@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hello, World! - A-Frame</title>
+    <meta name="description" content="Hello, World! - A-Frame">
+    <script src="https://aframe.io/releases/0.3.2/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene stats>
+    <a-assets timeout="10000">
+      <!-- You got until the count of 10 to load else the show will go on without you. -->
+
+      <!-- ASSETS
+      <a-asset-item id="horse-obj" src="horse.obj"></a-asset-item>
+      <a-asset-item id="horse-mtl" src="horse.mtl"></a-asset-item>
+      <a-mixin id="giant" scale="5 5 5"></a-mixin>
+      <audio id="neigh" src="neigh.mp3">
+
+      <video id="kentucky-derby" src="derby.mp4"> -->
+      <img id="one" src="one.png">
+      <img id="two" src="norm.jpg">
+      <audio src="bootycruise.mp3">
+      <a-asset-item id="obj" src="mother_shell.obj"></a-asset-item>
+      <a-asset-item id="mtl" src="mother_shell.mtl"></a-asset-item>
+    </a-assets>
+
+      <!-- a-scene contains all objects in our scene -->
+      <a-entity></a-entity>
+
+
+
+      <a-box
+        position="-1 0.5 -3"
+        rotation="0 45 0"
+        color="#FFFFFF"
+
+        src="#one">
+        <a-animation attribute="rotation" begin ="click" repeat="indefinate" to="0 90 0" ease="linear" direction="alternate"></a-animation>
+        <a-event name="mouseenter" scale=".5 .5 .5"> </a-event>
+      </a-box>
+
+      <a-sphere position="0 1.25 -5" radius="1.25" color="#600000"></a-sphere>
+      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+      <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" src="#one"></a-plane>
+      <a-sky color="#FFFFFF" src="#one"></a-sky>
+      <a-light position="0 5 0" color="FFFFFF"></a-light>
+      <a-camera position="5 0 0">
+          <a-cursor color="#FF0000" scale="1 1 1">
+
+    </a-scene>
+
+    <script>
+var sphere = document.querySelector( "a-sphere" )
+      sphere.addEventListener( "mouseenter", function()
+      {
+        sphere.setAttribute( "scale",
+        {
+          x: .5,
+          y: .1,
+          z: 2,
+
+        }
+        );
+
+      }
+    );
+    </script>
+  </body>
+</html>
