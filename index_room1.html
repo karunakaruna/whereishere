@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Is This It?</title>
+    <meta name="description" content="Is this it?">
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/bryik/aframe-bmfont-text-component/master/dist/aframe-bmfont-text-component.min.js"></script>
+    <script src="../build.js"></script>
+<!-- Randomizer -->
+    <script src="https://rawgit.com/ngokevin/aframe-randomizer-components/master/dist/aframe-randomizer-components.min.js"></script>
+    <script src="https://unpkg.com/aframe-entity-generator-component@^3.0.0/dist/aframe-entity-generator-component.min.js"></script>
+
+  </head>
+  <body>
+<!-- START SCENE +++++++++++++++++++++++++++++++++++++++++++++++++-->
+<a-scene stats>
+<!-- Load ASSETS - 10 sec max  @@@@@@@@@@@@@@@@@@@@@@@@@@@   -->
+              <a-assets timeout="10000">
+        <!-- Image Sourcing -->
+              <img id="pink" src="https://img.gs/bbdkhfbzkk/stretch/http://i.imgur.com/1hyyIUi.jpg" crossorigin="anonymous" />
+              <img id="one" src="one.png">
+              <img id="nrm" src="norm.jpg">
+        <!-- Object Sourcing -->
+              <a-mixin id="sphere"
+                        geometry="primitive: sphere; radius: .1"></a-mixin>
+              <a-mixin id="box" geometry="primitive: box; depth: 0.5; height: 1; width: 0.5">
+        <!-- Animation mixins. -->
+              <a-mixin id="pulse" attribute="material.color" from="#000000" to="#FFFFFF" dur="1000"
+                     begin="0"></a-mixin>
+
+              <a-mixin id="yoyo" direction="alternate" fill="forwards"
+                                 repeat="indefinite"></a-mixin>
+              <a-mixin id="spin" attribute="rotation" to="0 360 0"
+                       repeat="indefinite" easing="linear" dur="10000"></a-mixin>
+              <a-mixin id="spin-x" mixin="spin" attribute="rotation" to="360 0 0"
+                       repeat="indefinite" easing="linear" dur="10000"></a-mixin>
+        <!-- Cube Maps -->
+              <a-cubemap id="sky">
+                <img src="one.png">
+                <img src="one.png">
+                <img src="one.png">
+                <img src="one.png">
+                <img src="one.png">
+                <img src="one.png">
+              </a-cubemap>
+        <!-- Cube Dupl -->
+              <a-mixin id="cube"
+                       geometry="primitive: box; height: .1; width: .1; depth: .1; mergeTo: #boxes; skipCache: true; buffer: false;"
+                       material="color: #000000; roughness: 1.0; metalness: 0.2;" look-at="[camera]">
+                       </a-mixin>
+
+<!-- END LOAD ASSETS - 10 sec max  @@@@@@@@@@@@@@@@@@@@@@@@@@@   -->
+  </a-assets>
+
+  <a-entity position="0 10 0" entity-generator="mixin: box" random-position random-rotation random-scale>
+         <a-animation attribute="position" dur="16000" easing="linear" repeat="indefinite"
+                      to="0 0 0"></a-animation>
+
+       </a-entity>
+<!-- |/  SCENE  \| -->
+
+<!-- Moving Spheres. -->
+<a-entity position="0 1 0" mixin="box">  <a-animation mixin="pulse"></a-animation></a-entity>
+ <a-entity geometry="primitive:box; depth:10; height:.01; width:.01;  " position="0 0 0" color="#F00"></a-entity>
+ <a-entity geometry="primitive:box; depth:.010; height:10; width:.01;   " position="0 0 0" color="#0F0"></a-entity>
+ <a-entity geometry="primitive:box; depth:.010; height:.01;  width:10;  " position="0 0 0" color="#00F"></a-entity>
+
+ <!-- Sphere -->
+<a-entity bmfont-text="text: This sphere has normalMap and envMap ; color: #333" position="5 3.5 5" look-at="[camera]"></a-entity>
+<a-entity bmfont-text="text: but I no see them :( ; color: #333" position="5 3.2 5" look-at="[camera]"></a-entity>
+<a-entity geometry="primitive: sphere; radius:1;" rotation="0 90 0" position="5 2 5"  material="color:white; metalness:1; roughness: 0; sphericalEnvMap: #one;normalMap:#nrm;normalScale:.5 .5;">
+  <a-animation mixin="yoyo" attribute="rotation" from="0 0 0"
+               to="0 360 0" ></a-animation>
+  </a-entity>
+
+
+<!--TEXT -->
+ <a-entity bmfont-text="text: Is This It?; color: #333" position="5 5 0" look-at="[camera]"></a-entity>
+ <a-entity bmfont-text="text: O_o; color: #333" position="5 5.5 0" scale="4 4 4" look-at="[camera]"></a-entity>
+
+
+ <!--Test Objects -->
+
+<a-image src="one.png" position="3.5 2 2" rotation="0 -125 0" id="test">
+  <a-animation mixin="spin"></a-animation>
+  </a-image>
+
+<a-image src="one.png" position="5 3 2" rotation="0 125 0" id="sen">
+  <a-animation mixin="spin"></a-animation>
+  </a-image>
+
+<a-box src="one.png" position="5 4 2" rotation="0 125 0" id="hello">
+    <a-animation mixin="spin"></a-animation>
+    </a-box>
+
+<a-entity geometry="primitive: box; radius: 1;"
+          position="5 5 2"
+          material="color: #FF0000; metalness: 0.7"></a-entity>
+
+<<a-entity light="type: point; color: #FFFFFF; intensity: 10"></a-entity>
+
+ <a-entity text="text: 5x; color: #333" position="5 0 0" look-at="[camera]"></a-entity>
+ <a-entity text="text: 5y; color: #333" position="0 5 0" look-at="[camera]"></a-entity>
+ <a-entity text="text: 5z; color: #333" position="0 0 5" look-at="[camera]"></a-entity>
+            <a-entity position="2.5 0 -2">
+              <a-entity mixin="column">
+
+                <a-entity mixin="column-light"></a-entity>
+
+                <a-entity mixin="object-on-column color sphere"
+                          position="-.2 1.2 0" id="sens">
+                  <a-animation mixin="yoyo" attribute="position" from="-.2 1 0"
+                               to="-.2 1.8 0" ></a-animation>
+                  <a-event name="mouseenter" scale=".5 .5 .5" dur="300"> </a-event>
+                  <a-event name="mouseleave" scale="1 1 1"> </a-event>
+                </a-entity id="sen">
+
+                <a-entity mixin="object-on-column color sphere">
+                  <a-animation mixin="yoyo" attribute="position" from="0 1.8 0"
+                               to="0 1 0" ></a-animation>
+                </a-entity>
+
+                <a-entity mixin="object-on-column color sphere" position=".2 1 0" >
+                  <a-animation mixin="yoyo" attribute="position" from=".2 1 0"
+                               to=".2 1.8 0"></a-animation>
+                </a-entity>
+              </a-entity>
+              <a-entity mixin="column-bottom"></a-entity>
+            </a-entity>
+
+
+
+
+    <!-- CAMERA  -->
+
+    <a-entity position="-5 0 0" rotation=" 0 -90 0">
+      <a-camera>
+        <a-cursor color="#000000" scale="1 1 1"></a-camera>
+    </a-entity>
+
+      <!-- Lights  -->
+    <a-entity position="5 0 0" light="color: #FF0000; intensity: 10; type: spot;" visible="">
+      </a-entity>
+
+
+<!--Background Color -->
+      <a-sky color="#FFFFFF"radius="50">
+        <a-animation attribute="color" dur="10000" direction="alternate" from="#afafaf"
+                     to="#352D4D" repeat="indefinite"></a-sky>
+
+<!-- END SCENE +++++++++++++++++++++++++++++++++++++++++++++++++-->
+    </a-scene>
+
+
+<!-- S C R I P T S -->
+    <!-- Array -->
+    <script>
+      var cubeEl;
+      var sceneEl = document.querySelector('a-scene');
+      var xStartPos = 0
+      var zStartPos = 0;
+      var xPos;
+      var zPos;
+      var xMargin = 2;
+      var zMargin = -2;
+      var cubeszNum = 10;
+      var cubesxNum = 20;
+      var rootEl;
+      var x;
+      zPos = zStartPos;
+      for (var i = 0; i < cubeszNum; i += 1) {
+        xPos = xStartPos;
+        for (var j = 0; j < cubesxNum; j += 1) {
+          cubeEl = document.createElement('a-entity');
+          cubeEl.setAttribute('mixin', 'cube');
+          cubeEl.setAttribute('position', { x: xPos, y: 0, z: zPos});
+          xPos += xMargin;
+          sceneEl.appendChild(cubeEl);
+        }
+        zPos += zMargin;
+      }
+    </script>
+
+
+
+
+
+<!-- Toggle State Attempt -->
+    <script>
+    var togglestate = 1
+    var objSel = document.querySelector( "#hello" )
+      objSel.addEventListener( "mouseenter", function()
+      {
+        var cScale = objSel.getAttribute('scale');
+        if (togglestate){
+          objSel.setAttribute( "scale",
+            {
+              x: 1,
+              y: 1,
+              z: 1,
+            }
+          );
+
+          } else {
+            objSel.setAttribute( "scale",
+              {
+                x: .5,
+                y: .5,
+                z: .5,
+              }
+              );
+        }
+      }
+    );
+    </script>
+
+<!-- another -->
+
+
+
+
+
+
+  </body>
+</html>
