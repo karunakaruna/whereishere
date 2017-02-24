@@ -22,6 +22,7 @@
               <a-assets timeout="10000">
         <!-- Image Sourcing -->
               <img id="one" src="one.png">
+              <img id="nrm" src="norm.jpg">
         <!-- Object Sourcing -->
               <a-mixin id="sphere"
                         geometry="primitive: sphere; radius: .1"></a-mixin>
@@ -48,9 +49,9 @@
         <!-- Cube Dupl -->
               <a-mixin id="cube"
                        geometry="primitive: box; height: .1; width: .1; depth: .1; mergeTo: #boxes; skipCache: true; buffer: false;"
-                       material="color: #000000; roughness: 1.0; metalness: 0.2;" look-at="[camera]"></a-mixin>
+                       material="color: #000000; roughness: 1.0; metalness: 0.2;" look-at="[camera]">
+                       </a-mixin>
 
-                         <audio src="bootycruise.mp3" autoplay></audio>
 <!-- END LOAD ASSETS - 10 sec max  @@@@@@@@@@@@@@@@@@@@@@@@@@@   -->
   </a-assets>
 
@@ -60,20 +61,45 @@
        </a-entity>
 
 
-<!-- |/  SCENE  \| -->
-            <!-- Spheres. -->
 
+
+<!-- |/  SCENE  \| -->
+
+<!-- Moving Spheres. -->
  <a-entity geometry="primitive:box; depth:10; height:.01; width:.01;  " position="0 0 0" color="#F00"></a-entity>
  <a-entity geometry="primitive:box; depth:.010; height:10; width:.01;   " position="0 0 0" color="#0F0"></a-entity>
  <a-entity geometry="primitive:box; depth:.010; height:.01;  width:10;  " position="0 0 0" color="#00F"></a-entity>
 
+ <!-- Sphere -->
+<a-entity bmfont-text="text: This sphere has normalMap and envMap ; color: #333" position="5 3.5 5" look-at="[camera]"></a-entity>
+<a-entity bmfont-text="text: but I no see them :( ; color: #333" position="5 3.2 5" look-at="[camera]"></a-entity>
+<a-entity geometry="primitive: sphere; radius:1;" rotation="0 90 0" position="5 2 5" material="shader: standard; src: #one ; color: white; roughness: .5; metalness: 0; envMap: #sky; normalMap: #nrm"></a-entity>
+
+
+<!--TEXT -->
  <a-entity bmfont-text="text: Is This It?; color: #333" position="5 5 0" look-at="[camera]"></a-entity>
  <a-entity bmfont-text="text: O_o; color: #333" position="5 5.5 0" scale="4 4 4" look-at="[camera]"></a-entity>
 
-<a-image src="one.png" position="3.5 2 2" rotation="0 -125 0">
-  <a-animation mixin="spin"><w/a-animation></a-sky>
+
+ <!--Test Objects -->
+
+<a-image src="one.png" position="3.5 2 2" rotation="0 -125 0" id="test">
+  <a-animation mixin="spin"></a-animation>
   </a-image>
 
+<a-image src="one.png" position="5 3 2" rotation="0 125 0" id="sen">
+  <a-animation mixin="spin"></a-animation>
+  </a-image>
+
+<a-box src="one.png" position="5 4 2" rotation="0 125 0" id="hello">
+    <a-animation mixin="spin"></a-animation>
+    </a-box>
+
+<a-entity geometry="primitive: box; radius: 1;"
+          position="5 5 2"
+          material="color: #FF0000; metalness: 0.7"></a-entity>
+
+<<a-entity light="type: point; color: #FFFFFF; intensity: 10"></a-entity>
 
  <a-entity bmfont-text="text: 5x; color: #333" position="5 0 0" look-at="[camera]"></a-entity>
  <a-entity bmfont-text="text: 5y; color: #333" position="0 5 0" look-at="[camera]"></a-entity>
@@ -84,18 +110,19 @@
                 <a-entity mixin="column-light"></a-entity>
 
                 <a-entity mixin="object-on-column color sphere"
-                          position="-.2 1.2 0">
+                          position="-.2 1.2 0" id="sens">
                   <a-animation mixin="yoyo" attribute="position" from="-.2 1 0"
-                               to="-.2 1.8 0"></a-animation>
-                  <a-event name="mouseenter" scale=".5 .5 .5"> </a-event>
-                </a-entity>
+                               to="-.2 1.8 0" ></a-animation>
+                  <a-event name="mouseenter" scale=".5 .5 .5" dur="300"> </a-event>
+                  <a-event name="mouseleave" scale="1 1 1"> </a-event>
+                </a-entity id="sen">
 
                 <a-entity mixin="object-on-column color sphere">
                   <a-animation mixin="yoyo" attribute="position" from="0 1.8 0"
                                to="0 1 0" ></a-animation>
                 </a-entity>
 
-                <a-entity mixin="object-on-column color sphere" position=".2 1 0">
+                <a-entity mixin="object-on-column color sphere" position=".2 1 0" >
                   <a-animation mixin="yoyo" attribute="position" from=".2 1 0"
                                to=".2 1.8 0"></a-animation>
                 </a-entity>
@@ -119,16 +146,14 @@
 
 
 <!--Background Color -->
-      <a-sky color="#FFFFFF"radius="5">
-          <a-animation mixin="yoyo" attribute="radius" from="5"
-                    to="50"  dur="10000"></a-animation></a-sky>
+      <a-sky color="#FFFFFF"radius="50"></a-sky>
 
 <!-- END SCENE +++++++++++++++++++++++++++++++++++++++++++++++++-->
     </a-scene>
 
 
-
-
+<!-- S C R I P T S -->
+    <!-- Array -->
     <script>
       var cubeEl;
       var sceneEl = document.querySelector('a-scene');
@@ -160,8 +185,34 @@
 
 
 
+<!-- Toggle State Attempt -->
+    <script>
+    var togglestate = 1
+    var objSel = document.querySelector( "#hello" )
+      objSel.addEventListener( "mouseenter", function()
+      {
+        var cScale = objSel.getAttribute('scale');
+        if (togglestate){
+          objSel.setAttribute( "scale",
+            {
+              x: 1,
+              y: 1,
+              z: 1,
+            }
+          );
 
-
+          } else {
+            objSel.setAttribute( "scale",
+              {
+                x: .5,
+                y: .5,
+                z: .5,
+              }
+              );
+        }
+      }
+    );
+    </script>
 
 
 
