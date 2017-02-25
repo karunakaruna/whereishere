@@ -14,24 +14,51 @@
   <body>
     <a-scene stats>
       <a-assets>
+        <audio id="blip1" src="audio/321103__nsstudios__blip1.wav"></audio>
+        <audio id="blip2" src="audio/321104__nsstudios__blip2.wav"></audio>
         <img id="one" src="one.png">
         <video id="testvid" src="test.mov" autoplay loop="true">
+        <a-mixin id="fusing" material="color: magenta"></a-mixin>
+
+
+        <a-mixin id="cube" geometry="primitive: box"></a-mixin>
+        <a-mixin id="cube-hovered" material="shader:flat; color: #FFFFFF"></a-mixin>
+        <a-mixin id="cube-selected" material="shader:flat; color: #FF0000"></a-mixin>
 
       </a-assets>
 <<!----------------------------------->>
 
 
-
-<a-entity camera  position="0 2 20" active="true" look-controls wasd-controls universal-controls>
+<<!--camera---------------------------->>
+<a-entity position="0 2 20" >
+  <a-entity camera active="true" look-controls wasd-controls>
+      <a-entity cursor="fuse: true; fuseTimeout: 5"
+            raycaster="far: 30; objects: .intersectable"
+            position="0 0 -1"
+            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+            material="color: black; shader: flat">
+      </a-entity>
+  </a-entity>
 </a-entity>
 
-      <a-entity
-        geometry="primitive:box"
-        scale="2 1 1"
-        position="0 5 0"
-        material="src:#testvid;loop:true">
-      </a-entity>
 
+<!-- test cube -->
+<a-entity position="0 1 18">
+     <a-entity id="foregroundCube"
+               mixin="cube"
+               class="intersectable"
+               class="clickable"
+               sound__1="on: click; src: #blip1;"
+               sound__2="on: mouseenter; src: #blip2;" >
+       <a-animation begin="click" attribute="rotation" to="0 360 0"
+                    easing="linear" dur="200" fill="backwards"></a-animation>
+     </a-entity>
+   </a-entity>
+
+
+
+
+<<!--eye thing---------------------------->>
 <a-entity look-at="[camera]" position="0 1.5 5">
       <a-entity
       geometry="primitive:sphere;radius:.1"
@@ -54,20 +81,28 @@
         </a-entity>
         </a-entity>
         <a-text value="hey... whatcha doin?" wrap-count="200" position="-.15 .15 0">
-        <a-animation attribute="width" begin="fusing" onerror=""from="5" to="0.001" dur="1000" begin="0" repeat="indefinate" direction="alternate" easing="linear"></a-animation></a-text>
+        <a-animation attribute="width" begin="fusing" onerror=""from="5" to="0.001" dur="1000" begin="0" repeat="1" direction="alternate" easing="linear"></a-animation></a-text>
      </a-entity>
 
 
 
 <!-- Center Sphere -->
       <a-entity
+      cursor-listener
+      class="intersectable"
+      class="clickable"
       geometry="primitive:sphere"
       material="shader:standard;roughness:0;metalness:.5;normalMap:norm.jpg;sphericalEnvMap:#testvid;normalTextureRepeat:.35 .35;displacementMap:#one;"
       position="0 2.25 -1"
-      radius="1.25">
-     <a-animation attribute="material.metalness" from=".8" to="1" dur="10000" begin="0" repeat="indefinate" direction="alternate"></a-animation>
-     <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="60000" begin="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
+      radius="1.25"
+      sound="on: click; src: #blip1;"
+      sound="on: mouseenter; src: #blip2;">
+     <a-animation attribute="material.metalness" from=".8" to=".85" dur="10000" begin="0" repeat="indefinate" direction="alternate"></a-animation>
+     <a-animation attribute="rotation" from="0 0 0 " to="0 0 0" dur="60000" begin="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
 
+
+
+  <!--    <a-animation attribute="scale" from="1 1 1" to="2 2 2" dur="100" begin="click" repeat="indefinate" direction="alternate" easing="ease"></a-animation> -->
 
        </a-entity>
 
@@ -78,10 +113,14 @@
 
 
 <!-- spinning Lights -->
-       <a-entity>
-         <a-light type="point" position="0 0 -5" color="#6600FF" intensity="1.5"></a-light>
-         <a-light type="point" position="0 0 5" color="#FF0000" intensity="3"></a-light>
-         <a-light type="point" position="5 0 0" color="#FF00FF" intensity="3"><a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="10000" begin="0" repeat="indefinate" direction="normal" easing="linear"></a-animation></a-light>
+<!-- spinning Lights -->
+       <a-entity position="" rotation="" scale="" visible="">
+         <a-light type="point" position="0 0 -5" color="#5052FF" intensity="1.5" rotation="" scale="" visible="" light=""></a-light>
+         <a-light type="point" position="0 0 5" color="#FF5500" intensity="1.5" rotation="" scale="" visible="" light=""></a-light>
+         <a-light type="point" position="5 0 0" color="#FF00FF" intensity="1.5" rotation="0 169.5462119999768 0" scale="1 1 1" visible="true" light="type:point;color:#6cd0ff;intensity:3">
+           <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="10000" begin="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
+         </a-light>
+         <a-light type="point" position="5 0 0" color="#FF55FF" intensity="1.5" rotation="0 169.5462119999768 0" scale="1 1 1" visible="true" light="type:point;color:#6cd0ff;intensity:3"><a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="10000" begin="0" repeat="indefinate" direction="normal" easing="linear"></a-animation></a-light>
          <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="10000" begin="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
        </a-entity>
 <!-- Plane -->
@@ -100,6 +139,76 @@
                   material="color: black; shader: flat">
         </a-entity>
       </a-entity>
+
+      <script>
+         (function () {
+           // Custom states.
+           var clickedEl = null;
+           var els = document.querySelectorAll('a-entity');
+           Array.prototype.forEach.call(els, function (el) {
+             el.addEventListener('click', function () {
+               if (clickedEl && clickedEl !== el) {
+                 clickedEl.removeState('selected');
+               }
+               if (!el.classList.contains('clickable')) { return; }
+               clickedEl = el;
+               clickedEl.addState('selected');
+             });
+           });
+
+           // Responding to mouse events.
+           var cubes = document.querySelectorAll('a-entity[mixin*=cube]');
+           var i;
+           for (i = 0; i < cubes.length; ++i) {
+             cubes[i].addEventListener('click', function () {
+               var href = this.getAttribute('href');
+               if (!href) { return; }
+               window.top.postMessage({type: 'navigate', data: {url: href}}, '*');
+             })
+           }
+
+           // testing mouseenter and mouseleave
+           var foregroundCube = document.querySelector('#foregroundCube');
+           foregroundCube.addEventListener('mouseenter', function (evt) {
+             foregroundCube.setAttribute('mixin','cube cube-hovered')
+           })
+           foregroundCube.addEventListener('mouseleave', function (evt) {
+             foregroundCube.setAttribute('mixin','green cube')
+           })
+           foregroundCube.addEventListener('mousedown', function (evt) {
+             foregroundCube.setAttribute('mixin','cube cube-selected')
+           })
+           foregroundCube.addEventListener('mouseup', function (evt) {
+             foregroundCube.setAttribute('mixin','cube cube-hovered')
+           })
+           foregroundCube.addEventListener('click', function (evt) {
+             var scene = document.querySelector('a-scene');
+             var clickRing = document.createElement('a-entity');
+             clickRing.id = 'clickRing-'+new Date().getTime();
+             clickRing.setAttribute('material','shader:flat; color: #FFFFFF; transparent: true; opacity: 0.6');
+             clickRing.setAttribute('geometry','primitive: ring; radius-inner: 0.5; radius-outer: 0.6');
+             clickRing.setAttribute('position',evt.detail.intersection.point);
+             clickRing.setAttribute('look-at',"[camera]");
+             var opacityAnimation = document.createElement('a-animation');
+             opacityAnimation.setAttribute('attribute','material.opacity');
+             opacityAnimation.setAttribute('to',0);
+             opacityAnimation.setAttribute('duration','250');
+             opacityAnimation.setAttribute('easing','ease-out-quad');
+             var scaleAnimation = document.createElement('a-animation');
+             scaleAnimation.setAttribute('attribute','scale');
+             scaleAnimation.setAttribute('to','3 3 3');
+             scaleAnimation.setAttribute('duration','250');
+             scaleAnimation.setAttribute('easing','ease-out-quad');
+             var onAnimationEnd = function () {
+               scene.removeChild(document.querySelector('#'+clickRing.id))
+             }
+             scaleAnimation.addEventListener('animationend', onAnimationEnd.bind(this))
+             clickRing.appendChild(opacityAnimation);
+             clickRing.appendChild(scaleAnimation);
+             scene.appendChild(clickRing);
+           })
+         })();
+       </script>
 
 
 <script>
