@@ -12,17 +12,20 @@
     <script src="noise.js"></script>
   </head>
   <body>
-    <a-scene stats>
+    <a-scene stats fog="type: linear; color: #000; far: 25">
       <a-assets>
         <audio id="blip1" src="audio/321103__nsstudios__blip1.wav"></audio>
         <audio id="blip2" src="audio/321104__nsstudios__blip2.wav"></audio>
         <img id="one" src="one.png">
         <video id="testvid" src="test.mov" autoplay loop="true">
         <a-mixin id="fusing" material="color: magenta"></a-mixin>
-        <a-mixin id="cube" geometry="primitive: box"></a-mixin>
+        <a-mixin id="cube" geometry="primitive: box" material="shader:flat;color#000000;" random-rotation random-scale random-position="min:-10 0 -10;max:10 10 10;"></a-mixin>
         <a-mixin id="cube-hovered" material="shader:flat; color: #FFFFFF"></a-mixin>
         <a-mixin id="cube-selected" material="shader:flat; color: #FF0000"></a-mixin>
-
+        <a-mixin id="mtl_ancient" material="shader:standard; roughness:0; metalness:.5; sphericalEnvMap:#testvid"></a-mixin>
+        <a-mixin id="mtl_ancient2" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:norm.jpg;sphericalEnvMap:#testvid;normalTextureRepeat:.5 .5;"></a-mixin>
+        <a-mixin id="rotAnim" begin="click" attribute="rotation" to="0 360 0" easing="linear" dur="200" fill="backwards"></a-mixin>
+        <a-mixin id="rotAnim2" begin="click" attribute="rotation" to="0 360 0" easing="ease-out-quad" dur="2000" fill="forwards"></a-mixin>
       </a-assets>
 <<!----------------------------------->>
 
@@ -56,6 +59,7 @@
 
 <<!--eye thing---------------------------->>
 <a-entity look-at="[camera]" position="0 1.5 5">
+  <a-animation begin="0" attribute="position" from="0 2 15" to="0 2.15 15" repeat="indefinate" direction="alternate" easing="ease"></a-animation>
       <a-entity
       geometry="primitive:sphere;radius:.1"
       material="shader:standard;roughness:0;metalness:.5;sphericalEnvMap:#testvid;"
@@ -87,14 +91,30 @@
       cursor-listener
       class="intersectable"
       class="clickable"
-      geometry="primitive:sphere"
+      geometry="primitive:sphere;radius:.3"
       material="shader:standard;roughness:0;metalness:.5;normalMap:norm.jpg;sphericalEnvMap:#testvid;normalTextureRepeat:.35 .35;displacementMap:#one;"
       position="0 2.25 -1"
-      radius="1.25"
+      radius=".25"
       sound="on: click; src: #blip1;"
-      sound="on: mouseenter; src: #blip2;">
+      sound="on: mouseenter; src: #blip2;"
+      random-rotation
+      random-scale
+      random-spherical-position>
+
      <a-animation attribute="material.metalness" from=".8" to=".85" dur="10000" begin="0" repeat="indefinate" direction="alternate"></a-animation>
-     <a-animation attribute="rotation" from="0 0 0 " to="0 0 0" dur="60000" begin="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
+
+            </a-entity>
+     <!-- Center Sphere -->
+           <a-entity
+           geometry="primitive:sphere;radius:.1"
+           material="shader:standard;roughness:0;metalness:.5;normalMap:norm.jpg;sphericalEnvMap:#testvid;normalTextureRepeat:.35 .35;displacementMap:#one;"
+           position="1 2.25 -1"
+           sound="on: click; src: #blip1;"
+           sound="on: mouseenter; src: #blip2;"
+           random-rotation
+           random-scale
+           random-spherical-position>
+          <a-animation attribute="material.metalness" from=".8" to=".85" dur="10000" begin="0" repeat="indefinate" direction="alternate"></a-animation>
 
 
 
@@ -110,31 +130,29 @@
 
 <!-- spinning Lights -->
 <!-- spinning Lights -->
-       <a-entity position="" rotation="" scale="" visible="">
-         <a-light type="point" position="0 0 -5" color="#5052FF" intensity="1.5" rotation="" scale="" visible="" light=""></a-light>
-         <a-light type="point" position="0 0 5" color="#FF5500" intensity="1.5" rotation="" scale="" visible="" light=""></a-light>
-         <a-light type="point" position="5 0 0" color="#FF00FF" intensity="1.5" rotation="0 169.5462119999768 0" scale="1 1 1" visible="true" light="type:point;color:#6cd0ff;intensity:3">
+       <a-entity position="" rotation="" scale="10 10 10" visible="">
+         <a-light type="ambient" position="0 0 0" color="#3333FF" intensity=".5" rotation="" scale="" visible="" light="">
+           <a-animation attribute="intensity" begin="0" dur="10000" from=".5" to="1" repeat="1" easing="linear" direction="alternate"></a-animation>
+         </a-light>
+
+         <a-light type="point" position="0 0 -5" color="#77427F" intensity=".7" rotation="" scale="" visible="" light=""></a-light>
+         <a-light type="point" position="0 0 5" color="#FF5500" intensity=".7" rotation="" scale="" visible="" light=""></a-light>
+         <a-light type="point" position="5 0 0" color="#FF66FF" intensity=".4" rotation="0 169.5462119999768 0" scale="1 1 1" visible="true" light="type:point;color:#6cd0ff;intensity:3">
            <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="10000" begin="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
          </a-light>
          <a-light type="point" position="5 0 0" color="#FF55FF" intensity="1.5" rotation="0 169.5462119999768 0" scale="1 1 1" visible="true" light="type:point;color:#6cd0ff;intensity:3"><a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="10000" begin="0" repeat="indefinate" direction="normal" easing="linear"></a-animation></a-light>
-         <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="10000" begin="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
+         <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="100000" begin="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
        </a-entity>
 <!-- Plane -->
-      <a-entity geometry="primitive: plane;width:40;height:40;segmentsHeight:20;segmentsWidth:20;"
+      <a-entity geometry="primitive: plane;width:10;height:10;segmentsHeight:20;segmentsWidth:20;"
       rotation="-90 0 0"
       segments-width="20"
       material="shader:standard;roughness:0;metalness:.5;normalMap:norm.jpg;sphericalEnvMap:#testvid;normalTextureRepeat:4 4;displacementMap:#one;"></a-entity>
 
-      <a-sky color="#ECECEC" src="#testvid"></a-sky>
+      <a-sky color="#000000"></a-sky>
 
 
-      <a-entity camera userHeight="1.8"  id="master_camera" >
-        <a-entity cursor="fuse: true; fuseTimeout: 500"
-                  position="0 0 -1"
-                  geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
-                  material="color: black; shader: flat">
-        </a-entity>
-      </a-entity>
+
 
       <script>
          (function () {
@@ -214,8 +232,8 @@
          var zStartPos = 15;
          var xPos;
          var zPos;
-         var xMargin = 2;
-         var zMargin = -2;
+         var xMargin = 5;
+         var zMargin = -5;
          var cubeszNum = 5;
          var cubesxNum = 5;
          var rootEl;
@@ -225,12 +243,16 @@
            xPos = xStartPos;
            for (var j = 0; j < cubesxNum; j += 1) {
              cubeEl = document.createElement('a-entity');
-             cubeEl.setAttribute('mixin', 'cube');
+             cubeEl.setAttribute('mixin', 'cube mtl_ancient2');
              cubeEl.setAttribute('cursor-listener');
              cubeEl.setAttribute('class', 'clickable');
              cubeEl.setAttribute('class', 'intersectable');
              cubeEl.setAttribute('sound__1', 'on: click; src: #blip1;');
-            cubeEl.setAttribute('sound__2', 'on: mouseenter; src: #blip2;');
+            cubeEl.setAttribute('sound__2', 'on: mouseenter; src: #blip2;')
+            var rotAnimation = document.createElement('a-animation');
+            rotAnimation.setAttribute('begin','click');
+            rotAnimation.setAttribute('mixin','rotAnim2');
+            cubeEl.appendChild(rotAnimation);
              cubeEl.setAttribute('position', { x: xPos, y: 1, z: zPos});
              xPos += xMargin;
              sceneEl.appendChild(cubeEl);
