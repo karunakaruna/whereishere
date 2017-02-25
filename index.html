@@ -22,8 +22,9 @@
 
 
 
-<a-entity camera position="0 0 20" active="true" look-controls wasd-controls teleport-contorls >
+<a-entity camera  position="0 2 20" active="true" look-controls wasd-controls universal-controls>
 </a-entity>
+
       <a-entity
         geometry="primitive:box"
         scale="2 1 1"
@@ -42,9 +43,7 @@
       position="0 0 0.1">
        </a-entity>
        </a-entity>
-
-
-       <a-entity
+          <a-entity
        geometry="primitive:sphere;radius:.1"
        material="shader:standard;roughness:0;metalness:.5;sphericalEnvMap:#testvid"
        position=".15 0 0">
@@ -54,7 +53,6 @@
        position="0 0 0.1" >
         </a-entity>
         </a-entity>
-
         <a-text value="hey... whatcha doin?" wrap-count="200" position="-.15 .15 0">
         <a-animation attribute="width" begin="fusing" onerror=""from="5" to="0.001" dur="1000" begin="0" repeat="indefinate" direction="alternate" easing="linear"></a-animation></a-text>
      </a-entity>
@@ -95,7 +93,7 @@
       <a-sky color="#ECECEC" src="#testvid"></a-sky>
 
 
-      <a-entity camera id="master_camera" >
+      <a-entity camera userHeight="1.8"  id="master_camera" >
         <a-entity cursor="fuse: true; fuseTimeout: 500"
                   position="0 0 -1"
                   geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
@@ -105,7 +103,7 @@
 
 
 <script>
-var secondCameraEl = document.querySelector('master_camera2');
+var secondCameraEl = document.querySelector('master_camera');
 secondCameraEl.setAttribute('camera', 'active', true);
 
 </script>
