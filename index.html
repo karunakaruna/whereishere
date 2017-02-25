@@ -44,15 +44,19 @@
 
 
 <!-- test cube -->
+
+<a-entity  id="scene1">
 <a-entity position="0 1 18">
      <a-entity id="foregroundCube"
                mixin="cube"
                class="intersectable"
                class="clickable"
                sound__1="on: click; src: #blip1;"
-               sound__2="on: mouseenter; src: #blip2;" >
+               sound__2="on: mouseenter; src: #blip2;"
+               onclick="nextScene()" >
        <a-animation begin="click" attribute="rotation" to="0 360 0"
                     easing="linear" dur="200" fill="backwards"></a-animation>
+
      </a-entity>
    </a-entity>
 
@@ -115,11 +119,7 @@
            random-scale
            random-spherical-position>
           <a-animation attribute="material.metalness" from=".8" to=".85" dur="10000" begin="0" repeat="indefinate" direction="alternate"></a-animation>
-
-
-
   <!--    <a-animation attribute="scale" from="1 1 1" to="2 2 2" dur="100" begin="click" repeat="indefinate" direction="alternate" easing="ease"></a-animation> -->
-
        </a-entity>
 
 
@@ -151,8 +151,14 @@
 
       <a-sky color="#000000"></a-sky>
 
+</a-entity>
 
 
+<a-entity  id="scene2" visible="false">
+
+  <a-entity geometry="primitive:box; position:0 2 0" material="shader:flat;color:#FFFFFF"></a-entity>
+  <a-sky color="#000000"></a-sky>
+</a-entity>
 
       <script>
          (function () {
@@ -303,6 +309,22 @@ window.addEventListener('touchstart', function() {
 
   }
 </script>
+
+
+
+<script>
+
+  function nextScene() {
+    document.getElementById('scene1').setAttribute('visible', 'false')
+    document.getElementById('scene2').setAttribute('visible', 'true')
+  }
+  </script>
+
+
+
+
+
+
 
     </a-scene>
   </body>
