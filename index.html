@@ -19,8 +19,6 @@
         <img id="one" src="one.png">
         <video id="testvid" src="test.mov" autoplay loop="true">
         <a-mixin id="fusing" material="color: magenta"></a-mixin>
-
-
         <a-mixin id="cube" geometry="primitive: box"></a-mixin>
         <a-mixin id="cube-hovered" material="shader:flat; color: #FFFFFF"></a-mixin>
         <a-mixin id="cube-selected" material="shader:flat; color: #FF0000"></a-mixin>
@@ -212,14 +210,14 @@
        <script>
          var cubeEl;
          var sceneEl = document.querySelector('a-scene');
-         var xStartPos = 0
-         var zStartPos = 0;
+         var xStartPos = -5
+         var zStartPos = 15;
          var xPos;
          var zPos;
          var xMargin = 2;
          var zMargin = -2;
-         var cubeszNum = 10;
-         var cubesxNum = 20;
+         var cubeszNum = 5;
+         var cubesxNum = 5;
          var rootEl;
          var x;
          zPos = zStartPos;
@@ -228,7 +226,12 @@
            for (var j = 0; j < cubesxNum; j += 1) {
              cubeEl = document.createElement('a-entity');
              cubeEl.setAttribute('mixin', 'cube');
-             cubeEl.setAttribute('position', { x: xPos, y: 0, z: zPos});
+             cubeEl.setAttribute('cursor-listener');
+             cubeEl.setAttribute('class', 'clickable');
+             cubeEl.setAttribute('class', 'intersectable');
+             cubeEl.setAttribute('sound__1', 'on: click; src: #blip1;');
+            cubeEl.setAttribute('sound__2', 'on: mouseenter; src: #blip2;');
+             cubeEl.setAttribute('position', { x: xPos, y: 1, z: zPos});
              xPos += xMargin;
              sceneEl.appendChild(cubeEl);
            }
@@ -236,6 +239,13 @@
          }
        </script>
 
+
+       sound__1="on: click; src: #blip1;"
+       sound__2="on: mouseenter; src: #blip2;"
+
+       cursor-listener
+       class="intersectable"
+       class="clickable"
  <!--  Set Active Camera -->
 <script>
 var secondCameraEl = document.querySelector('master_camera');
@@ -247,17 +257,27 @@ secondCameraEl.setAttribute('camera', 'active', true);
 window.addEventListener('touchstart', function() {
 
 	// create empty buffer
-	var buffer = myContext.createBuffer(1, 1, 22050);
-	var source = myContext.createBufferSource();
-	source.buffer = buffer;
+  var isUnlocked = false;
+  function unlock() {
 
-	// connect to output (your speakers)
-	source.connect(myContext.destination);
+  	if(isIOS || this.unlocked)
+  		return;
 
-	// play the file
-	source.noteOn(0);
+  	// create empty buffer and play it
+  	var buffer = myContext.createBuffer(1, 1, 22050);
+  	var source = myContext.createBufferSource();
+  	source.buffer = buffer;
+  	source.connect(myContext.destination);
+  	source.noteOn(0);
 
-}, false);
+  	// by checking the play state after some time, we know if we're really unlocked
+  	setTimeout(function() {
+  		if((source.playbackState === source.PLAYING_STATE || source.playbackState === source.FINISHED_STATE)) {
+  			isUnlocked = true;
+  		}
+  	}, 0);
+
+  }
 </script>
 
     </a-scene>
