@@ -55,18 +55,6 @@
      </a-entity>
    </a-entity>
 
-   <a-entity position="0 2 18">
-        <a-entity id="foregroundCube"
-                  mixin="cube"
-                  class="intersectable"
-                  class="clickable"
-                  sound__1="on: click; src: #blip1;"
-                  sound__2="on: mouseenter; src: #blip2;" >
-          <a-animation begin="click" attribute="rotation" to="0 360 0"
-                       easing="linear" dur="200" fill="backwards"></a-animation>
-        </a-entity>
-      </a-entity>
-
 
 <<!--eye thing---------------------------->>
 <a-entity look-at="[camera]" position="0 1.5 5">
@@ -220,13 +208,57 @@
          })();
        </script>
 
+       <!-- Array -->
+       <script>
+         var cubeEl;
+         var sceneEl = document.querySelector('a-scene');
+         var xStartPos = 0
+         var zStartPos = 0;
+         var xPos;
+         var zPos;
+         var xMargin = 2;
+         var zMargin = -2;
+         var cubeszNum = 10;
+         var cubesxNum = 20;
+         var rootEl;
+         var x;
+         zPos = zStartPos;
+         for (var i = 0; i < cubeszNum; i += 1) {
+           xPos = xStartPos;
+           for (var j = 0; j < cubesxNum; j += 1) {
+             cubeEl = document.createElement('a-entity');
+             cubeEl.setAttribute('mixin', 'cube');
+             cubeEl.setAttribute('position', { x: xPos, y: 0, z: zPos});
+             xPos += xMargin;
+             sceneEl.appendChild(cubeEl);
+           }
+           zPos += zMargin;
+         }
+       </script>
 
+ <!--  Set Active Camera -->
 <script>
 var secondCameraEl = document.querySelector('master_camera');
 secondCameraEl.setAttribute('camera', 'active', true);
 
 </script>
 
+<script>
+window.addEventListener('touchstart', function() {
+
+	// create empty buffer
+	var buffer = myContext.createBuffer(1, 1, 22050);
+	var source = myContext.createBufferSource();
+	source.buffer = buffer;
+
+	// connect to output (your speakers)
+	source.connect(myContext.destination);
+
+	// play the file
+	source.noteOn(0);
+
+}, false);
+</script>
 
     </a-scene>
   </body>
