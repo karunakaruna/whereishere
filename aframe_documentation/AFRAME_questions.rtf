@@ -1,0 +1,54 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 AndaleMono;}
+{\colortbl;\red255\green255\blue255;\red38\green38\blue38;\red24\green133\blue169;}
+\margl1440\margr1440\vieww14140\viewh16200\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Aframe Notes\
+\
+entity-compenet-system framework \
+\
+
+\b\fs28 An Entity is an empty placeholder, \
+We attach \'93components to attach appearance, behaviour, functionality\'94
+\b0\fs24 \
+\
+DOM?\
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs30\fsmilli15400 \cf2 \expnd0\expndtw0\kerning0
+Since A-Frame fetches assets using {\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/docs/Web/API/XMLHttpRequest"}}{\fldrslt \cf3 XHRs}}, browser security requires the browser to serve assets with {\field{\*\fldinst{HYPERLINK "https://wikipedia.org/wiki/Cross-origin_resource_sharing"}}{\fldrslt \cf3 cross-origin resource sharing (CORS) headers}} if the asset is on a different domain. Otherwise, we\'92d have to host assets on the same origin as the scene.\
+For some options, {\field{\*\fldinst{HYPERLINK "https://pages.github.com/"}}{\fldrslt \cf3 GitHub Pages}} serves everything with CORS headers. We recommend GitHub Pages as a simple deployment platform. Or you could also upload assets using the {\field{\*\fldinst{HYPERLINK "https://cdn.aframe.io/"}}{\fldrslt \cf3 A-Frame + Uploadcare Uploader}}, a service that serves files with CORS headers set.\
+Given that {\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/docs/Web/HTML/CORS_enabled_image"}}{\fldrslt \cf3 CORS headers}} are set, 
+\f1\fs26 <a-assets>
+\f0\fs30\fsmilli15400  will automatically set 
+\f1\fs26 crossorigin
+\f0\fs30\fsmilli15400  attributes on media elements (e.g., 
+\f1\fs26 <audio>
+\f0\fs30\fsmilli15400 , 
+\f1\fs26 <img>
+\f0\fs30\fsmilli15400 , 
+\f1\fs26 <video>
+\f0\fs30\fsmilli15400 ) if it detects the resource is on a different domain.\
+\
+Audio and video assets will only block the scene if we set 
+\f1\fs26 autoplay
+\f0\fs30\fsmilli15400  or if we set 
+\f1\fs26 preload="auto"
+\f0\fs30\fsmilli15400 :\
+\
+
+\b what is blocking?\
+\
+
+\b0 Since 
+\f1\fs26 <a-assets>
+\f0\fs30\fsmilli15400  and 
+\f1\fs26 <a-asset-item>
+\f0\fs30\fsmilli15400  are nodes in A-Frame, they will emit the 
+\f1\fs26 loaded
+\f0\fs30\fsmilli15400  event when they say they have finished loading.}

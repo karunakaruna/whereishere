@@ -18,8 +18,12 @@
         <video id="testvid" src="test.mov" autoplay loop="true">
 
       </a-assets>
+<<!----------------------------------->>
 
 
+
+<a-entity camera position="0 0 20" active="true" look-controls wasd-controls teleport-contorls >
+</a-entity>
       <a-entity
         geometry="primitive:box"
         scale="2 1 1"
@@ -89,9 +93,24 @@
       material="shader:standard;roughness:0;metalness:.5;normalMap:norm.jpg;sphericalEnvMap:#testvid;normalTextureRepeat:4 4;displacementMap:#one;"></a-entity>
 
       <a-sky color="#ECECEC" src="#testvid"></a-sky>
-      <a-entity position="0 0 3.8">
-        <a-camera></a-camera>
+
+
+      <a-entity camera id="master_camera" >
+        <a-entity cursor="fuse: true; fuseTimeout: 500"
+                  position="0 0 -1"
+                  geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                  material="color: black; shader: flat">
+        </a-entity>
       </a-entity>
+
+
+<script>
+var secondCameraEl = document.querySelector('master_camera2');
+secondCameraEl.setAttribute('camera', 'active', true);
+
+</script>
+
+
     </a-scene>
   </body>
 </html>
