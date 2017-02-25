@@ -36,8 +36,8 @@
       <a-entity cursor
             raycaster="far: 30; objects: .intersectable"
             position="0 0 -1"
-            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
-            material="color: black; shader: flat">
+            geometry="primitive: ring; radiusInner: 0.005; radiusOuter: 0.007"
+            material="color: white; shader: flat">
       </a-entity>
   </a-entity>
 </a-entity>
@@ -81,7 +81,7 @@
         </a-entity>
         </a-entity>
         <a-text value="hey... whatcha doin?" wrap-count="200" position="-.15 .15 0">
-        <a-animation attribute="width" begin="fusing" onerror=""from="5" to="0.001" dur="1000" begin="0" repeat="1" direction="alternate" easing="linear"></a-animation></a-text>
+        <a-animation attribute="width" begin="click" onerror=""from="5" to="0.001" dur="1000" begin="0" repeat="1" direction="alternate" easing="linear"></a-animation></a-text>
      </a-entity>
 
 
@@ -213,6 +213,7 @@
              scaleAnimation.setAttribute('to','5 5 5');
              scaleAnimation.setAttribute('duration','250');
              scaleAnimation.setAttribute('easing','ease-out-quad');
+
              var onAnimationEnd = function () {
                scene.removeChild(document.querySelector('#'+clickRing.id))
              }
@@ -220,6 +221,7 @@
              clickRing.appendChild(opacityAnimation);
              clickRing.appendChild(scaleAnimation);
              scene.appendChild(clickRing);
+
            })
          })();
        </script>
