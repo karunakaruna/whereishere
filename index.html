@@ -31,7 +31,7 @@
 
 
 <<!--camera---------------------------->>
-<a-entity position="0 2 20" >
+<a-entity position="0 2 0" >
   <a-entity camera active="true" look-controls wasd-controls>
       <a-entity cursor
             raycaster="far: 30; objects: .intersectable"
@@ -46,7 +46,7 @@
 <!-- test cube -->
 
 <a-entity  id="scene1">
-<a-entity position="0 1 18">
+<a-entity position="0 0 1">
      <a-entity id="foregroundCube"
                mixin="cube"
                class="intersectable"
@@ -63,7 +63,7 @@
 
 <<!--eye thing---------------------------->>
 <a-entity look-at="[camera]" position="0 1.5 5">
-  <a-animation begin="0" attribute="position" from="0 2 15" to="0 2.15 15" repeat="indefinate" direction="alternate" easing="ease"></a-animation>
+  <a-animation begin="0" attribute="position" from="2 2 3" to="2 2.15 3" repeat="indefinate" direction="alternate" easing="ease"></a-animation>
       <a-entity
       geometry="primitive:sphere;radius:.1"
       material="shader:standard;roughness:0;metalness:.5;sphericalEnvMap:#testvid;"
@@ -144,7 +144,7 @@
          <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="100000" begin="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
        </a-entity>
 <!-- Plane -->
-      <a-entity geometry="primitive: plane;width:10;height:10;segmentsHeight:20;segmentsWidth:20;"
+      <a-entity geometry="primitive: plane;width:4;height:4;segmentsHeight:20;segmentsWidth:20;"
       rotation="-90 0 0"
       segments-width="20"
       material="shader:standard;roughness:0;metalness:.5;normalMap:norm.jpg;sphericalEnvMap:#testvid;normalTextureRepeat:4 4;displacementMap:#one;"></a-entity>
@@ -156,7 +156,9 @@
 
 <a-entity  id="scene2" visible="false">
 
-  <a-entity geometry="primitive:box; position:0 2 0" material="shader:flat;color:#FFFFFF"></a-entity>
+  <a-entity position="0 5 0"><a-entity geometry="primitive: sphere" class="intersectable"
+  class="clickable" material="shader:flat;color:#FFFFFF" onclick="nextScene2()" ></a-entity></a-entity>
+  <a-light type="point" intensity="1" position="0 5 0"></a-light>
   <a-sky color="#000000"></a-sky>
 </a-entity>
 
@@ -317,6 +319,11 @@ window.addEventListener('touchstart', function() {
   function nextScene() {
     document.getElementById('scene1').setAttribute('visible', 'false')
     document.getElementById('scene2').setAttribute('visible', 'true')
+  }
+
+  function nextScene2() {
+    document.getElementById('scene2').setAttribute('visible', 'false')
+    document.getElementById('scene1').setAttribute('visible', 'true')
   }
   </script>
 
