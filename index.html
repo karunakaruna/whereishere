@@ -4,6 +4,10 @@
       <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
       <script src="https://rawgit.com/ngokevin/aframe-randomizer-components/master/dist/aframe-randomizer-components.min.js"></script>
       <script src="/components/howler.js-master/dist/howler.js"></script>
+      <script src="/node_modules/aframe-href-component/dist/aframe-href-component.js">
+
+      </script>
+
       <title>Sound_Test</title>
       <script>
       var sound = new Howl({
@@ -15,12 +19,13 @@
     </head>
       <body>
         <a-scene>
-            <a-entity geometry="primitive:box" material="shader:flat;color:#000000"onclick="sound.play()" class="intersectable"
+            <a-entity geometry="primitive:box" material="shader:flat;color:#000000" onclick="sound.play()" class="intersectable"
              class="clickable">
              </a-entity>
           <a-sphere position="0 1.25 -1" radius="1.25" color="#EF2D5E"></a-sphere>
      <a-box position="-1 0.5 1" rotation="0 45 0" width="1" height="1" depth="1"  color="#4CC3D9"></a-box>
-     <a-cylinder position="1 0.75 1" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+     <a-cylinder position="1 0.75 1" radius="0.5" height="1.5" color="#FFC65D" href="index_ancientroom.html" class="intersectable"
+      class="clickable"></a-cylinder>
 <a-plane rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
 
                     <a-entity camera wasd-controls look-controls position="0 2 2">

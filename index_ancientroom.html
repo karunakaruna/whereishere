@@ -9,7 +9,20 @@
     <script src="https://rawgit.com/ngokevin/aframe-randomizer-components/master/dist/aframe-randomizer-components.min.js"></script>
     <script src="https://unpkg.com/aframe-entity-generator-component@^3.0.0/dist/aframe-entity-generator-component.min.js"></script>
     <script src="https://rawgit.com/ngokevin/aframe-look-at-component/master/dist/aframe-look-at-component.min.js"></script>
+    <script src="/node_modules/aframe-href-component/dist/aframe-href-component.js"></script>
+    <script src="/components/howler.js-master/dist/howler.js"></script>
     <script src="noise.js"></script>
+
+
+
+    <script>
+    var sound = new Howl({
+      src: ['#audio/321104__nsstudios__blip2.wav']
+    });
+
+
+    </script>
+
   </head>
   <body>
     <a-scene stats fog="type: linear; color: #000; far: 25">
@@ -161,7 +174,7 @@
 <a-entity  id="scene2" visible="false">
 
   <a-entity position="0 5 0"><a-entity geometry="primitive: sphere" class="intersectable"
-  class="clickable" material="shader:flat;color:#FFFFFF" onclick="nextScene2()" ></a-entity></a-entity>
+  class="clickable" material="shader:flat;color:#FFFFFF" href="index.html" ></a-entity></a-entity>
   <a-light type="point" intensity="1" position="0 5 0"></a-light>
   <a-sky color="#000000"></a-sky>
 </a-entity>
@@ -261,6 +274,7 @@
              cubeEl.setAttribute('cursor-listener');
              cubeEl.setAttribute('class', 'clickable');
              cubeEl.setAttribute('class', 'intersectable');
+             cubeEl.setAttribute('onclick', 'sound.play()');
              cubeEl.setAttribute('sound__1', 'on: click; src: #blip1;');
             cubeEl.setAttribute('sound__2', 'on: mouseenter; src: #blip2;')
             var rotAnimation = document.createElement('a-animation');
