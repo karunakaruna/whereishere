@@ -20,6 +20,16 @@
       src: ['audio/321104__nsstudios__blip2.wav']
     });
 
+    var alert = new Howl({
+      src: ['audio/alert.wav']
+    });
+
+    var mystery = new Howl({
+      src: ['audio/beautiful_mystery.mp3']
+    });
+
+    mystery.play();
+    mystery.volume(0.40);
 
     </script>
 
@@ -49,6 +59,7 @@
 <a-entity position="0 2 0" >
   <a-entity camera active="true" look-controls wasd-controls>
       <a-entity cursor
+            fuse= "true"
             raycaster="far: 30; objects: .intersectable"
             position="0 0 -1"
             geometry="primitive: ring; radiusInner: 0.005; radiusOuter: 0.007"
@@ -174,10 +185,22 @@
 <a-entity  id="scene2" visible="false">
 
   <a-entity position="0 5 0"><a-entity geometry="primitive: sphere" class="intersectable"
-  class="clickable" material="shader:flat;color:#FFFFFF" href="index.html" ></a-entity></a-entity>
+  class="clickable" material="shader:flat;color:#FFFFFF" href="index.html" onclick='alert.play()' ></a-entity></a-entity>
   <a-light type="point" intensity="1" position="0 5 0"></a-light>
   <a-sky color="#000000"></a-sky>
 </a-entity>
+
+
+<script>
+  document.querySelector('#cube').addEventListener('mouseenter', function () {
+    alert.play();
+  });
+
+  document.querySelector('#cube').addEventListener('mouseleave', function () {
+    this.setAttribute('material', 'color', 'green');
+  });
+</script>
+
 
       <script>
          (function () {
@@ -209,7 +232,8 @@
            // testing mouseenter and mouseleave
            var foregroundCube = document.querySelector('#foregroundCube');
            foregroundCube.addEventListener('mouseenter', function (evt) {
-             foregroundCube.setAttribute('mixin','cube cube-hovered')
+             foregroundCube.setAttribute('mixin','cube cube-hovered');
+               alert.play();
            })
            foregroundCube.addEventListener('mouseleave', function (evt) {
              foregroundCube.setAttribute('mixin','green cube')

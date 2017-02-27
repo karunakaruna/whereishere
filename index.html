@@ -14,6 +14,10 @@
         src: ['bootycruise.mp3']
       });
 
+      var alert = new Howl({
+        src: ['audio/alert.wav']
+      });
+
 
       </script>
     </head>
@@ -24,8 +28,10 @@
              </a-entity>
           <a-sphere position="0 1.25 -1" radius="1.25" color="#EF2D5E"></a-sphere>
      <a-box position="-1 0.5 1" rotation="0 45 0" width="1" height="1" depth="1"  color="#4CC3D9"></a-box>
-     <a-cylinder position="1 0.75 1" radius="0.5" height="1.5" color="#FFC65D" href="index_ancientroom.html" class="intersectable"
-      class="clickable"></a-cylinder>
+     <a-cylinder position="1 0.75 1" radius="0.5" height="1.5" color="#FFC65D" href="index_ancientroom.html" target="#boxout" class="intersectable"
+      class="clickable" onclick="alert.play()">
+         <a-animation id="boxout" attribute="rotation" from="0 0 0" to="50 -10 50" begin="href" dur="1800" easing="ease-in-back"></a-animation>
+       </a-cylinder>
 <a-plane rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
 
                     <a-entity camera wasd-controls look-controls position="0 2 2">
@@ -37,6 +43,9 @@
                       </a-entity>
                     </a-entity>
         </a-scene>
+
+
+
 
       </body>
   </html>
