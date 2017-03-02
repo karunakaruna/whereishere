@@ -34,6 +34,17 @@
 
       <!-- Player -->
       <a-entity camera
+                 universal-controls="movementControls: checkpoint"
+                 checkpoint-controls="mode: animate"
+                 position="0 1.764 0">
+         <a-entity cursor="maxDistance: 30"
+                   position="0 0 -1"
+                   geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03;"
+                   material="color: #F00; shader: flat;">
+         </a-entity>
+       </a-entity>
+<!--
+      <a-entity camera
                 look-controls
                 universal-controls="movementControls: checkpoint"
                 checkpoint-controls="mode: animate"
@@ -49,6 +60,7 @@
                     <a-animation begin="fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
           </a-entity>
       </a-entity>
+    -->
 
 
 
