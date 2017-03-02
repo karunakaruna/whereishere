@@ -7,6 +7,7 @@
     <script src="../aframe-extras.js"></script>
     <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
     <script src="http://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.0/dist/aframe-extras.min.js"></script>
+    <script src="http://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.0/dist/aframe-extras.controls.min.js"></script>
   </head>
   <body>
     <a-scene>
@@ -17,7 +18,8 @@
 
       <!-- Player -->
       <a-entity camera
-                universal-controls="movementControls: checkpoint;look-controls"
+                look-controls
+                universal-controls="movementControls: checkpoint"
                 checkpoint-controls="mode: animate"
                 position="0 1.764 0">
         <a-entity cursor="maxDistance: 30;fuse:true;fuseTimeout:100"
