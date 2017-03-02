@@ -7,36 +7,79 @@
         <script src="https://rawgit.com/gasolin/aframe-href-component/master/dist/aframe-href-component.min.js"></script>
         <script src="http://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.0/dist/aframe-extras.min.js"></script>
         <script src="https://unpkg.com/aframe-particle-system-component@1.0.5/dist/aframe-particle-system-component.min.js"></script>
-
+        <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+        <script src="https://raw.githubusercontent.com/ngokevin/kframe/master/components/template/dist/aframe-template-component.min.js"></script>
+        <script src="https://raw.githubusercontent.com/ngokevin/kframe/b78fb6a17d39556fcf61d00f5afb8b835651e473/components/audioanalyser/examples/components/audioanalyser-volume-scale.js"
+        <script src="/node_modules/audioanalyser-volume-scale.js"></script>
+        <script>
+        require('aframe');
+        require('aframe-audioanalyser-component');
         </script>
+
+
 
         <title>Sound_Test</title>
         <script>
         var sound = new Howl({
-          src: ['bootycruise.mp3']
+          src: ['audio/bm.mp3']
         });
 
         var alert = new Howl({
           src: ['audio/alert.wav']
         });
 
+        var bgsound = new Howl({
+          src: ['audio/alert.wav']
+        });
+
+
+        sound.play();
 
         </script>
+
+
+
       </head>
         <body>
-          <a-scene>
-            <a-assets>
+          <a-scene stats>
+                      <a-assets>
+              <a-asset-item id="terrain-obj" src="terrain.obj"></a-asset-item>
+              <a-asset-item id="terrain-mtl" src="terrain.mtl"></a-asset-item>
+              <audio id="river" src="audio/bm.mp3" preload="auto"></audio>
+              <a-asset-item id="sphere-obj" src="mother_shell.obj"></a-asset-item>
+              <a-asset-item id="sphere-mtl" src="mother_shell.mtl"></a-asset-item>
               <a-mixin id="checkpoint"></a-mixin>
               <a-mixin id="checkpoint-hovered" color="#6CEEB5"></a-mixin>
+
+              <a-mixin id="mtl_ancient" material="shader:standard; roughness:0; metalness:.5; sphericalEnvMap:#testvid"></a-mixin>
+              <a-mixin id="mtl_ancient2" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:norm.jpg;sphericalEnvMap:#testvid;normalTextureRepeat:.5 .5;"></a-mixin>
+
+
+
             </a-assets>
+
+<audio id="song" autoplay loop src="audio/bm.mp3"></audio>
+
+            <a-entity
+              audioanalyser="src: #song; smoothingTimeConstant: 0.9"
+              audioanalyser-levels-scale="max: 50; multiplier: 0.06"
+              entity-generator="mixin: bar; num: 256"
+              layout="type: circle; radius: 10"
+              rotation="0 180 0"
+            ></a-entity>
+
+
+
 
 
 
       <!-- Player -->
       <a-entity camera
                 look-controls
+                wasd-controls
+                mouse-cursor
                 universal-controls="movementControls: checkpoint"
-                checkpoint-controls="mode: teleport"
+                checkpoint-controls="mode: animate"
                 position="0 1.764 0">
           <a-entity cursor="maxDistance: 30"
                     position="0 0 -1"
@@ -51,28 +94,38 @@
 
 
 
+      <a-entity obj-model="obj: #sphere-obj; mtl: #sphere-mtl" position="0 5 0"></a-entity>
+        <a-entity obj-model="obj: #terrain-obj; mtl: #terrain-mtl"></a-entity>
+<a-entity obj-model="obj: #sphere-obj" material="color:#000000" position="1 1 5"  sound="on: click; src: #river;"></a-entity>
+<a-entity obj-model="obj: #sphere-obj" position="10 1 1"  sound="on: click; src: #river;" ></a-entity>
+<a-entity obj-model="obj: #sphere-obj" position="1 1 15"  sound="on: click; src: #river;" ></a-entity>
+
+<a-box audioanalyser="src: #river; smoothingTimeConstant: 0.0" audioanalyser-volume-scale="max: 50; multiplier: 2"></a-box>
+
+
       <a-entity position="1 0 1">
-           <a-cylinder checkpoint radius="1" height="0.1" position="0 0 -5.2" color="#FFBB82"></a-cylinder>
-           <a-cylinder class="clickable" class="intersectable" checkpoint radius="1" height="0.1" position="3 0 0" color="#39BB82"></a-cylinder>
+           <a-cylinder checkpoint radius="1" height="0.1" position="0 0 -5.2" color="#FFBB82" onclick=""></a-cylinder>
+           <a-cylinder class="clickable" class="intersectable" checkpoint radius="1" height="500" position="150 0 -95" color="#39BB82"></a-cylinder>
            <a-cylinder class="clickable" class="intersectable" checkpoint radius="1" height="0.1" position="-3 0 0" color="#39BB82"></a-cylinder>
          </a-entity>
 
 
-
+<!--
               <a-entity geometry="primitive:box" material="shader:flat;color:#000000" onclick="sound.play()" class="intersectable"
                class="clickable">
                </a-entity>
 
-       <!-- <a-entity particle-system="preset: dust; particleCount: 100" position="0 2.5 -15" color="#000000"></a-entity>-->
-
-
-            <a-sphere position="0 1.25 -1" radius="1.25" color="#EF2D5E" id="link"></a-sphere>
+                  <a-sphere position="0 1.25 -1" radius="1.25" color="#EF2D5E" id="link"></a-sphere>
        <a-box position="-1 0.5 1" rotation="0 45 0" width="1" height="1" depth="1"  color="#4C00D9"></a-box>
        <a-cylinder position="1 0.75 1" radius="0.5" height="1.5" color="#FFC65D" href="index_ancientroom.html" target="#boxout" class="intersectable"
         class="clickable" onclick="alert.play()">
            <a-animation id="boxout" attribute="rotation" from="0 0 0" to="50 -10 50" begin="href" dur="1800" easing="ease-in-back"></a-animation>
          </a-cylinder>
-  <a-plane rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+  <a-plane rotation="-90 0 0" position="0 .1 0" width="4" height="4" color="#7BC8A4"></a-plane>
+
+-->
+
+
 <!--
                       <a-entity camera wasd-controls look-controls position="0 2 2">
                         <a-entity cursor
@@ -84,15 +137,20 @@
                       </a-entity>
 
                     -->
+
+
+                    <!-- <a-entity particle-system="preset: dust; particleCount: 100" position="0 2.5 -15" color="#000000"></a-entity>-->
+                    <a-sky color="#000000"></a-sky>
           </a-scene>
 
 <script>
-
+var scene = document.querySelector('a-scene');
 var el= document.querySelector('#link');
 
 el.addEventListener('click', function () {
   window.location.href = 'https://google.com';
 });
+
 
 AFRAME.registerComponent('link', {
   schema: {default: ''},
@@ -112,6 +170,7 @@ AFRAME.registerComponent('link', {
 
 
 </script>
+
 
 
         </body>
