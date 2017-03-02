@@ -33,6 +33,7 @@
 
       <!-- Player -->
       <a-entity camera
+                look-controls
                 universal-controls="movementControls: checkpoint"
                 checkpoint-controls="mode: animate"
                 position="0 1.764 0">
@@ -75,7 +76,25 @@
                       </a-entity>
           </a-scene>
 
+<script>
 
+el.addEventListener('click', function () {
+  window.location.href = 'https://google.com';
+});
+
+AFRAME.registerComponent('link', {
+  schema: {default: ''},
+
+  init: function () {
+    var url = this.data;
+    this.el.addEventListener('click', function () {
+      window.location.href = url;
+    });
+  }
+});
+
+
+</script>
 
 
         </body>
