@@ -41,10 +41,11 @@
                 position="0 1.764 0"
                 active="true">
           <a-entity cursor="maxDistance: 30;fuse:true"
+                    raycaster="far: 30; objects: .intersectable"
                     fuse-timeout="100"
                     position="0 0 -1"
                     geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03;"
-                    material="color: #F00; shader: flat;">
+                    material="color: #F0F; shader: flat;">
                     <a-animation begin="fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
           </a-entity>
       </a-entity>
@@ -53,9 +54,9 @@
 
 
       <a-entity position="1 0 1">
-           <a-cylinder class="clickable" checkpoint radius="1" height="0.1" position="0 0 -5.2" color="#39BB82"></a-cylinder>
-           <a-cylinder class="clickable" checkpoint radius="1" height="0.1" position="3 0 0" color="#39BB82"></a-cylinder>
-           <a-cylinder class="clickable" checkpoint radius="1" height="0.1" position="-3 0 0" color="#39BB82"></a-cylinder>
+           <a-cylinder class="clickable" class="intersectable" checkpoint radius="1" height="0.1" position="0 0 -5.2" color="#39BB82"></a-cylinder>
+           <a-cylinder class="clickable" class="intersectable" checkpoint radius="1" height="0.1" position="3 0 0" color="#39BB82"></a-cylinder>
+           <a-cylinder class="clickable" class="intersectable" checkpoint radius="1" height="0.1" position="-3 0 0" color="#39BB82"></a-cylinder>
          </a-entity>
 
 
