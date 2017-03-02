@@ -10,11 +10,9 @@
         <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
         <script src="https://raw.githubusercontent.com/ngokevin/kframe/master/components/template/dist/aframe-template-component.min.js"></script>
         <script src="https://raw.githubusercontent.com/ngokevin/kframe/b78fb6a17d39556fcf61d00f5afb8b835651e473/components/audioanalyser/examples/components/audioanalyser-volume-scale.js"
-        <script src="/node_modules/audioanalyser-volume-scale.js"></script>
-        <script>
-        require('aframe');
-        require('aframe-audioanalyser-component');
-        </script>
+        <script src="https://raw.githubusercontent.com/ngokevin/kframe/master/components/audioanalyser/examples/components/audioanalyser-levels-scale.js"></script>
+
+
 
 
 
@@ -50,25 +48,14 @@
               <a-asset-item id="sphere-mtl" src="mother_shell.mtl"></a-asset-item>
               <a-mixin id="checkpoint"></a-mixin>
               <a-mixin id="checkpoint-hovered" color="#6CEEB5"></a-mixin>
-
+<audio id="song" autoplay loop src="audio/bm.mp3"></audio>
+<video id="testvid" src="test.mov" autoplay loop="true">
               <a-mixin id="mtl_ancient" material="shader:standard; roughness:0; metalness:.5; sphericalEnvMap:#testvid"></a-mixin>
               <a-mixin id="mtl_ancient2" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:norm.jpg;sphericalEnvMap:#testvid;normalTextureRepeat:.5 .5;"></a-mixin>
 
 
 
             </a-assets>
-
-<audio id="song" autoplay loop src="audio/bm.mp3"></audio>
-
-            <a-entity
-              audioanalyser="src: #song; smoothingTimeConstant: 0.9"
-              audioanalyser-levels-scale="max: 50; multiplier: 0.06"
-              entity-generator="mixin: bar; num: 256"
-              layout="type: circle; radius: 10"
-              rotation="0 180 0"
-            ></a-entity>
-
-
 
 
 
@@ -92,20 +79,30 @@
       </a-entity>
 
 
+      <a-entity position="" rotation="" scale="1000 1000 1000" visible="">
+        <a-light type="ambient" position="0 0 0" color="#FF0000" intensity=".01" rotation="" scale="" visible="" light="">
+          <a-animation attribute="intensity" begin="0" dur="1000" from="0" to=".1" repeat="1" easing="linear" direction="alternate"></a-animation>
+        </a-light>
 
+        <a-light type="point" position="0 0 -5" color="#77427F" intensity=".3" rotation="" scale="" visible="" light=""></a-light>
+        <a-light type="point" position="0 0 5" color="#FF5500" intensity=".3" rotation="" scale="" visible="" light=""></a-light>
+        <a-light type="point" position="5 0 0" color="#FF66FF" intensity=".2" rotation="0 169.5462119999768 0" scale="1 1 1" visible="true" light="type:point;color:#6cd0ff;intensity:.4">
+          <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="1000" begin="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
+        </a-light>
+
+        <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="60000" begin="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
+      </a-entity>
 
       <a-entity obj-model="obj: #sphere-obj; mtl: #sphere-mtl" position="0 5 0"></a-entity>
-        <a-entity obj-model="obj: #terrain-obj; mtl: #terrain-mtl"></a-entity>
+        <a-entity obj-model="obj: #terrain-obj;" material="normalMap:norm.jpg;normalTextureRepeat:80 80;src:cobalt_2048.jpg;sphericalEnvMap:#testvid;metalness:.7"></a-entity>
 <a-entity obj-model="obj: #sphere-obj" material="color:#000000" position="1 1 5"  sound="on: click; src: #river;"></a-entity>
 <a-entity obj-model="obj: #sphere-obj" position="10 1 1"  sound="on: click; src: #river;" ></a-entity>
 <a-entity obj-model="obj: #sphere-obj" position="1 1 15"  sound="on: click; src: #river;" ></a-entity>
 
-<a-box audioanalyser="src: #river; smoothingTimeConstant: 0.0" audioanalyser-volume-scale="max: 50; multiplier: 2"></a-box>
-
 
       <a-entity position="1 0 1">
            <a-cylinder checkpoint radius="1" height="0.1" position="0 0 -5.2" color="#FFBB82" onclick=""></a-cylinder>
-           <a-cylinder class="clickable" class="intersectable" checkpoint radius="1" height="500" position="150 0 -95" color="#39BB82"></a-cylinder>
+           <a-cylinder class="clickable" class="intersectable" checkpoint radius="1" height="500" position="150 0 -95" color="#39BB82" light="type:point;color:#ffffff;intensity:.2"></a-cylinder>
            <a-cylinder class="clickable" class="intersectable" checkpoint radius="1" height="0.1" position="-3 0 0" color="#39BB82"></a-cylinder>
          </a-entity>
 
