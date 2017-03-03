@@ -3,15 +3,12 @@
       <head>
         <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
         <script src="https://rawgit.com/ngokevin/aframe-randomizer-components/master/dist/aframe-randomizer-components.min.js"></script>
-        <script src="https://raw.githubusercontent.com/goldfire/howler.js/master/dist/howler.js"></script>
-        <script src="https://rawgit.com/gasolin/aframe-href-component/master/dist/aframe-href-component.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.2/howler.js"></script>
         <script src="http://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.0/dist/aframe-extras.min.js"></script>
         <script src="https://unpkg.com/aframe-particle-system-component@1.0.5/dist/aframe-particle-system-component.min.js"></script>
         <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
-        <script src="https://raw.githubusercontent.com/ngokevin/kframe/master/components/template/dist/aframe-template-component.min.js"></script>
-        <script src="https://raw.githubusercontent.com/ngokevin/kframe/b78fb6a17d39556fcf61d00f5afb8b835651e473/components/audioanalyser/examples/components/audioanalyser-volume-scale.js"
-        <script src="https://raw.githubusercontent.com/ngokevin/kframe/master/components/audioanalyser/examples/components/audioanalyser-levels-scale.js"></script>
-
+        <script src="node_modules/aframe-audioanalyser-component/dist/aframe-audioanalyser-component.js"></script>
+        <script src="node_modules/aframe-audioanalyser-component/examples/components/audioanalyser-volume-scale.js"></script>
 
 
 
@@ -31,7 +28,7 @@
         });
 
 
-        sound.play();
+        alert.play();
 
         </script>
 
@@ -43,13 +40,12 @@
                       <a-assets>
               <a-asset-item id="terrain-obj" src="terrain.obj"></a-asset-item>
               <a-asset-item id="terrain-mtl" src="terrain.mtl"></a-asset-item>
-              <audio id="river" src="audio/bm.mp3" preload="auto"></audio>
+              <audio id="river" src="audio/bm.mp3" preload="auto" ></audio>
               <a-asset-item id="sphere-obj" src="mother_shell.obj"></a-asset-item>
               <a-asset-item id="sphere-mtl" src="mother_shell.mtl"></a-asset-item>
               <a-mixin id="checkpoint"></a-mixin>
               <a-mixin id="checkpoint-hovered" color="#6CEEB5"></a-mixin>
-<audio id="song" autoplay loop src="audio/bm.mp3"></audio>
-<video id="testvid" src="test.mov" autoplay loop="true">
+              <video id="testvid" src="test.mov" autoplay loop="true">
               <a-mixin id="mtl_ancient" material="shader:standard; roughness:0; metalness:.5; sphericalEnvMap:#testvid"></a-mixin>
               <a-mixin id="mtl_ancient2" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:norm.jpg;sphericalEnvMap:#testvid;normalTextureRepeat:.5 .5;"></a-mixin>
 
@@ -73,31 +69,43 @@
                     geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03;"
                     material="color: #0FF; shader: flat;">
 
-                    <a-animation begin="click" easing="ease-in" attribute="scale"  fill="backwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
-                    <a-animation begin="fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
+                    <a-animation delay="click" easing="ease-in" attribute="scale"  fill="backwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
+                    <a-animation delay="fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
           </a-entity>
       </a-entity>
 
 
       <a-entity position="" rotation="" scale="1000 1000 1000" visible="">
         <a-light type="ambient" position="0 0 0" color="#FF0000" intensity=".01" rotation="" scale="" visible="" light="">
-          <a-animation attribute="intensity" begin="0" dur="1000" from="0" to=".1" repeat="1" easing="linear" direction="alternate"></a-animation>
+          <a-animation attribute="intensity" delay="0" dur="1000" from="0" to=".1" repeat="1" easing="linear" direction="alternate"></a-animation>
         </a-light>
 
         <a-light type="point" position="0 0 -5" color="#77427F" intensity=".3" rotation="" scale="" visible="" light=""></a-light>
         <a-light type="point" position="0 0 5" color="#FF5500" intensity=".3" rotation="" scale="" visible="" light=""></a-light>
         <a-light type="point" position="5 0 0" color="#FF66FF" intensity=".2" rotation="0 169.5462119999768 0" scale="1 1 1" visible="true" light="type:point;color:#6cd0ff;intensity:.4">
-          <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="1000" begin="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
+          <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="1000" delay="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
         </a-light>
 
-        <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="60000" begin="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
+        <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="60000" delay="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
       </a-entity>
+
+
+      <a-sphere id="mouth"
+        color="#FFF"
+        scale="1 1 1"
+        audioanalyser="src: #raver"
+        audioanalyser-volume-scale="multiplier: 1"
+        position="0 5 0"
+        side="double"
+        shader="flat"
+      ></a-sphere>
+
 
       <a-entity obj-model="obj: #sphere-obj; mtl: #sphere-mtl" position="0 5 0"></a-entity>
         <a-entity obj-model="obj: #terrain-obj;" material="normalMap:norm.jpg;normalTextureRepeat:80 80;src:cobalt_2048.jpg;sphericalEnvMap:#testvid;metalness:.7"></a-entity>
-<a-entity obj-model="obj: #sphere-obj" material="color:#000000" position="1 1 5"  sound="on: click; src: #river;"></a-entity>
-<a-entity obj-model="obj: #sphere-obj" position="10 1 1"  sound="on: click; src: #river;" ></a-entity>
-<a-entity obj-model="obj: #sphere-obj" position="1 1 15"  sound="on: click; src: #river;" ></a-entity>
+<a-entity  obj-model="obj: #sphere-obj" material="color:#000000" position="1 1 5"  sound="on: click; src: #river;" audioanalyser="src: #raver" audioanalyser-volume-scale="multiplier: 1"></a-entity>
+<a-entity  obj-model="obj: #sphere-obj" position="10 1 1"  sound="on: click; src: #river;" ></a-entity>
+<a-entity  obj-model="obj: #sphere-obj" position="1 1 15"  sound="on: click; src: #river;" ></a-entity>
 
 
       <a-entity position="1 0 1">
@@ -107,20 +115,18 @@
          </a-entity>
 
 
-<!--
-              <a-entity geometry="primitive:box" material="shader:flat;color:#000000" onclick="sound.play()" class="intersectable"
-               class="clickable">
-               </a-entity>
+
+
 
                   <a-sphere position="0 1.25 -1" radius="1.25" color="#EF2D5E" id="link"></a-sphere>
-       <a-box position="-1 0.5 1" rotation="0 45 0" width="1" height="1" depth="1"  color="#4C00D9"></a-box>
+       <a-box position="-1 0.5 1" rotation="0 45 0" width="1" height="1" depth="1"  color="#4C00D9" id="audioREACT"></a-box>
        <a-cylinder position="1 0.75 1" radius="0.5" height="1.5" color="#FFC65D" href="index_ancientroom.html" target="#boxout" class="intersectable"
         class="clickable" onclick="alert.play()">
            <a-animation id="boxout" attribute="rotation" from="0 0 0" to="50 -10 50" begin="href" dur="1800" easing="ease-in-back"></a-animation>
          </a-cylinder>
   <a-plane rotation="-90 0 0" position="0 .1 0" width="4" height="4" color="#7BC8A4"></a-plane>
 
--->
+
 
 
 <!--
@@ -136,7 +142,6 @@
                     -->
 
 
-                    <!-- <a-entity particle-system="preset: dust; particleCount: 100" position="0 2.5 -15" color="#000000"></a-entity>-->
                     <a-sky color="#000000"></a-sky>
           </a-scene>
 
@@ -148,17 +153,15 @@ el.addEventListener('click', function () {
   window.location.href = 'https://google.com';
 });
 
+var el= document.querySelector('#audioREACT');
 
-AFRAME.registerComponent('link', {
-  schema: {default: ''},
-
-  init: function () {
-    var url = this.data;
-    this.el.addEventListener('click', function () {
-      window.location.href = url;
-    });
-  }
+el.addEventListener('click', function () {
+  alert.play();
+  el.setAttribute('sound','src: #river');
+  el.setAttribute('audioanalyser','src: #river');
+  el.setAttribute('audioanalyser-volume-scale','multiplier:1');
 });
+
 
 
 
