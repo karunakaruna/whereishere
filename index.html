@@ -40,7 +40,7 @@
                       <a-assets>
               <a-asset-item id="terrain-obj" src="terrain.obj"></a-asset-item>
               <a-asset-item id="terrain-mtl" src="terrain.mtl"></a-asset-item>
-              <audio id="river" src="audio/bm.mp3" preload="auto" ></audio>
+              <audio id="river" src="audio/bm.mp3" preload="auto" autoplay></audio>
               <a-asset-item id="sphere-obj" src="mother_shell.obj"></a-asset-item>
               <a-asset-item id="sphere-mtl" src="mother_shell.mtl"></a-asset-item>
               <a-mixin id="checkpoint"></a-mixin>
@@ -119,13 +119,26 @@
 
 
                   <a-sphere position="0 1.25 -1" radius="1.25" color="#EF2D5E" id="link"></a-sphere>
-       <a-box position="-1 0.5 1" rotation="0 45 0" width="1" height="1" depth="1"  color="#4C00D9" id="audioREACT"></a-box>
+       <a-box position="-1 0.5 1" rotation="0 45 0" width="1" height="1" depth="1"  color="#4C00D9" audioanalyser="src: #nsound" audioanalyser-volume-scale="multiplier: 1" id="audioREACT"></a-box>
        <a-cylinder position="1 0.75 1" radius="0.5" height="1.5" color="#FFC65D" href="index_ancientroom.html" target="#boxout" class="intersectable"
         class="clickable" onclick="alert.play()">
            <a-animation id="boxout" attribute="rotation" from="0 0 0" to="50 -10 50" begin="href" dur="1800" easing="ease-in-back"></a-animation>
          </a-cylinder>
   <a-plane rotation="-90 0 0" position="0 .1 0" width="4" height="4" color="#7BC8A4"></a-plane>
 
+
+
+
+
+
+
+  <!-- Audio analyser. -->
+       <a-entity id="analyser"
+         audioanalyser="src: #river"
+         audioanalyser-waveform="radius: 0.5"
+         rotation="90 0 0"
+         position="0 30 0"
+       ></a-entity>
 
 
 
@@ -156,9 +169,13 @@ el.addEventListener('click', function () {
 var el= document.querySelector('#audioREACT');
 
 el.addEventListener('click', function () {
+  var scene = document.querySelector('a-scene');
+  var newSound = document.createElement('audio');
+  newSound.id = 'nsound';
+  newSound.setAttribute('src','audio/bm.mp3');
+  newSound.setAttribute('autoplay','true');
   alert.play();
-  el.setAttribute('sound','src: #river');
-  el.setAttribute('audioanalyser','src: #river');
+  el.setAttribute('audioanalyser','src: #nsound');
   el.setAttribute('audioanalyser-volume-scale','multiplier:1');
 });
 
