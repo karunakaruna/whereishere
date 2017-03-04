@@ -4,6 +4,7 @@
         <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
         <script src="https://rawgit.com/ngokevin/aframe-randomizer-components/master/dist/aframe-randomizer-components.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.2/howler.js"></script>
+        <script src="noise.js"></script>
         <script src="http://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.0/dist/aframe-extras.min.js"></script>
         <script src="https://unpkg.com/aframe-particle-system-component@1.0.5/dist/aframe-particle-system-component.min.js"></script>
         <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
@@ -46,6 +47,9 @@
               <a-mixin id="checkpoint"></a-mixin>
               <a-mixin id="checkpoint-hovered" color="#6CEEB5"></a-mixin>
               <video id="testvid" src="test.mov" autoplay loop="true">
+              <video id="disp" src="displacement.mov" autoplay loop="true">
+              <video id="geometric" src="geometric.mp4" autoplay loop="true">
+              <video id="color" src="color_sm.mov" autoplay loop="true">
               <a-mixin id="mtl_ancient" material="shader:standard; roughness:0; metalness:.5; sphericalEnvMap:#testvid"></a-mixin>
               <a-mixin id="mtl_ancient2" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:norm.jpg;sphericalEnvMap:#testvid;normalTextureRepeat:.5 .5;"></a-mixin>
 
@@ -102,7 +106,7 @@
 
 
       <a-entity obj-model="obj: #sphere-obj; mtl: #sphere-mtl" position="0 5 0"></a-entity>
-        <a-entity obj-model="obj: #terrain-obj;" material="normalMap:norm.jpg;normalTextureRepeat:80 80;src:cobalt_2048.jpg;sphericalEnvMap:#testvid;metalness:.7"></a-entity>
+        <a-entity obj-model="obj: #terrain-obj;" material="normalMap:norm.jpg;normalTextureRepeat:80 80;src:cobalt_2048.jpg;sphericalEnvMap:#color;metalness:.7;displacementMap:#disp;displacementScale:3"></a-entity>
 <a-entity  obj-model="obj: #sphere-obj" material="color:#000000" position="1 1 5"  sound="on: click; src: #river;" audioanalyser="src: #raver" audioanalyser-volume-scale="multiplier: 1"></a-entity>
 <a-entity  obj-model="obj: #sphere-obj" position="10 1 1"  sound="on: click; src: #river;" ></a-entity>
 <a-entity  obj-model="obj: #sphere-obj" position="1 1 15"  sound="on: click; src: #river;" ></a-entity>
@@ -118,13 +122,13 @@
 
 
 
-                  <a-sphere position="0 1.25 -1" radius="1.25" color="#EF2D5E" id="link"></a-sphere>
+                  <a-sphere position="0 1.25 -1" radius="1.25" color="#EF2D5E" id="link" material="normalMap:#geometric;;normalTextureRepeat: 10 10;sphericalEnvMap:#color;metalness:.7;displacementMap:#disp"></a-sphere>
        <a-box position="-1 0.5 1" rotation="0 45 0" width="1" height="1" depth="1"  color="#4C00D9" audioanalyser="src: #nsound" audioanalyser-volume-scale="multiplier: 1" id="audioREACT"></a-box>
-       <a-cylinder position="1 0.75 1" radius="0.5" height="1.5" color="#FFC65D" href="index_ancientroom.html" target="#boxout" class="intersectable"
+       <a-cylinder position="1 0.75 1" radius="0.5" height="1.5" color="#FFC65D" href="index_ancientroom.html" target="#boxout" class="intersectable" material="shader:noise"
         class="clickable" onclick="alert.play()">
            <a-animation id="boxout" attribute="rotation" from="0 0 0" to="50 -10 50" begin="href" dur="1800" easing="ease-in-back"></a-animation>
          </a-cylinder>
-  <a-plane rotation="-90 0 0" position="0 .1 0" width="4" height="4" color="#7BC8A4"></a-plane>
+  <a-plane rotation="-90 0 0" position="0 -4 0" width="4" height="4" color="#7BC8A4" material="shader:standard;sphericalEnvMap:#color;metalness:.7"></a-plane>
 
 
 
