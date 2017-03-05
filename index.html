@@ -5,7 +5,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.2/howler.js"></script>
         <script src="https://rawgit.com/ngokevin/aframe-randomizer-components/master/dist/aframe-randomizer-components.min.js"></script>
         <script src="noise.js"></script>
-        <script src="build.js"></script>
+        <script src="bundle.js"></script>
         <script src="http://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.1/dist/aframe-extras.min.js"></script>
         <script src="https://rawgit.com/ngokevin/aframe-look-at-component/master/dist/aframe-look-at-component.min.js"></script>
 
@@ -43,6 +43,7 @@
                 });
 
                 alert.play();
+                sound.play();
         </script>
 </head>
 
@@ -118,7 +119,7 @@
               raycaster="far: 30; objects: .waypoints"
               position="0 0 -1"
               geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.014;"
-              material="color: #0FF; shader: flat;">
+              material="color: #FFF; shader: flat;">
 
               <a-animation begin="click" easing="ease-in" attribute="scale"  fill="forwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
               <a-animation begin="fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
