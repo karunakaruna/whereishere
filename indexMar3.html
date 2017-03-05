@@ -1,0 +1,109 @@
+  <!DOCTYPE html>
+    <html>
+      <head>
+        <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+        <script src="https://rawgit.com/ngokevin/aframe-randomizer-components/master/dist/aframe-randomizer-components.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.2/howler.js"></script>
+        <script src="noise.js"></script>
+        <script src="http://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.0/dist/aframe-extras.min.js"></script>
+        <script src="https://unpkg.com/aframe-particle-system-component@1.0.5/dist/aframe-particle-system-component.min.js"></script>
+        <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+        <script src="node_modules/aframe-audioanalyser-component/dist/aframe-audioanalyser-component.js"></script>
+        <script src="node_modules/aframe-audioanalyser-component/examples/components/audioanalyser-volume-scale.js"></script>
+
+
+
+
+        <title>Sound_Test</title>
+        <script>
+        var sound = new Howl({
+          src: ['audio/bm.mp3']
+        });
+
+        var alert = new Howl({
+          src: ['audio/alert.wav']
+        });
+
+        var bgsound = new Howl({
+          src: ['audio/alert.wav']
+        });
+
+
+        alert.play();
+
+        </script>
+
+
+
+      </head>
+        <body>
+          <a-scene>
+            <a-assets>
+              <a-mixin id="checkpoint"></a-mixin>
+              <a-mixin id="checkpoint-hovered" color="#6CEEB5"></a-mixin>
+            </a-assets>
+      <a-grid>
+            <!-- Player -->
+            <a-entity camera
+
+                      universal-controls="movementControls: checkpoint"
+                      checkpoint-controls="mode: animate"
+                      position="0 1.764 0">
+              <a-entity cursor="maxDistance: 30;fuse:true;fuseTimeout:100"
+                        position="0 0 -1"
+                        geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03;"
+                        material="color: #CCC; shader: flat;">
+                      <a-animation begin="click" easing="ease-in" attribute="scale"  fill="backwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
+                      <a-animation begin="fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
+              </a-entity>
+            </a-entity>
+
+            <!-- Terrain -->
+            <a-grid></a-grid>
+
+            <!-- Checkpoints -->
+            <a-entity position="1 0 1">
+              <a-cylinder checkpoint radius="1" height="0.1" position="0 0 -5.2" color="#39BB82"></a-cylinder>
+              <a-cylinder checkpoint radius="1" height="0.1" position="3 0 0" color="#39BB82"></a-cylinder>
+              <a-cylinder checkpoint radius="1" height="0.1" position="-3 0 0" color="#39BB82"></a-cylinder>
+            </a-entity>
+
+            <!-- Lighting -->
+            <a-light type="ambient" color="#fff"></a-light>
+          </a-scene>
+
+
+<script>
+var scene = document.querySelector('a-scene');
+var el= document.querySelector('#link');
+
+el.addEventListener('click', function () {
+  window.location.href = 'https://google.com';
+});
+
+var el= document.querySelector('#audioREACT');
+
+el.addEventListener('click', function () {
+  var scene = document.querySelector('a-scene');
+  var newSound = document.createElement('audio');
+  newSound.id = 'nsound';
+  newSound.setAttribute('src','audio/bm.mp3');
+  newSound.setAttribute('autoplay','true');
+  alert.play();
+  el.setAttribute('audioanalyser','src: #nsound');
+  el.setAttribute('audioanalyser-volume-scale','multiplier:1');
+});
+
+
+
+
+
+
+
+
+</script>
+
+
+
+        </body>
+    </html>
