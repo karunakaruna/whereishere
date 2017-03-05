@@ -90,7 +90,7 @@
                                   <!-- Video Textures -->
                                   <video id="testvid" src="test.mov" autoplay loop="true">
                                   <video id="disp" src="displacement.mov" autoplay loop="true">
-                                  <video id="geometric" src="geometric.mp4" autoplay loop="true">
+                                  <video id="geometric" src="geometric.mov" autoplay loop="true">
                                   <video id="color" src="color_sm.mov" autoplay loop="true">
 
                                   <!-- materials -->
@@ -262,7 +262,28 @@
 <a-sky color="#000000"></a-sky>
 
 
+<script>
+	// create empty buffer
+  var isUnlocked = false;
+  function unlock() {
 
+  	if(isIOS || this.unlocked)
+  		return;
+
+  	// create empty buffer and play it
+  	var buffer = myContext.createBuffer(1, 1, 22050);
+  	var source = myContext.createBufferSource();
+  	source.buffer = buffer;
+  	source.connect(myContext.destination);
+  	source.noteOn(0);
+  	// by checking the play state after some time, we know if we're really unlocked
+  	setTimeout(function() {
+  		if((source.playbackState === source.PLAYING_STATE || source.playbackState === source.FINISHED_STATE)) {
+  			isUnlocked = true;
+  		}
+  	}, 0);
+  }
+  </script>
 
 
 
