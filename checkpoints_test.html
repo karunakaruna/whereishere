@@ -3,9 +3,25 @@
   <head>
     <title>Examples • Checkpoints</title>
     <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
-  
+    <script src="node_modules/aframe-extras/dist/aframe-extras.controls.min.js"></script>
+    <script src="node_modules/aframe-extras/dist/aframe-extras.min.js"></script>
     <script src="http://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.1/dist/aframe-extras.controls.min.js"></script>
     <script src="http://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.1/dist/aframe-extras.min.js"></script>
+
+    <script>
+
+var extras = require('aframe-extras');
+
+// Register a single component.
+AFRAME.registerComponent('checkpoint', extras.misc.checkpoint);
+
+// Register a particular package, and its dependencies.
+extras.controls.registerAll();
+
+// Register everything.
+extras.registerAll();
+
+</script>
    </head>
   <body>
     <a-scene>
