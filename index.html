@@ -3,13 +3,11 @@
       <head>
         <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.2/howler.js"></script>
-
         <script src="https://rawgit.com/ngokevin/aframe-randomizer-components/master/dist/aframe-randomizer-components.min.js"></script>
-
-
         <script src="noise.js"></script>
-
+        <script src="build.js"></script>
         <script src="http://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.1/dist/aframe-extras.min.js"></script>
+        <script src="https://rawgit.com/ngokevin/aframe-look-at-component/master/dist/aframe-look-at-component.min.js"></script>
 
 
 
@@ -93,6 +91,12 @@
                                   <!-- materials -->
                                   <a-mixin id="mtl_ancient" material="shader:standard; roughness:0; metalness:.5; sphericalEnvMap:#testvid"></a-mixin>
                                   <a-mixin id="mtl_ancient2" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:norm.jpg;sphericalEnvMap:#testvid;normalTextureRepeat:.5 .5;"></a-mixin>
+
+
+                                  <a-mixin id="rotAnim" begin="click" attribute="rotation" to="0 360 0" easing="linear" dur="200" fill="backwards"></a-mixin>
+                                  <a-mixin id="rotAnim2" begin="click" attribute="rotation" to="0 360 0" easing="ease-out-quad" dur="2000" fill="forwards"></a-mixin>
+                                  <a-mixin id="select-anim" begin="click" attribute="scale" to="2 2 2" easing="ease-out-quad" dur="200" fill="forwards" repeat="1"></a-mixin>
+
             </a-assets>
 <!-- Assets -->
 
@@ -100,20 +104,24 @@
 
       <!-- Player -->
 <a-entity camera
+          id="camera"
+          active="true"
           look-controls
           wasd-controls
           mouse-cursor
           universal-controls="movementControls: checkpoint"
           checkpoint-controls="mode: animate"
           position="0 2 0"
-          rotation="0 -90 0">
+          rotation="0 90 0">
     <a-entity cursor="maxDistance: 30"
+              fuse="true"
+              raycaster="far: 30; objects: .waypoints"
               position="0 0 -1"
-              geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03;"
+              geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.014;"
               material="color: #0FF; shader: flat;">
 
-              <a-animation delay="click" easing="ease-in" attribute="scale"  fill="backwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
-              <a-animation delay="fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
+              <a-animation begin="click" easing="ease-in" attribute="scale"  fill="forwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
+              <a-animation begin="fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
     </a-entity>
 </a-entity>
 
@@ -145,7 +153,25 @@
 
 
 <a-entity position="0 28 0">
-      <a-sphere id="mouth"
+      <a-sphere id="waypoint1"
+        class="waypoints"
+        color="#FFF"
+        scale=".25 .25 .25"
+        audioanalyser="src: #raver"
+        audioanalyser-volume-scale="multiplier: 1"
+        position="0 0 0"
+        checkpoint
+        side="single"
+        shader="flat">
+    </a-sphere>
+</a-entity>
+
+
+
+
+<a-entity position="0 2 0">
+<a-sphere id="waypoint1"
+        class="waypoints"
         color="#FFF"
         scale=".25 .25 .25"
         audioanalyser="src: #raver"
@@ -154,37 +180,24 @@
         checkpoint
         side="single"
         shader="flat"
-      ></a-sphere>
-</a-entity>
-
-
-
-
-<a-entity position="0 2 0">
-<a-sphere id="mouth"
-color="#FFF"
-scale=".25 .25 .25"
-audioanalyser="src: #raver"
-audioanalyser-volume-scale="multiplier: 1"
-position="0 0 0"
-checkpoint
-side="single"
-shader="flat"
 ></a-sphere>
 </a-entity>
 
 
 <a-entity position="-30 2 0">
-<a-sphere id="mouth"
-color="#FFF"
-scale=".25 .25 .25"
-audioanalyser="src: #raver"
-audioanalyser-volume-scale="multiplier: 1"
-position="0 0 0"
-checkpoint
-side="single"
-shader="flat"
-></a-sphere>
+<a-sphere id="boop"
+      class="waypoints"
+      color="#FFF"
+      scale=".25 .25 .25"
+      audioanalyser="src: #raver"
+      audioanalyser-volume-scale="multiplier: 1"
+      position="0 0 0"
+      checkpoint
+      side="single"
+      shader="flat"
+>
+<a-animation begin="mouseenter" attribute="scale" from=".5 .5 .5" to="1 1 1" dur="100" repeat="3" direction="alternate" easing="ease"></a-animation>
+</a-sphere>
 </a-entity>
 
 <!-- Temple -->
@@ -200,7 +213,7 @@ shader="flat"
 
 <!-- Mother Shell -->
 <a-entity position="0 -15 0">
-      <a-entity obj-model="obj: #sphere-obj; mtl: #sphere-mtl"      position="0 5 0"></a-entity>
+      <a-entity obj-model="obj: #sphere-obj;    mtl: #sphere-mtl"   position="0 5 0"></a-entity>
       <a-entity obj-model="obj: #sphere-obj"                        position="1 1 5" material="color:#000000"  sound="on: click; src: #river;" audioanalyser="src: #raver" audioanalyser-volume-scale="multiplier: 1"></a-entity>
       <a-entity obj-model="obj: #sphere-obj"                        position="10 1 1"  sound="on: click; src: #river;" ></a-entity>
       <a-entity obj-model="obj: #sphere-obj"                        position="1 1 15"  sound="on: click; src: #river;" ></a-entity>
@@ -238,7 +251,7 @@ shader="flat"
 
 
 
-                    <a-sky color="#000000"></a-sky>
+<a-sky color="#000000"></a-sky>
 
 
 
@@ -246,20 +259,33 @@ shader="flat"
           </a-scene>
 
 
-
-
+<!-- Waypoints-->
 
 <script>
+var elms = document.getElementsByClassName('waypoints')
+for (var i = 0; i < elms.length; i++) {
+
+     elms[i].setAttribute("color", "#FFF");
+   };
+</script>
 
 
+
+
+<!--Links-->
+<script>
 var scene = document.querySelector('a-scene');
 
 var el= document.querySelector('#link');
 el.addEventListener('click', function () {
   window.location.href = 'https://google.com';
 });
+</script>
 
 
+
+<!-- Audio Reactive -->
+<script>
 <!-- AUDIO REACT -->
 var el= document.querySelector('#audioREACT');
 el.addEventListener('click', function () {
@@ -272,14 +298,59 @@ el.addEventListener('click', function () {
   el.setAttribute('audioanalyser','src: #nsound');
   el.setAttribute('audioanalyser-volume-scale','multiplier:1');
 });
+</script>
 
 
 
 
+<!-- Eminating Circle-->
+<script>
 
+document.querySelector('#boop').addEventListener('mouseenter', function () {
+  this.setAttribute('material', 'color', 'white');
+  alert.play();
 
+});
 
+document.querySelector('#boop').addEventListener('mouseleave', function () {
+    this.setAttribute('material', 'color', 'white');
+  });
 
+  document.querySelector('#boop').addEventListener('mouseleave', function () {
+      this.setAttribute('material', 'color', 'white');
+    });
+
+// testing mouseenter and mouseleave
+var chime = document.querySelector('#boop');
+chime.addEventListener('click', function (evt) {
+  var scene = document.querySelector('a-scene');
+  var clickRing = document.createElement('a-entity');
+  clickRing.id = 'clickRing-'+new Date().getTime();
+  clickRing.setAttribute('material','shader:flat; color: #FFFFFF; transparent: true; opacity: 0.6');
+  clickRing.setAttribute('geometry','primitive: ring; radius-inner: .5; radius-outer: 0.6');
+  clickRing.setAttribute('position',evt.detail.intersection.point);
+  clickRing.setAttribute('look-at',"[camera]");
+  var opacityAnimation = document.createElement('a-animation');
+  opacityAnimation.setAttribute('attribute','material.opacity');
+  opacityAnimation.setAttribute('to',0);
+  opacityAnimation.setAttribute('duration','250');
+  opacityAnimation.setAttribute('easing','ease-out-quad');
+  var scaleAnimation = document.createElement('a-animation');
+  scaleAnimation.setAttribute('attribute','scale');
+  scaleAnimation.setAttribute('to','5 5 5');
+  scaleAnimation.setAttribute('duration','250');
+  scaleAnimation.setAttribute('easing','ease-out-quad');
+  alert.play();
+
+  var onAnimationEnd = function () {
+    scene.removeChild(document.querySelector('#'+clickRing.id))
+  }
+  scaleAnimation.addEventListener('animationend', onAnimationEnd.bind(this))
+  clickRing.appendChild(opacityAnimation);
+  clickRing.appendChild(scaleAnimation);
+  scene.appendChild(clickRing);
+
+})
 </script>
 
 
