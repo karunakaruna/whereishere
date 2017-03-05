@@ -2,83 +2,126 @@
     <html>
       <head>
         <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
-        <script src="https://rawgit.com/ngokevin/aframe-randomizer-components/master/dist/aframe-randomizer-components.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.2/howler.js"></script>
+
+        <script src="https://rawgit.com/ngokevin/aframe-randomizer-components/master/dist/aframe-randomizer-components.min.js"></script>
+
+
         <script src="noise.js"></script>
-        <script src="http://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.0/dist/aframe-extras.min.js"></script>
-        <script src="https://unpkg.com/aframe-particle-system-component@1.0.5/dist/aframe-particle-system-component.min.js"></script>
-        <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+
+        <script src="http://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.1/dist/aframe-extras.min.js"></script>
+
+
+
+
+
+
+                <!-- AUDIO REACTIVE -->
         <script src="node_modules/aframe-audioanalyser-component/dist/aframe-audioanalyser-component.js"></script>
         <script src="node_modules/aframe-audioanalyser-component/examples/components/audioanalyser-volume-scale.js"></script>
 
 
 
+                <!-- HERE WE ARE     -->
+        <title>here we are</title>
 
-        <title>Sound_Test</title>
+
+
+
+
+
+
         <script>
-        var sound = new Howl({
-          src: ['audio/bm.mp3']
-        });
+                var sound = new Howl({
+                  src: ['audio/bm.mp3']
+                });
 
-        var alert = new Howl({
-          src: ['audio/alert.wav']
-        });
+                var alert = new Howl({
+                  src: ['audio/alert.wav']
+                });
 
-        var bgsound = new Howl({
-          src: ['audio/alert.wav']
-        });
+                var bgsound = new Howl({
+                  src: ['audio/alert.wav']
+                });
 
-
-        alert.play();
-
+                alert.play();
         </script>
+</head>
 
 
 
-      </head>
+<!-- Scene -->
         <body>
           <a-scene stats>
-                      <a-assets>
-              <a-asset-item id="terrain-obj" src="terrain.obj"></a-asset-item>
-              <a-asset-item id="terrain-mtl" src="terrain.mtl"></a-asset-item>
-              <audio id="river" src="audio/bm.mp3" preload="auto" autoplay></audio>
-              <a-asset-item id="sphere-obj" src="mother_shell.obj"></a-asset-item>
-              <a-asset-item id="sphere-mtl" src="mother_shell.mtl"></a-asset-item>
-              <a-mixin id="checkpoint"></a-mixin>
-              <a-mixin id="checkpoint-hovered" color="#6CEEB5"></a-mixin>
-              <video id="testvid" src="test.mov" autoplay loop="true">
-              <video id="disp" src="displacement.mov" autoplay loop="true">
-              <video id="geometric" src="geometric.mp4" autoplay loop="true">
-              <video id="color" src="color_sm.mov" autoplay loop="true">
-              <a-mixin id="mtl_ancient" material="shader:standard; roughness:0; metalness:.5; sphericalEnvMap:#testvid"></a-mixin>
-              <a-mixin id="mtl_ancient2" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:norm.jpg;sphericalEnvMap:#testvid;normalTextureRepeat:.5 .5;"></a-mixin>
+
+<!-- Assets -->
+            <a-assets>
+                    <!-- OBJECTS -->
 
 
+                    <!--Terrain-->
+                                  <a-asset-item id="terrain-obj" src="terrain.obj"></a-asset-item>
+                                  <a-asset-item id="terrain-mtl" src="terrain.mtl"></a-asset-item>
 
+
+                    <!-- Temple -->
+                                  <a-asset-item id="temple-obj" src="assets/temple.obj"></a-asset-item>
+                                  <a-asset-item id="temple-mtl" src="assets/temple.mtl"></a-asset-item>
+
+                    <!--Ceiling-->
+                                  <a-asset-item id="ceiling-obj" src="assets/ceiling.obj"></a-asset-item>
+                                  <a-asset-item id="ceiling-mtl" src="assets/ceiling.mtl"></a-asset-item>
+
+
+                    <!-- Mother Shells-->
+
+                                  <a-asset-item id="sphere-obj" src="mother_shell.obj"></a-asset-item>
+                                  <a-asset-item id="sphere-mtl" src="mother_shell.mtl"></a-asset-item>
+
+                                  <audio id="river" src="audio/bm.mp3" preload="auto" autoplay></audio>
+
+                                  <!-- Checkpoints -->
+                                  <a-mixin id="checkpoint"></a-mixin>
+                                  <a-mixin id="checkpoint-hovered" color="#FFFFFF"></a-mixin>
+
+                                  <!-- Video Textures -->
+                                  <video id="testvid" src="test.mov" autoplay loop="true">
+                                  <video id="disp" src="displacement.mov" autoplay loop="true">
+                                  <video id="geometric" src="geometric.mp4" autoplay loop="true">
+                                  <video id="color" src="color_sm.mov" autoplay loop="true">
+
+                                  <!-- materials -->
+                                  <a-mixin id="mtl_ancient" material="shader:standard; roughness:0; metalness:.5; sphericalEnvMap:#testvid"></a-mixin>
+                                  <a-mixin id="mtl_ancient2" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:norm.jpg;sphericalEnvMap:#testvid;normalTextureRepeat:.5 .5;"></a-mixin>
             </a-assets>
+<!-- Assets -->
 
-<a-grid></a-grid>
 
 
       <!-- Player -->
-      <a-entity camera
-                look-controls
-                wasd-controls
-                mouse-cursor
-                universal-controls="movementControls: checkpoint"
-                checkpoint-controls="mode: animate"
-                position="0 1.764 0">
-          <a-entity cursor="maxDistance: 30"
-                    position="0 0 -1"
-                    geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03;"
-                    material="color: #0FF; shader: flat;">
+<a-entity camera
+          look-controls
+          wasd-controls
+          mouse-cursor
+          universal-controls="movementControls: checkpoint"
+          checkpoint-controls="mode: animate"
+          position="0 2 0"
+          rotation="0 -90 0">
+    <a-entity cursor="maxDistance: 30"
+              position="0 0 -1"
+              geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03;"
+              material="color: #0FF; shader: flat;">
 
-                    <a-animation delay="click" easing="ease-in" attribute="scale"  fill="backwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
-                    <a-animation delay="fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
-          </a-entity>
-      </a-entity>
+              <a-animation delay="click" easing="ease-in" attribute="scale"  fill="backwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
+              <a-animation delay="fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
+    </a-entity>
+</a-entity>
 
 
+
+
+
+<!-- Rotating Scene Lights -->
       <a-entity position="" rotation="" scale="1000 1000 1000" visible="">
         <a-light type="ambient" position="0 0 0" color="#FF0000" intensity=".01" rotation="" scale="" visible="" light="">
           <a-animation attribute="intensity" delay="0" dur="1000" from="0" to=".1" repeat="1" easing="linear" direction="alternate"></a-animation>
@@ -93,45 +136,95 @@
         <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="60000" delay="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
       </a-entity>
 
+      <a-entity light="type: point; intensity: 0.75; distance: 50; decay: 2; color:#FF0000"
+                position="0 28 0"></a-entity>
 
+
+
+
+
+
+<a-entity position="0 28 0">
       <a-sphere id="mouth"
         color="#FFF"
-        scale="1 1 1"
+        scale=".25 .25 .25"
         audioanalyser="src: #raver"
         audioanalyser-volume-scale="multiplier: 1"
-        position="0 5 0"
-        side="double"
+        position="0 0 0"
+        checkpoint
+        side="single"
         shader="flat"
       ></a-sphere>
+</a-entity>
 
 
-      <a-entity obj-model="obj: #sphere-obj; mtl: #sphere-mtl" position="0 5 0"></a-entity>
-        <a-entity obj-model="obj: #terrain-obj;" material="normalMap:norm.jpg;normalTextureRepeat:80 80;src:cobalt_2048.jpg;sphericalEnvMap:#color;metalness:.7;displacementMap:#disp;displacementScale:3"></a-entity>
-<a-entity  obj-model="obj: #sphere-obj" material="color:#000000" position="1 1 5"  sound="on: click; src: #river;" audioanalyser="src: #raver" audioanalyser-volume-scale="multiplier: 1"></a-entity>
-<a-entity  obj-model="obj: #sphere-obj" position="10 1 1"  sound="on: click; src: #river;" ></a-entity>
-<a-entity  obj-model="obj: #sphere-obj" position="1 1 15"  sound="on: click; src: #river;" ></a-entity>
 
 
+<a-entity position="0 2 0">
+<a-sphere id="mouth"
+color="#FFF"
+scale=".25 .25 .25"
+audioanalyser="src: #raver"
+audioanalyser-volume-scale="multiplier: 1"
+position="0 0 0"
+checkpoint
+side="single"
+shader="flat"
+></a-sphere>
+</a-entity>
+
+
+<a-entity position="-30 2 0">
+<a-sphere id="mouth"
+color="#FFF"
+scale=".25 .25 .25"
+audioanalyser="src: #raver"
+audioanalyser-volume-scale="multiplier: 1"
+position="0 0 0"
+checkpoint
+side="single"
+shader="flat"
+></a-sphere>
+</a-entity>
+
+<!-- Temple -->
+<a-entity obj-model="obj: #temple-obj; mtl: #temple-mtl" checkpoint position="0 0 0"></a-entity>
+  <!-- ceiling -->
+    <a-entity obj-model="obj: #ceiling-obj" checkpoint position="0 0 0" material="normalMap:#geometric"></a-entity>
+
+
+<!-- Terrain -->
+  <a-entity obj-model="obj: #terrain-obj;" material="normalMap:norm.jpg;normalTextureRepeat:80 80;src:cobalt_2048.jpg;sphericalEnvMap:#color;metalness:.7;displacementMap:#disp;displacementScale:3"></a-entity>
+
+
+
+<!-- Mother Shell -->
+<a-entity position="0 -15 0">
+      <a-entity obj-model="obj: #sphere-obj; mtl: #sphere-mtl"      position="0 5 0"></a-entity>
+      <a-entity obj-model="obj: #sphere-obj"                        position="1 1 5" material="color:#000000"  sound="on: click; src: #river;" audioanalyser="src: #raver" audioanalyser-volume-scale="multiplier: 1"></a-entity>
+      <a-entity obj-model="obj: #sphere-obj"                        position="10 1 1"  sound="on: click; src: #river;" ></a-entity>
+      <a-entity obj-model="obj: #sphere-obj"                        position="1 1 15"  sound="on: click; src: #river;" ></a-entity>
+</a-entity>
+
+
+
+<!-- Checkpoints -->
+
+<!--
       <a-entity position="1 0 1">
            <a-cylinder checkpoint radius="1" height="0.1" position="0 0 -5.2" color="#FFBB82" onclick=""></a-cylinder>
            <a-cylinder class="clickable" class="intersectable" checkpoint radius="1" height="500" position="150 0 -95" color="#39BB82" light="type:point;color:#ffffff;intensity:.2"></a-cylinder>
            <a-cylinder class="clickable" class="intersectable" checkpoint radius="1" height="0.1" position="-3 0 0" color="#39BB82"></a-cylinder>
-         </a-entity>
+      </a-entity>
+-->
 
 
+<!-- Starter Objects -->
+      <a-sphere  position="0 -10 -1" radius=".6" color="#EF2D5E" id="link" material="normalMap:#geometric;;normalTextureRepeat: 10 10;sphericalEnvMap:#color;metalness:.7;displacementMap:#disp"></a-sphere>
 
 
-
-                  <a-sphere position="0 1.25 -1" radius="1.25" color="#EF2D5E" id="link" material="normalMap:#geometric;;normalTextureRepeat: 10 10;sphericalEnvMap:#color;metalness:.7;displacementMap:#disp"></a-sphere>
-       <a-box position="-1 0.5 1" rotation="0 45 0" width="1" height="1" depth="1"  color="#4C00D9" audioanalyser="src: #nsound" audioanalyser-volume-scale="multiplier: 1" id="audioREACT"></a-box>
-       <a-cylinder position="1 0.75 1" radius="0.5" height="1.5" color="#FFC65D" href="index_ancientroom.html" target="#boxout" class="intersectable" material="shader:noise"
-        class="clickable" onclick="alert.play()">
-           <a-animation id="boxout" attribute="rotation" from="0 0 0" to="50 -10 50" begin="href" dur="1800" easing="ease-in-back"></a-animation>
-         </a-cylinder>
-  <a-plane rotation="-90 0 0" position="0 -4 0" width="4" height="4" color="#7BC8A4" material="shader:standard;sphericalEnvMap:#color;metalness:.7"></a-plane>
-
-
-
+<!-- Ground Plane -->
+  <a-plane rotation="-90 0 0" position="0 -4 0" width="35" height="35" color="#7BC8A4" material="shader:standard;sphericalEnvMap:#color;metalness:.7"></a-plane>
 
 
 
@@ -141,37 +234,34 @@
          audioanalyser="src: #river"
          audioanalyser-waveform="radius: 0.5"
          rotation="90 0 0"
-         position="0 30 0"
-       ></a-entity>
+         position="0 30 0"></a-entity>
 
-
-
-<!--
-                      <a-entity camera wasd-controls look-controls position="0 2 2">
-                        <a-entity cursor
-                              raycaster="far: 30; objects: .intersectable"
-                              position="0 0 -1"
-                              geometry="primitive: ring; radiusInner: 0.005; radiusOuter: 0.007"
-                              material="color: #FF0000; shader: flat">
-                        </a-entity>
-                      </a-entity>
-
-                    -->
 
 
                     <a-sky color="#000000"></a-sky>
+
+
+
+
           </a-scene>
 
-<script>
-var scene = document.querySelector('a-scene');
-var el= document.querySelector('#link');
 
+
+
+
+<script>
+
+
+var scene = document.querySelector('a-scene');
+
+var el= document.querySelector('#link');
 el.addEventListener('click', function () {
   window.location.href = 'https://google.com';
 });
 
-var el= document.querySelector('#audioREACT');
 
+<!-- AUDIO REACT -->
+var el= document.querySelector('#audioREACT');
 el.addEventListener('click', function () {
   var scene = document.querySelector('a-scene');
   var newSound = document.createElement('audio');
@@ -194,5 +284,5 @@ el.addEventListener('click', function () {
 
 
 
-        </body>
-    </html>
+</body>
+</html>
