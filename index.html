@@ -143,7 +143,7 @@
 
                     <!-- Animation Animation Textures -->
                           <a-mixin id="rotAnim"  attribute="rotation" to="360 360 360" easing="linear" dur="40000"repeat="indefinate" begin="0" fill="backwards"></a-mixin>
-                          <a-mixin id="rotAnimSlow"  attribute="rotation" to="360 360 360" easing="linear" dur="90000"repeat="indefinate" begin="0" fill="backwards"></a-mixin>
+                          <a-mixin id="rotAnimSlow"  attribute="rotation" to="360 360 360" easing="linear" dur="130000"repeat="indefinate" begin="0" fill="backwards"></a-mixin>
                           <a-mixin id="rotAnim2"  attribute="rotation" to="0 360 0" easing="ease-out-quad" dur="2000" fill="forwards"></a-mixin>
                           <a-mixin id="posAnim"  attribute="position" to="0 2 0" easing="ease-out-quad" dur="2000" fill="forwards" alternate="reverse" repeat="indefinately"></a-mixin>
                           <a-mixin id="select-anim" begin="click" attribute="scale" to="2 2 2" easing="ease-out-quad" dur="200" fill="forwards" repeat="1"></a-mixin>
@@ -159,12 +159,12 @@
           id="camera"
           active="true"
           look-controls
-          wasd-controls="acceleration:150;fly:true"
+          wasd-controls="acceleration:150;fly:false"
           mouse-cursor
           universal-controls="movementControls:checkpoint;movementSpeed:10"
           checkpoint-controls="mode: animate;animateSpeed:7"
           position="-60 2 0"
-          rotation="0 -90 0"
+          rotation="35 -90 0"
           fov="50">
                     <a-entity cursor="maxDistance: 100"
                               fuse="true"
