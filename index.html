@@ -22,13 +22,7 @@
 
 
                 <!-- HERE WE ARE     -->
-        <title>here we are</title>
-
-
-
-
-
-
+        <title>here we are </title>
 
         <script>
 
@@ -70,10 +64,6 @@
                   }
                 });
 
-                function getRand(){
-                   return new Date().getTime().toString() + Math.floor(Math.random()*1000000);
-                }
-
 
                 var soundFile = [];
                 var sounds = [ding,ding, alert, ding2];
@@ -94,10 +84,9 @@
                 function fadeout(){sound2.fade(1,0,2000,soundSprite)};
                 setTimeout(fadeout(),3000);
                 };
-
-
-
                 </script>
+
+
 </head>
 
 
@@ -111,54 +100,56 @@
 <!-- Assets -->
             <a-assets>
                     <!-- OBJECTS -->
-                                  <a-mixin id="cube" geometry="primitive: box" random-rotation random-scale "min:.2 .2 .2;max:15 15 15;" random-position="min:-10 0 -10;max:10 20 10;"></a-mixin>
+                                  <a-mixin id="cube" geometry="primitive: octahedron" random-rotation random-scale "min:.2 .2 .2;max:15 15 15;" random-position="min:-10 0 -10;max:10 20 10;"></a-mixin>
 
                     <!--Terrain-->
-                                  <a-asset-item id="terrain-obj" src="terrain.obj"></a-asset-item>
-                                  <a-asset-item id="terrain-mtl" src="terrain.mtl"></a-asset-item>
+                                  <a-asset-item id="terrain-obj" src="assets/models/terrain.obj"></a-asset-item>
+                                  <a-asset-item id="terrain-mtl" src="assets/models/terrain.mtl"></a-asset-item>
 
-                                  <a-asset-item id="courtyard-obj" src="assets/courtyard.obj"></a-asset-item>
+                                  <a-asset-item id="courtyard-obj" src="assets/models/courtyard.obj"></a-asset-item>
 
                     <!-- Temple -->
-                                  <a-asset-item id="temple-obj" src="assets/temple.obj"></a-asset-item>
-                                  <a-asset-item id="temple-mtl" src="assets/temple.mtl"></a-asset-item>
-                                  <a-asset-item id="walkway-obj" src="assets/walkway.obj"></a-asset-item>
-                    <!--Ceiling-->
-                                  <a-asset-item id="ceiling-obj" src="assets/ceiling.obj"></a-asset-item>
-                                  <a-asset-item id="ceiling-mtl" src="assets/ceiling.mtl"></a-asset-item>
+                                  <a-asset-item id="temple-obj" src="assets/models/temple.obj"></a-asset-item>
+                                  <a-asset-item id="temple-mtl" src="assets/models/temple.mtl"></a-asset-item>
+                                  <a-asset-item id="walkway-obj" src="assets/models/walkway.obj"></a-asset-item>
 
+                    <!--Ceiling-->
+                                  <a-asset-item id="ceiling-obj" src="assets/models/ceiling.obj"></a-asset-item>
+                                  <a-asset-item id="ceiling-mtl" src="assets/models/ceiling.mtl"></a-asset-item>
 
                     <!-- Mother Shells-->
+                                  <a-asset-item id="shell-obj" src="assets/models/mother_shell.obj"></a-asset-item>
+                                  <a-asset-item id="shell-mtl" src="assets/models/mother_shell.mtl"></a-asset-item>
 
-                                  <a-asset-item id="shell-obj" src="mother_shell.obj"></a-asset-item>
-                                  <a-asset-item id="shell-mtl" src="mother_shell.mtl"></a-asset-item>
-
-                                  <audio id="river" src="audio/bm.mp3" preload="auto" ></audio>
-
-                                  <!-- Checkpoints -->
+                    <!-- Checkpoints -->
                                   <a-mixin id="checkpoint"></a-mixin>
                                   <a-mixin id="checkpoint-hovered" color="#FFFFFF"></a-mixin>
 
-                                  <!-- Video Textures -->
-                                  <video id="testvid" src="test.mov" autoplay loop="true"></video>
-                                  <video id="disp" src="displacement.mov" autoplay loop="true"></video>
-                                  <video id="geometric" src="geometric.mov" autoplay loop="true"></video>
-                                  <video id="color" src="color_sm.mov" autoplay loop="true"></video>
+                    <!-- Video Textures -->
+                              <video id="testvid" src="assets/test.mov" autoplay loop="true"></video>
+                              <video id="disp" src="assets/displacement.mov" autoplay loop="true"></video>
+                              <video id="geometric" src="assets/geometric_lq2.mov" autoplay loop="true"></video>
+                              <video id="color" src="assets/color_sm.mov" autoplay loop="true"></video>
 
-                                  <a-image id="ancientFractal" src="assets/ancient.jpg"></image>
+                              <a-image id="ancientFractal" src="assets/ancient.jpg"></image>
+                              <a-image id="geoNrm01" src="assets/norm2.jpg"></image>
+                              <a-image id="cobalt" src="assets/cobalt_512.jpg"></image>
 
-                                  <!-- materials -->
-                                  <a-mixin id="mtl_ancient" material="shader:standard; roughness:0; metalness:.5; normalMap:#geometric; sphericalEnvMap:#testvid"></a-mixin>
-                                  <a-mixin id="mtl_ancient2" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:norm.jpg;sphericalEnvMap:#testvid;normalTextureRepeat:.5 .5;"></a-mixin>
+                    <!-- materials -->
+                          <a-mixin id="mtl_ancient" material="shader:standard; roughness:0; metalness:.5; normalMap:#geometric; sphericalEnvMap:#testvid"></a-mixin>
+                          <a-mixin id="mtl_ancient2" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:#geoNrm01;sphericalEnvMap:#test;normalTextureRepeat:.5 .5;"></a-mixin>
+                          <a-mixin id="ancient_Fractal" material="shader:standard;roughness:.5;color:#999999;metalness:.2;normalMap:#ancientFractal;sphericalEnvMap:#color;normalTextureRepeat:2 2"></a-mixin>
 
-                                  <a-mixin id="ancient_Fractal" material="shader:standard;roughness:.5;color:#999999;metalness:.2;normalMap:#ancientFractal;sphericalEnvMap:#color;normalTextureRepeat:2 2"></a-mixin>
 
-                                  <a-mixin id="randomize_01" random-rotation random-scale "min:.5 .5 .5 ;max:3 3 3" random-position="min:-15 2 -15;max:15 9 15;"></a-mixin>
 
-                                  <a-mixin id="rotAnim"  attribute="rotation" to="360 360 360" easing="linear" dur="40000"repeat="indefinate" begin="0" fill="backwards"></a-mixin>
-                                  <a-mixin id="rotAnim2"  attribute="rotation" to="0 360 0" easing="ease-out-quad" dur="2000" fill="forwards"></a-mixin>
-                                  <a-mixin id="posAnim"  attribute="position" to="0 2 0" easing="ease-out-quad" dur="2000" fill="forwards" alternate="reverse" repeat="indefinately"></a-mixin>
-                                  <a-mixin id="select-anim" begin="click" attribute="scale" to="2 2 2" easing="ease-out-quad" dur="200" fill="forwards" repeat="1"></a-mixin>
+                          <a-mixin id="randomize_01" random-rotation random-position="min:-15 2 -15;max:15 9 15;"></a-mixin>
+
+
+                    <!-- Animation Animation Textures -->
+                          <a-mixin id="rotAnim"  attribute="rotation" to="360 360 360" easing="linear" dur="40000"repeat="indefinate" begin="0" fill="backwards"></a-mixin>
+                          <a-mixin id="rotAnim2"  attribute="rotation" to="0 360 0" easing="ease-out-quad" dur="2000" fill="forwards"></a-mixin>
+                          <a-mixin id="posAnim"  attribute="position" to="0 2 0" easing="ease-out-quad" dur="2000" fill="forwards" alternate="reverse" repeat="indefinately"></a-mixin>
+                          <a-mixin id="select-anim" begin="click" attribute="scale" to="2 2 2" easing="ease-out-quad" dur="200" fill="forwards" repeat="1"></a-mixin>
 
 
             </a-assets>
@@ -171,51 +162,49 @@
           id="camera"
           active="true"
           look-controls
-          wasd-controls
+          wasd-controls="acceleration:150;fly:false"
           mouse-cursor
-          universal-controls="movementControls: checkpoint"
-          checkpoint-controls="mode: animate"
-          position="0 2 0"
-          rotation="90 0 0"
+          universal-controls="movementControls:checkpoint;movementSpeed:10"
+          checkpoint-controls="mode: animate;animateSpeed:7"
+          position="-60 2 0"
+          rotation="0 -90 0"
           fov="50">
-    <a-entity cursor="maxDistance: 100"
-              fuse="true"
-              fusetimer="100"
-              raycaster="far: 100; objects: .waypoints,.intersectable"
-              position="0 0 -1"
-              geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.014;"
-              material="color: #FFF; shader: flat;">
+                    <a-entity cursor="maxDistance: 100"
+                              fuse="true"
+                              fuseTimeout="1600"
+                              raycaster="far: 100; objects: .waypoints,.intersectable"
+                              position="0 0 -1"
+                              geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.014;"
+                              material="color: #FFF; shader: flat;">
 
-              <a-animation begin="click" easing="ease-in" attribute="scale"  fill="forwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
-              <a-animation begin="fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
-    </a-entity>
+                              <a-animation begin="click" easing="ease-in" attribute="scale"  fill="forwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
+                              <a-animation begin="fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500" repeat="1"></a-animation>
+                    </a-entity>
 </a-entity>
 
 
 
-
-<!--Setting -->
-<a-entity obj-model="obj: #courtyard-obj" mixin="ancient_Fractal" checkpoint position="0 0 0"></a-entity>
-
 <!-- Temple -->
-<a-entity obj-model="obj: #temple-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #walkway-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
-  <!-- ceiling -->
-    <a-entity obj-model="obj: #ceiling-obj" checkpoint position="0 0 0" material="normalMap:#geometric"></a-entity>
+            <a-entity id="theTemple" obj-model="obj: #temple-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
+            <a-entity obj-model="obj: #walkway-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
+            <a-entity obj-model="obj: #courtyard-obj" mixin="ancient_Fractal" checkpoint position="0 0 0"></a-entity>
+
+  <!-- Ceiling -->
+            <a-entity obj-model="obj: #ceiling-obj" checkpoint position="0 0 0" material="normalMap:#geometric"></a-entity>
 
 
 <!-- Terrain -->
-  <a-entity obj-model="obj: #terrain-obj;" material="normalMap:norm.jpg;normalTextureRepeat:80 80;src:cobalt_2048.jpg;sphericalEnvMap:#testvid;metalness:.7;displacementMap:#disp;displacementScale:3"></a-entity>
+            <a-entity obj-model="obj: #terrain-obj;" material="normalMap:#geoNrm01;normalTextureRepeat:80 80;src:#cobalt;sphericalEnvMap:#testvid;metalness:.7;displacementMap:#disp;displacementScale:3"></a-entity>
 
 
 
-<!-- Mother Shell -->
-<a-entity id="shellGrp" visible="false" position="0 -15 0" scale="1 1 1">
-      <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01" ><a-animation mixin="rotAnim"></a-animation></a-entity>
-      <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01"   sound="on: click; src: #river;" audioanalyser="src: #raver" audioanalyser-volume-scale="multiplier: 1"><a-animation mixin="rotAnim"></a-animation></a-entity>
-      <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01"  sound="on: click; src: #river;" ><a-animation mixin="rotAnim"></a-animation></a-entity>
-      <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01"   sound="on: click; src: #river;" ><a-animation mixin="rotAnim"></a-animation></a-entity>
-</a-entity>
+<!-- Mother Shells -->
+          <a-entity id="shellGrp" visible="false" position="0 -15 0" scale="1 1 1">
+                <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01" ><a-animation mixin="rotAnim"></a-animation></a-entity>
+                <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01"   sound="on: click; src: #river;" audioanalyser="src: #raver" audioanalyser-volume-scale="multiplier: 1"><a-animation mixin="rotAnim"></a-animation></a-entity>
+                <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01"  sound="on: click; src: #river;" ><a-animation mixin="rotAnim"></a-animation></a-entity>
+                <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01"   sound="on: click; src: #river;" ><a-animation mixin="rotAnim"></a-animation></a-entity>
+          </a-entity>
 
 
 
@@ -226,135 +215,66 @@
 
 
 <!-- Rotating Scene Lights -->
-      <a-entity position="" rotation="" scale="1000 1000 1000" visible="">
+<a-entity position="" rotation="" scale="1000 1000 1000" visible="">
         <a-light type="ambient" position="0 0 0" color="#FF0000" intensity=".01" rotation="" scale="" visible="" light="">
-          <a-animation attribute="intensity" delay="0" dur="1000" from="0" to=".1" repeat="1" easing="linear" direction="alternate"></a-animation>
+                <a-animation attribute="intensity" begin="0" dur="1000" from="0" to=".1" repeat="1" easing="linear" direction="alternate"></a-animation>
         </a-light>
 
-        <a-light type="point" position="0 0 -5" color="#77427F" intensity=".3" rotation="" scale="" visible="" light=""></a-light>
+        <a-light type="point" position="0 0 -5" color="#cc1616" intensity=".3" rotation="" scale="" visible="" light="">
+          <a-animation attribute="intensity" from=".2" to=".7" begin="0" repeat="indefinate" direction="alternate" dur="9999"></a-animation>
+        </a-light>
         <a-light type="point" position="0 0 5" color="#FF5500" intensity=".3" rotation="" scale="" visible="" light=""></a-light>
-        <a-light type="point" position="5 0 0" color="#FF66FF" intensity=".2" rotation="0 169.5462119999768 0" scale="1 1 1" visible="true" light="type:point;color:#6cd0ff;intensity:.4">
-          <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="1000" delay="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
+        <a-light type="point" position="5 0 0" color="#FF6644" intensity=".2" rotation="0 169.5462119999768 0" scale="1 1 1" visible="true" light="type:point;color:#6cd0ff;intensity:.4">
+                <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="1000" delay="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
         </a-light>
 
-        <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="60000" delay="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
-      </a-entity>
+                <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="60000" delay="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
+</a-entity>
+<a-light type="point" position="0 28 0" color="#FF0000" intensity="2" decay="5" distance="70">
+<a-animation attribute="decay" from="6" to="3" begin="0" repeat="indefinate" direction="alternate" dur="2666"></a-animation>
+</a-light>
 
 
 
 
 
 
+                            <!-- Waypoints-->
 
+                        <script>
+                                  var elms = document.getElementsByClassName('waypoints')
+                                  for (var i = 0; i < elms.length; i++) {
 
-
-      <a-sphere id="waypoint1"
-        class="waypoints"
-        color="#FFF"
-        scale=".25 .25 .25"
-        audioanalyser="src: #raver"
-        audioanalyser-volume-scale="multiplier: 1"
-        position="0 28 0"
-        checkpoint
-        side="single"
-        shader="flat"
-        light="type: point; intensity: .7; distance: 70; decay: 2; color:#FF0000" position="0 0 0">
-        <a-animation attribute="light.intensity" from=".75" to="0" dur="500" begin="transition01()" repeat="indefinate"></a-animation>
-    </a-sphere>
-
-
-
-
-
+                                       elms[i].setAttribute("color", "#FFF");
+                                     };
+                        </script>
 
 
 
 <a-entity position="0 2 0">
-<a-sphere id="waypoint2"
-        class="waypoints"
-        color="#FFF"
-        scale=".25 .25 .25"
-        audioanalyser="src: #raver"
-        audioanalyser-volume-scale="multiplier: 1"
-        position="0 0 0"
-        checkpoint
-        side="single"
-        shader="flat"
-        light="type:point;color:#6cd0ff;intensity:20;decay:14;distance:50;"
-></a-sphere>
+<a-box id="waypoint2" scale="1 4 2" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0" light="type:point;color:#6cd0ff;intensity:20;decay:14;distance:50;"></a-box>
 </a-entity>
 
 
 <a-entity position="-30 2 0">
-<a-sphere id="boop"
-      class="waypoints"
-      color="#FFF"
-      scale=".25 .25 .25"
-      audioanalyser="src: #raver"
-      audioanalyser-volume-scale="multiplier: 1"
-      position="0 0 0"
-      checkpoint
-      side="single"
-      shader="flat">
-<a-animation begin="mouseenter" attribute="scale" from=".5 .5 .5" to="1 1 1" dur="100" repeat="3" direction="alternate" easing="ease"></a-animation>
-</a-sphere>
+<a-box scale="1 4 4" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+<a-entity position="-20 2 0">
+<a-box scale="1 4 4" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
 </a-entity>
 
 <a-entity position="-60 2 0">
-<a-sphere id="boop2"
-      class="waypoints"
-      color="#FFF"
-      scale=".25 .25 .25"
-      audioanalyser="src: #raver"
-      audioanalyser-volume-scale="multiplier: 1"
-      position="0 0 0"
-      checkpoint
-      side="single"
-      shader="flat">
-<a-animation begin="mouseenter" attribute="scale" from=".5 .5 .5" to="1 1 1" dur="100" repeat="3" direction="alternate" easing="ease"></a-animation>
-</a-sphere>
+<a-box scale="1 4 4" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
 </a-entity>
 
 <a-entity position="-100 2 0">
-<a-sphere id="boop2"
-      class="waypoints"
-      color="#FFF"
-      scale=".25 .25 .25"
-      audioanalyser="src: #raver"
-      audioanalyser-volume-scale="multiplier: 1"
-      position="0 0 0"
-      checkpoint
-      side="single"
-      shader="flat">
-<a-animation begin="mouseenter" attribute="scale" from=".5 .5 .5" to="1 1 1" dur="100" repeat="3" direction="alternate" easing="ease"></a-animation>
-</a-sphere>
+<a-box scale="1 4 4" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
 </a-entity>
 
 
-
-
-
-
-
-
-
-<!-- Checkpoints -->
-
-<!--
-      <a-entity position="1 0 1">
-           <a-cylinder checkpoint radius="1" height="0.1" position="0 0 -5.2" color="#FFBB82" onclick=""></a-cylinder>
-           <a-cylinder class="clickable" class="intersectable" checkpoint radius="1" height="500" position="150 0 -95" color="#39BB82" light="type:point;color:#ffffff;intensity:.2"></a-cylinder>
-           <a-cylinder class="clickable" class="intersectable" checkpoint radius="1" height="0.1" position="-3 0 0" color="#39BB82"></a-cylinder>
-      </a-entity>
--->
-
-
-<!-- Starter Objects -->
-      <a-sphere  position="0 -10 -1" radius=".6" color="#EF2D5E" id="link" material="normalMap:#geometric;;normalTextureRepeat: 10 10;sphericalEnvMap:#color;metalness:.7;displacementMap:#disp"></a-sphere>
-
-
 <!-- Ground Plane -->
-  <a-plane rotation="-90 0 0" position="0 -4 0" width="400" height="400" segmentsHeight="30" segmentsWidth="30" color="#7BC8A4" material="shader:standard;sphericalEnvMap:#testvid;metalness:.95;displacementMap:#disp"></a-plane>
+  <a-plane id="waterplane" rotation="-90 0 0" position="0 -4 0" width="400" height="400" segmentsHeight="30" segmentsWidth="30" color="#7BC8A4" material="shader:standard;sphericalEnvMap:#testvid;metalness:.95;displacementMap:#disp"></a-plane>
 
 
 
@@ -368,7 +288,7 @@
 
 
 <a-sphere color="black" scale="50 50 50" position="0 1000 0"></a-sphere>
-<a-sky src="#color"rotate="90 0 0"></a-sky>
+<a-entity rotation="180 0 90"> <a-sky src="#color"></a-sky></a-entity>
 
 
 <script>
@@ -430,8 +350,7 @@
                 cubeEl.addEventListener('mouseenter', function () {
                 randomSprite();
                 this.setAttribute('material','color:#FFFFFF;metalness:.7;sphericalEnvMap:#color');
-                ding2.play();
-                    });
+                });
                var rotAnimation = document.createElement('a-animation');
                rotAnimation.setAttribute('begin','click');
                rotAnimation.setAttribute('mixin','rotAnim2');
@@ -461,15 +380,6 @@
             }
           </script>
 
-<!-- Waypoints-->
-
-<script>
-var elms = document.getElementsByClassName('waypoints')
-for (var i = 0; i < elms.length; i++) {
-
-     elms[i].setAttribute("color", "#FFF");
-   };
-</script>
 
 
 <!-- Counter Test -->
@@ -481,7 +391,7 @@ var count = 0;
       };
 
     function checkCount(){
-      if (count == 5){
+      if (count == 3){
           alert.play();
 
           transition01();
@@ -502,6 +412,10 @@ var count = 0;
 <!-- Cube Transition -->
 <script>
 function transition01(){
+  var list = document.getElementsByClassName("intersectable");
+  for (var i = 0; i < list.length; i++) {
+    list[i].setAttribute('material','color:#FFFFFF;metalness:.7;sphericalEnvMap:#color');
+  };
   var cParent = document.querySelector('#cubeparent');
   var transition1 = document.createElement('a-animation');
   transition1.setAttribute('repeat','0');
