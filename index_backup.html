@@ -68,14 +68,21 @@
 
 
                 var soundFile = [];
-                var sounds = [ding, alert, sound];
+                var sounds = ['ding', 'alert', 'sound'];
+                var lastSoundTime = Date.now();
 
                 // Preload Howl objects
+                var sounds = ['s1', 's2', 's3'];
+                var howls = {};
+                for (var i=0; i<sounds.length; i++) {
+                howls[sounds[i]] = new Howl({
+                    src: [sounds[i] + '.wav']
+                });
+              };
 
                 // Select a random sound and play it
-                var random =
+
                 var soundFile = sounds[Math.floor(Math.random() * sounds.length)];
-                sounds[1].play();
                 </script>
 </head>
 
