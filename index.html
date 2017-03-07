@@ -11,7 +11,7 @@
         <script src="node_modules/aframe-extras/dist/aframe-extras.min.js"></script>
         <script src="http://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.1/dist/aframe-extras.controls.min.js"></script>
         <script src="http://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.1/dist/aframe-extras.min.js"></script>
-
+        <script src="node_modules/seedrandom.js"></script>
 
 
 
@@ -60,22 +60,43 @@
                 var sound2 = new Howl({
                   src: ['audio/bm.mp3'],
                   sprite: {
-                    blast: [0, 3000],
-                    laser: [4000, 1000],
-                    winner: [8000, 5000]
+                    s1: [0, 5000],
+                    s2: [3000, 5000],
+                    s3: [6000, 5000],
+                    s4: [9000, 5000],
+                    s5: [12000, 5000],
+                    s6: [15000, 5000],
+                    s7: [18000, 5000],
                   }
                 });
 
+                function getRand(){
+                   return new Date().getTime().toString() + Math.floor(Math.random()*1000000);
+                }
+
 
                 var soundFile = [];
-                var sounds = [ding, alert, sound];
+                var sounds = [ding,ding, alert, ding2];
+                var sprites = ['s1','s2','s3','s4','s5','s6','s7'];
 
                 // Preload Howl objects
-
+                //  var soundFile = sounds[Math.floor(Math.random() * sounds.length)];
                 // Select a random sound and play it
-                var random =
-                var soundFile = sounds[Math.floor(Math.random() * sounds.length)];
-                sounds[1].play();
+                function randomSound(){
+                var soundFile = sounds[Math.floor( Math.random() * sounds.length)];
+                soundFile.play();
+                };
+
+                function randomSprite(){
+                var soundSprite = sprites[Math.floor( Math.random() * sprites.length)];
+                sound2.play(soundSprite);
+                sound2.fade(0,1,2000,soundSprite);
+                function fadeout(){sound2.fade(1,0,2000,soundSprite)};
+                setTimeout(fadeout(),3000);
+                };
+
+
+
                 </script>
 </head>
 
@@ -407,6 +428,7 @@
                 cubeEl.setAttribute('class', 'intersectable');
                 cubeEl.setAttribute('onclick', 'incrementCount();checkCount();');
                 cubeEl.addEventListener('mouseenter', function () {
+                randomSprite();
                 this.setAttribute('material','color:#FFFFFF;metalness:.7;sphericalEnvMap:#color');
                 ding2.play();
                     });
@@ -510,15 +532,16 @@ function transition01(){
 <!-- Shell Transition -->
 <script>
 function transition02(){
+    stop();
     tiny.play();
     var shellGroup = document.querySelector('#shellGrp');
     shellGroup.setAttribute('visible','true');
     var transition2 = document.createElement('a-animation');
     transition2.setAttribute('repeat','0');
     transition2.setAttribute('attribute','position');
-    transition2.setAttribute('dur','10000');
+    transition2.setAttribute('dur','22000');
     transition2.setAttribute('easing','ease');
-    transition2.setAttribute('from','0 -15 0');
+    transition2.setAttribute('from','0 -13 0');
     transition2.setAttribute('to','0 7 0');
     transition2.setAttribute('fill','forwards');
     shellGroup.appendChild(transition2);
