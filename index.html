@@ -86,15 +86,7 @@
                 setTimeout(fadeout(),3000);
                 };
                 </script>
-                <script>
-               var checkMob = AFRAME.utils.device.isMobile ();
 
-               if (checkMob == false ){
-
-               } else{
-                alert.play()
-               };
-               </script>
 
 </head>
 
@@ -205,8 +197,8 @@
             <a-entity id="courtyardElements" obj-model="obj: #courtyardElements-obj" mixin="mtl_ancientDark"  position="0 0 0"></a-entity>
             <a-entity id="pedestal" obj-model="obj: #pedestal-obj" mixin="mtl_ancient2" checkpoint position="0 -2.1 0">
               <a-box id="portalcube" scale=".2 .6 .2" position="0 1.5 0" material="shader:flat;color:white"></a-box>
-
             </a-entity>
+
             <a-entity obj-model="obj: #walkway-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
             <a-entity obj-model="obj: #courtyard-obj" mixin="ancient_Fractal" checkpoint position="0 0 0"></a-entity>
             <a-entity obj-model="obj: #towers-obj" mixin="ancient_Fractal" checkpoint position="0 0 0"></a-entity>
