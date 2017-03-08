@@ -24,7 +24,8 @@
                 <!-- HERE WE ARE     -->
         <title>here we are </title>
 
-        <script>
+
+       <script>
 
                 var tiny = new Howl({
                   src: ['audio/tiny_mystery.mp3']
@@ -85,7 +86,15 @@
                 setTimeout(fadeout(),3000);
                 };
                 </script>
+                <script>
+               var checkMob = AFRAME.utils.device.isMobile ();
 
+               if (checkMob == false ){
+
+               } else{
+                alert.play()
+               };
+               </script>
 
 </head>
 
@@ -106,6 +115,8 @@
                     <!-- Temple -->
                                   <a-asset-item id="temple-obj" src="assets/models/temple.obj"></a-asset-item>
                                   <a-asset-item id="walkway-obj" src="assets/models/walkway.obj"></a-asset-item>
+                                  <a-asset-item id="pedestal-obj" src="assets/models/pedestal.obj"></a-asset-item>
+
 
                     <!--Ceiling-->
                                   <a-asset-item id="ceiling-obj" src="assets/models/ceiling.obj"></a-asset-item>
@@ -118,12 +129,12 @@
                                   <a-mixin id="checkpoint-hovered" color="#FFFFFF"></a-mixin>
 
                     <!-- Video Textures -->
-                              <video id="particles" src="assets/particles.mov"  loop="true"></video>
+                              <video id="particles" src="assets/particles.mov"  loop="true" webkit-playsinline></video>
                               <video id="disp" src="assets/displacement.mov"  loop="true"></video>
-                              <video id="geometric" src="assets/geometric_lq2.mov"  loop="true"></video>
-                              <video id="color" src="assets/color_sm.mov"  loop="true"></video>
-                              <video id="sky" src="assets/sky.mov"  loop="true"></video>
-                              <video id="blue" src="assets/color_blue.mp4" loop="true"></video>
+                              <video id="geometric" src="assets/geometric_lq2.mov"  loop="true" webkit-playsinline></video>
+                              <video id="color" src="assets/color_sm.mov"  loop="true" webkit-playsinline></video>
+                              <video id="sky" src="assets/sky.mov"  loop="true" webkit-playsinline></video>
+                              <video id="blue" src="assets/color_blue.mp4" loop="true" webkit-playsinline></video>
 
                               <a-image id="ancientFractal" src="assets/ancient.jpg"></image>
                               <a-image id="geoNrm01" src="assets/norm2.jpg"></image>
@@ -157,7 +168,7 @@
           id="camera"
           active="true"
           look-controls
-          wasd-controls="acceleration:150;fly:false"
+          wasd-controls="acceleration:150;fly:true"
           mouse-cursor
           universal-controls="movementControls:checkpoint;movementSpeed:10"
           checkpoint-controls="mode: animate;animateSpeed:7"
@@ -181,6 +192,10 @@
 
 <!-- Temple -->
             <a-entity id="theTemple" obj-model="obj: #temple-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
+            <a-entity id="pedestal" obj-model="obj: #pedestal-obj" mixin="mtl_ancient2" checkpoint position="0 -2.1 0">
+              <a-box id="portalcube" scale=".2 .6 .2" position="0 1.5 0" material="shader:flat;color:white"></a-box>
+
+            </a-entity>
             <a-entity obj-model="obj: #walkway-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
             <a-entity obj-model="obj: #courtyard-obj" mixin="ancient_Fractal" checkpoint position="0 0 0"></a-entity>
             <a-entity obj-model="obj: #towers-obj" mixin="ancient_Fractal" checkpoint position="0 0 0"></a-entity>
@@ -221,7 +236,7 @@
 
                 <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="60000" delay="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
 </a-entity>
-<a-light type="point" position="0 28 0" color="#FF0000" intensity="2" decay="5" distance="70">
+<a-light id="redLight" type="point" position="0 28 0" color="#FF0000" intensity="0" decay="5" distance="70">
 <a-animation attribute="decay" from="6" to="4" begin="0" repeat="indefinate" direction="alternate" dur="2666"></a-animation>
 </a-light>
 
@@ -236,7 +251,7 @@
 
 
 
-<a-entity position="0 2 0">
+<a-entity position="-1 2 0">
 <a-box id="waypoint2" scale="0 0 0" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0" light="type:point;color:#6cd0ff;intensity:20;decay:14;distance:50;"></a-box>
 </a-entity>
 
@@ -442,6 +457,19 @@ function transition01(){
   for (var i = 0; i < list.length; i++) {
     list[i].setAttribute('material','color:#FFFFFF;metalness:.7;sphericalEnvMap:#color');
   };
+
+
+  var SelRedLight = document.querySelector('#redLight');
+  var RedLightIntensity = document.createElement('a-animation');
+  RedLightIntensity.setAttribute('repeat','0');
+  RedLightIntensity.setAttribute('attribute','intensity');
+  RedLightIntensity.setAttribute('dur','8000');
+  RedLightIntensity.setAttribute('easing','ease');
+  RedLightIntensity.setAttribute('from','0' );
+  RedLightIntensity.setAttribute('to','3');
+  RedLightIntensity.setAttribute('fill','forwards');
+  SelRedLight.appendChild(RedLightIntensity);
+
   var cParent = document.querySelector('#cubeparent');
   var transition1 = document.createElement('a-animation');
   transition1.setAttribute('repeat','0');
@@ -451,6 +479,7 @@ function transition01(){
   transition1.setAttribute('to','.01 .01 .01');
   transition1.setAttribute('fill','forwards');
   cParent.appendChild(transition1);
+
   var transition1rotation = document.createElement('a-animation');
   transition1rotation.setAttribute('repeat','0');
   transition1rotation.setAttribute('attribute','rotation');
@@ -459,9 +488,30 @@ function transition01(){
   transition1rotation.setAttribute('to','0 720 0');
   transition1rotation.setAttribute('fill','forwards');
   cParent.appendChild(transition1rotation);
+
   var onAnimationEnd = function () {
   scene.remove(document.querySelector('#cubeparent'))
   console.log('donerotation');
+  var ped = document.querySelector('#pedestal');
+  var pedPos = document.createElement('a-animation');
+  pedPos.setAttribute('repeat','0');
+  pedPos.setAttribute('attribute','position');
+  pedPos.setAttribute('dur','8000');
+  pedPos.setAttribute('easing','ease');
+  pedPos.setAttribute('to','0 -.8 0');
+  pedPos.setAttribute('fill','forwards');
+  ped.appendChild(pedPos);
+  var portalcube = document.querySelector('#portalcube');
+  var portalcubePos = document.createElement('a-animation');
+  portalcubePos.setAttribute('repeat','0');
+  portalcubePos.setAttribute('attribute','position');
+  portalcubePos.setAttribute('dur','8000');
+  portalcubePos.setAttribute('easing','ease');
+  portalcubePos.setAttribute('from','0 1.5 .05');
+  portalcubePos.setAttribute('to','0 2.5 .05');
+  portalcubePos.setAttribute('fill','forwards');
+  portalcube.appendChild(portalcubePos);
+
   transition02();
   };
   transition1.addEventListener('animationend', onAnimationEnd.bind(this))
@@ -481,13 +531,19 @@ function transition02(){
     transition2.setAttribute('attribute','position');
     transition2.setAttribute('dur','22000');
     transition2.setAttribute('easing','ease');
-    transition2.setAttribute('from','0 -15 0');
+    transition2.setAttribute('from','0 -18 0');
     transition2.setAttribute('to','0 7 0');
     transition2.setAttribute('fill','forwards');
     shellGroup.appendChild(transition2);
     console.log('done Transition 02');
     var wp2 = document.querySelector('#waypoint2');
-    wp2.setAttribute('light','distance','100');
+    var transitionLight = document.createElement('a-animation');
+    transitionLight.setAttribute('repeat','0');
+    transitionLight.setAttribute('attribute','light.distance');
+    transitionLight.setAttribute('to','100');
+    transitionLight.setAttribute('from','50');
+    transitionLight.setAttribute('dur','5000');
+    wp2.appendChild(transitionLight);
     wp2.setAttribute('scale','4 4 4');
     };
     transition2.addEventListener('animationend', onAnimationEnd.bind(this))
@@ -579,6 +635,8 @@ document.querySelector('#boop').addEventListener('mouseleave', function () {
 var list2 = document.querySelectorAll(".waypoints");
 for (var w = 0; w < list2.length; w++) {
       list2[w].setAttribute('material','color:#0000FF');
+      list2[w].setAttribute('opacity','0');
+      list2[w].setAttribute('transparent','true');
       list2[w].addEventListener('click', function (evt) {
        var scene = document.querySelector('a-scene');
        var clickRing = document.createElement('a-entity');
