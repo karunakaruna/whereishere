@@ -19,6 +19,19 @@
                   src: ['audio/tiny_mystery.mp3']
                 });
 
+
+
+                var bgMusic = new Howl({
+                  src: ['audio/bm.mp3'],
+                  autoplay: true,
+                  loop: true,
+                  volume: 0.2,
+                  onend: function() {
+                    console.log('Finished!');
+                  }
+                });
+
+
                 var sound = new Howl({
                   src: ['audio/bm.mp3']
                 });
@@ -95,6 +108,7 @@
                     <!-- Temple -->
                                   <a-asset-item id="temple-obj" src="assets/models/temple.obj"></a-asset-item>
                                   <a-asset-item id="walkway-obj" src="assets/models/walkway.obj"></a-asset-item>
+                                  <a-asset-item id="walkway2-obj" src="assets/models/walkway2.obj"></a-asset-item>
                                   <a-asset-item id="pedestal-obj" src="assets/models/pedestal.obj"></a-asset-item>
                                   <a-asset-item id="shape01-obj" src="assets/models/shape01.obj"></a-asset-item>
                                   <a-asset-item id="courtyardElements-obj" src="assets/models/elements.obj"></a-asset-item>
@@ -156,16 +170,16 @@
           mouse-cursor
           universal-controls="movementControls:checkpoint;movementSpeed:10"
           checkpoint-controls="mode: animate;animateSpeed:7"
-          position="-60 2 0"
-          rotation="35 -90 0"
+          position="-103 2 26.67"
+          rotation="6.75 303.16 0"
           fov="50">
                     <a-entity cursor="maxDistance: 100"
                               fuse="true"
-                              fuseTimeout="1600"
+                              fuseTimeout="800"
                               raycaster="far: 100; objects: .waypoints,.intersectable"
                               position="0 0 -1"
                               geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.014;"
-                              material="color: #FFF; shader: flat;">
+                              material="color: #FFF; shader: flat;opacity:0">
 
                               <a-animation begin="click" easing="ease-in" attribute="scale"  fill="forwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
                               <a-animation begin="fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500" repeat="1"></a-animation>
@@ -182,7 +196,7 @@
             <a-entity id="pedestal" obj-model="obj: #pedestal-obj" mixin="mtl_ancient2" checkpoint position="0 -2.1 0">
               <a-box id="portalcube" scale=".2 .6 .2" position="0 1.5 0" material="shader:flat;color:white"></a-box>
             </a-entity>
-
+            <a-entity obj-model="obj: #walkway2-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
             <a-entity obj-model="obj: #walkway-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
             <a-entity obj-model="obj: #courtyard-obj" mixin="ancient_Fractal" checkpoint position="0 0 0"></a-entity>
             <a-entity obj-model="obj: #towers-obj" mixin="ancient_Fractal" checkpoint position="0 0 0"></a-entity>
@@ -245,7 +259,7 @@
 
 
 <a-entity position="-30 2 0">
-<a-box scale="1 4 4" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+<a-box scale="1 18 4" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
 </a-entity>
 
 <a-entity position="-20 2 0">
@@ -253,12 +267,21 @@
 </a-entity>
 
 <a-entity position="-60 2 0">
-<a-box scale="1 4 4" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+<a-box scale="10 20 10" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
 </a-entity>
 
-<a-entity position="-100 2 0">
-<a-box scale="1 4 4" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+<a-entity position="-90 2 0">
+<a-box scale="15 20 15" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
 </a-entity>
+
+<a-entity position="-113 2 -40">
+<a-box scale="15 35 15" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+<a-entity position="-70 2 -35">
+<a-box scale="15 20 15" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
 
 
 <script>
