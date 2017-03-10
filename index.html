@@ -11,7 +11,7 @@
         <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.1/dist/aframe-extras.controls.min.js"></script>
         <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.1/dist/aframe-extras.min.js"></script>
         <script src="bundle.js"></script>
-        
+
         <script src="https://unpkg.com/networked-aframe/dist/networked-aframe.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
         <script src="easyrtc/api/easyrtc.js"></script>
@@ -140,9 +140,11 @@
 <!-- Scene -->
         <body>
           <a-scene network-scene="
-  room: here;
+  app: whereishere;
+  room: where;
   audio: false;
   debug: true;
+  signallingUrl: http://haydenlee.io;
   ">
         <!-- Assets -->
             <a-assets timeout="10000">
@@ -373,8 +375,8 @@
           var elms = [];
           var elms = document.getElementsByClassName("waypoints");
           for (var b = 0; b < elms.length; b++) {
-            elms[i].setAttribute('opacity','100');
-            elms[i].setAttribute('transparent','false');
+            elms[b].setAttribute('opacity','0');
+            elms[b].setAttribute('transparent','true');
              };
 </script>
 
