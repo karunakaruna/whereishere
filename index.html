@@ -5,7 +5,6 @@
         <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.2/howler.js"></script>
         <script src="https://rawgit.com/ngokevin/aframe-randomizer-components/master/dist/aframe-randomizer-components.min.js"></script>
-        <script src="noise.js"></script>
 
         <script src="https://rawgit.com/ngokevin/aframe-look-at-component/master/dist/aframe-look-at-component.min.js"></script>
         <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.1/dist/aframe-extras.controls.min.js"></script>
@@ -69,7 +68,7 @@
 
 
                 var bgMusic = new Howl({
-                  src: ['audio/bm.mp3'],
+                  src: ['assetsa/audio/bm.mp3'],
                   autoplay: true,
                   loop: true,
                   volume: 0.2,
@@ -343,32 +342,57 @@
 
 
 <a-entity position="-1 2 0">
-<a-box id="waypoint2" scale="0 0 0" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0" light="type:point;color:#6cd0ff;intensity:20;decay:14;distance:50;"></a-box>
+<a-box id="wpPedestal" scale="0 0 0" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0" light="type:point;color:#6cd0ff;intensity:20;decay:14;distance:50;"></a-box>
 </a-entity>
 
 
-<a-entity position="-30 2 0">
-<a-box scale="1 18 4" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
-</a-entity>
+
 
 <a-entity position="-20 2 0">
-<a-box scale="1 4 4" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+<a-box id="wpWalkway01" scale="1 4 6" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+<a-entity position="-30 2 0">
+<a-box id="wpTempleDoor" scale="1 80 5" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
 </a-entity>
 
 <a-entity position="-60 2 0">
-<a-box scale="10 20 10" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+<a-box id="wpTempleApproach" scale="10 80 40" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
 </a-entity>
 
-<a-entity position="-90 2 0">
-<a-box scale="15 20 15" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+<a-entity position="-89.5 2 .3">
+<a-box id="wpCenterPoint" scale="20 20 20" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
 </a-entity>
 
-<a-entity position="-113 2 -40">
-<a-box scale="15 35 15" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+<a-entity position="-129 2 1.2">
+<a-box id="wpAdjacentTemple" scale="4 50 25" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
 </a-entity>
 
-<a-entity position="-70 2 -35">
-<a-box scale="15 20 15" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+<a-entity position="-70 2 65" rotation="0 20 0">
+<a-box id="wpClockTowerEntrance" scale="30 40 3" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+
+<a-entity position="-50 2 115" rotation="0 20 0">
+<a-box id="wpClockTowerApproach" scale="30 40 3" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+<a-entity position="-38.5 2 142" rotation="0 20 0">
+<a-box id="wpClockTowerDoor" scale="8 40 3" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+
+<a-entity position="-54 2 20" rotation="0 0 0">
+<a-box id="wpTempleSideApproach" scale="30 60 3" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+
+<a-entity position="-113 2 -40" rotation="0 40 0">
+<a-box id="wpTempleDoor02" scale="30 80 15"  color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+<a-entity position="-73 2 -33">
+<a-box id="wpPoi01" scale="20 50 20" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
 </a-entity>
 
 
@@ -629,7 +653,7 @@ function transition02(){
     transition2.setAttribute('fill','forwards');
     shellGroup.appendChild(transition2);
     console.log('done Transition 02');
-    var wp2 = document.querySelector('#waypoint2');
+    var wp2 = document.querySelector('#wpPedestal');
     var transitionLight = document.createElement('a-animation');
     transitionLight.setAttribute('repeat','0');
     transitionLight.setAttribute('attribute','light.distance');
@@ -663,7 +687,7 @@ el.addEventListener('click', function () {
   var scene = document.querySelector('a-scene');
   var newSound = document.createElement('audio');
   newSound.id = 'nsound';
-  newSound.setAttribute('src','audio/bm.mp3');
+  newSound.setAttribute('src','assets/audio/bm.mp3');
   newSound.setAttribute('autoplay','true');
   alert.play();
   el.setAttribute('audioanalyser','src: #nsound');
@@ -735,11 +759,9 @@ for (var w = 0; w < list2.length; w++) {
        clickRing.id = 'clickRing-'+new Date().getTime();
        clickRing.setAttribute('material','shader:flat; color: #FFFFFF; transparent: false; opacity: 1');
        clickRing.setAttribute('geometry','primitive: ring; radius-inner: .5; radius-outer: 0.6;segmentsTheta:4');
-       // clickRing.setAttribute('position',evt.detail.intersection.point);
-       var x = evt.detail.intersection.point.x + -5;
-       var y = evt.detail.intersection.point.y;
-       var z = evt.detail.intersection.point.z;
-       clickRing.setAttribute('position', `${x} ${y} ${z}`);
+       clickRing.setAttribute('position',evt.detail.intersection.point);
+
+
        clickRing.setAttribute('look-at',"[camera]");
        var opacityAnimation = document.createElement('a-animation');
        opacityAnimation.setAttribute('attribute','geometry.radiusInner');
