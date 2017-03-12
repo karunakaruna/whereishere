@@ -17,53 +17,9 @@
         <script src="easyrtc/api/easyrtc.js"></script>
                 <!-- HERE WE ARE -->
 
-
-                <script>
-                      function randomPointOnCircle(radius, angleRad) {
-                        x = Math.cos(angleRad)*radius;
-                        y = Math.sin(angleRad)*radius;
-                        return {x: x, y: y};
-                      }
-
-                      // Define custom schema for syncing avatar color, set by random-color
-                      var avatarSchema = {
-                        template: '#avatar-template',
-                        components: [
-                          'position',
-                          'rotation',
-                          {
-                            selector: '.head',
-                            component: 'material'
-                          }
-                        ]
-                      };
-                      NAF.schemas.add(avatarSchema);
-
-                      // Called by Networked-Aframe when connected to server
-                      function onConnect () {
-                        // Get random angle
-                        var angleRad = Math.random()*Math.PI*2;
-
-                        // Get position around a circle
-                        var position = randomPointOnCircle(3, angleRad);
-                        position.x = position.x - 105;
-                        position.z = position.z + 26.67;
-                        var positionStr = position.x + ' 2 ' + position.y;
-
-                        // Get rotation towards center of circle
-                        var angleDeg = angleRad * 180 / Math.PI;
-                        var angleToCenter = -1 * angleDeg + 90;
-                        var rotationStr = '0 ' + angleToCenter + ' 0';
-
-                        // Create avatar with this position and rotation
-                        NAF.entities.createAvatar('#avatar-template', positionStr, rotationStr);
-                      }
-                    </script>
-
-
          <script>
                 var tiny = new Howl({
-                  src: ['assets/audio/tiny_mystery.mp3']
+                  src: ['audio/tiny_mystery.mp3']
                 });
 
 
@@ -80,28 +36,28 @@
 
 
                 var sound = new Howl({
-                  src: ['assets/audio/bm.mp3']
+                  src: ['audio/bm.mp3']
                 });
 
                 var alert = new Howl({
-                  src: ['assets/audio/alert.wav']
+                  src: ['audio/alert.wav']
                 });
 
                 var ding2 = new Howl({
-                  src: ['assets/audio/321104__nsstudios__blip2.wav']
+                  src: ['audio/321104__nsstudios__blip2.wav']
                 });
 
                 var ding = new Howl({
-                  src: ['assets/audio/321103__nsstudios__blip1.wav']
+                  src: ['audio/321103__nsstudios__blip1.wav']
                 });
 
 
                 var bgsound = new Howl({
-                  src: ['assets/audio/alert.wav']
+                  src: ['audio/alert.wav']
                 });
 
                 var sound2 = new Howl({
-                  src: ['assets/audio/bm.mp3'],
+                  src: ['audio/bm.mp3'],
                   sprite: {
                     s1: [0, 5000],
                     s2: [3000, 5000],
@@ -142,44 +98,9 @@
 
 <!-- Scene -->
         <body>
-          <a-scene network-scene="
-             app: whereishere;
-             room: where;
-             audio: false;
-             debug: true;
-             signallingUrl: https://haydenlee.io;
-             ">
-
-
+          <a-scene>
         <!-- Assets -->
             <a-assets timeout="10000">
-              <script id="avatar-template" type="text/html">
-                <a-entity class="avatar">
-                      <a-sphere class="head"
-                        opacity="0"
-                      ></a-sphere>
-                            <a-entity class="face"
-                              position="0 0.05 0"  >
-                                                <a-sphere class="eye"
-                                                  material="shader:flat;color:#FFFFFF"
-                                                  position="0.12 0.1 -0.35"
-                                                  scale="0.05 0.05 0.05"
-                                                >
-<a-animation attribute="position" from=".12 0.1 -.35" to=".12 0 -.35" dur="1000" repeat="indefinate" direction="alternate" begin="0"></a-animation>
-                                                </a-sphere>
-                                                <a-sphere class="eye"
-                                                  material="shader:flat;color:#FFFFFF"
-                                                  position="-0.12 0.1 -0.35"
-                                                  scale="0.05 0.05 0.05 "
-                                                >
-<a-animation attribute="position" from="-.12 0.1 -.35" to="-.12 0 -.35" dur="1000" repeat="indefinate" direction="alternate" begin="20"></a-animation>
-                              </a-sphere>
-
-                  </a-entity>
-                </a-entity>
-              </script>
-
-
                     <!-- OBJECTS -->
 
                                   <a-mixin id="cube" geometry="primitive: octahedron" random-rotation random-scale "min:.2 .2 .2;max:15 15 15;" random-position="min:-10 0 -10;max:10 20 10;"></a-mixin>
@@ -194,10 +115,7 @@
                                   <a-asset-item id="walkway2-obj" src="assets/models/walkway2.obj"></a-asset-item>
                                   <a-asset-item id="pedestal-obj" src="assets/models/pedestal.obj"></a-asset-item>
                                   <a-asset-item id="shape01-obj" src="assets/models/shape01.obj"></a-asset-item>
-                                  <a-asset-item id="courtyardBuildings-obj" src="assets/models/courtyardBuildings.obj"></a-asset-item>
-                                  <a-asset-item id="courtyardElementsFloor-obj" src="assets/models/courtyardElementsFloor.obj"></a-asset-item>
-                                  <a-asset-item id="centralTower-obj" src="assets/models/centralTower.obj"></a-asset-item>
-                                  <a-asset-item id="statues-obj" src="assets/models/courtyardStatues.obj"></a-asset-item>
+                                  <a-asset-item id="courtyardElements-obj" src="assets/models/elements.obj"></a-asset-item>
 
 
                     <!--Ceiling-->
@@ -223,7 +141,7 @@
 
                     <!-- materials -->
                           <a-mixin id="mtl_ancient" material="shader:standard; roughness:0; metalness:.5; normalMap:#geometric; sphericalEnvMap:#sky"></a-mixin>
-                          <a-mixin id="mtl_ancient2" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:#geoNrm01;sphericalEnvMap:#blue;normalTextureRepeat:.5 .5;"></a-mixin>
+                          <a-mixin id="mtl_ancient2" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:#geoNrm01;sphericalEnvMap:#blue;normalTextureRepeat:1 1;"></a-mixin>
                           <a-mixin id="mtl_ancientDark" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:#geoNrm01;sphericalEnvMap:#blue;normalTextureRepeat:.5 .5;"></a-mixin>
                           <a-mixin id="mtl_ancientGold" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:#geometric;sphericalEnvMap:#color;normalTextureRepeat:1 1;"></a-mixin>
 
@@ -251,11 +169,12 @@
 <a-entity camera
           id="camera"
           active="true"
+          look-controls
           wasd-controls="acceleration:150;fly:false"
           mouse-cursor
           universal-controls="movementControls:checkpoint;movementSpeed:10"
           checkpoint-controls="mode: animate;animateSpeed:7"
-          position="0 0 0"
+          position="-103 2 26.67"
           rotation="0.10 328.71 0"
           fov="50">
                     <a-entity cursor="maxDistance: 100"
@@ -269,7 +188,6 @@
                               <a-animation begin="click" easing="ease-in" attribute="scale"  fill="forwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
                               <a-animation begin="fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500" repeat="1"></a-animation>
                     </a-entity>
-
 </a-entity>
 
 
@@ -285,10 +203,7 @@
             <a-entity obj-model="obj: #walkway2-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
             <a-entity obj-model="obj: #walkway-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
             <a-entity obj-model="obj: #courtyard-obj" mixin="ancient_Fractal" checkpoint position="0 0 0"></a-entity>
-            <a-entity obj-model="obj: #courtyardBuildings-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
-            <a-entity obj-model="obj: #courtyardElementsFloor-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
-            <a-entity obj-model="obj: #centralTower-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
-            <a-entity obj-model="obj: #statues-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
+            <a-entity obj-model="obj: #towers-obj" mixin="ancient_Fractal" checkpoint position="0 0 0"></a-entity>
   <!-- Ceiling -->
             <a-entity obj-model="obj: #ceiling-obj" checkpoint position="0 0 0" material="normalMap:#geometric"></a-entity>
 
@@ -373,7 +288,14 @@
 
 
 
-
+<script>
+          var elms = [];
+          var elms = document.getElementsByClassName("waypoints");
+          for (var b = 0; b < elms.length; b++) {
+            elms[b].setAttribute('opacity','0');
+            elms[b].setAttribute('transparent','true');
+             };
+</script>
 
 <!-- Ground Plane -->
   <a-plane id="waterplane" rotation="-90 0 0" position="0 -4 0" width="400" height="400" segmentsHeight="30" segmentsWidth="30" color="#7BC8A4" material="shader:standard;sphericalEnvMap:#sky;metalness:.95;displacementMap:#disp"></a-plane>
@@ -727,6 +649,7 @@ document.querySelector('#boop').addEventListener('mouseleave', function () {
 
 var list2 = document.querySelectorAll(".waypoints");
 for (var w = 0; w < list2.length; w++) {
+      list2[w].setAttribute('material','color:#0000FF');
       list2[w].setAttribute('transparent','true');
       list2[w].setAttribute('opacity','0');
       list2[w].addEventListener('click', function (evt) {
