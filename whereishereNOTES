@@ -6,6 +6,11 @@ worldPos.copy( worldPos ).add( new THREE.Vector3(0, 0, -2) );
 
 
 
+intPosition = worldPos
+worldPos.copy( worldPos ).add( new THREE.Vector3(0, 0, -2) );
+
+
+
 <script>
       function randomPointOnCircle(radius, angleRad) {
         x = Math.cos(angleRad)*radius;

@@ -117,10 +117,17 @@
                 });
 
 
+                var hey = new Howl({
+                    src: ['assets/audio/beautiful_mystery_compressed.mp3'],
+                    autoplay: true,
+                    html5: true,
+                    volume: 0.2,
+                });
+
 
                 var bgMusic = new Howl({
                   src: ['assets/audio/bm.mp3'],
-                  autoplay: true,
+                  autoplay: false,
                   loop: true,
                   volume: 0.2,
                   onend: function() {
@@ -327,7 +334,8 @@
 
 
 
-      <!-- Player -->
+    <!-- Player -->
+
 <a-entity camera
           id="camera"
           active="true"
@@ -836,6 +844,9 @@ for (var w = 0; w < list2.length; w++) {
       list2[w].setAttribute('opacity','0');
       list2[w].addEventListener('click', function (evt) {
        var scene = document.querySelector('a-scene');
+
+
+       
        var clickRing = document.createElement('a-entity');
        clickRing.id = 'clickRing-'+new Date().getTime();
        clickRing.setAttribute('material','shader:flat; color: #FFFFFF; transparent: false; opacity: 1');
@@ -856,6 +867,8 @@ for (var w = 0; w < list2.length; w++) {
        scaleAnimation.setAttribute('duration','250');
        scaleAnimation.setAttribute('easing','ease-out-quad');
        alert.play();
+       alert.pos(evt.detail.intersection.point);
+       alert.fade(0,1,2000);
        clickRing.appendChild(opacityAnimation);
        clickRing.appendChild(scaleAnimation);
 
