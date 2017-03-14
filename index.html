@@ -267,6 +267,14 @@
           </a-entity>
               </script>
 
+
+              <script id="chime" type="text/html">
+                  <a-ring segments-theta="4" radius-inner=".5" radius-outer=".6" material="shader:flat; color: #FFFFFF; transparent: false; opacity: 1">
+                    <a-animation attribute="radius-Inner" from=".5" to=".6" dur="400" easing="ease-out-quad"></a-animation>
+                     <a-animation attribute="scale" to="4 4 4" duration="400" easing="ease-out-quad"></a-animation>
+                  </a-ring>
+              </script>
+
                     <!-- OBJECTS -->
 
                                   <a-mixin id="cube" geometry="primitive: octahedron" random-rotation random-scale "min:.2 .2 .2;max:15 15 15;" random-position="min:-10 0 -10;max:10 20 10;"></a-mixin>
@@ -846,13 +854,12 @@ for (var w = 0; w < list2.length; w++) {
        var scene = document.querySelector('a-scene');
 
 
-       
-       var clickRing = document.createElement('a-entity');
+       var clickRing = NAF.entities.createNetworkEntity('#chime', evt.detail.intersection.point, '0 0 0');
        clickRing.id = 'clickRing-'+new Date().getTime();
        clickRing.setAttribute('material','shader:flat; color: #FFFFFF; transparent: false; opacity: 1');
        clickRing.setAttribute('geometry','primitive: ring; radius-inner: .5; radius-outer: 0.6;segmentsTheta:4');
        clickRing.setAttribute('position',evt.detail.intersection.point);
-
+       var point = evt.detail.intersection.point;
 
        clickRing.setAttribute('look-at',"[camera]");
        var opacityAnimation = document.createElement('a-animation');
@@ -867,12 +874,19 @@ for (var w = 0; w < list2.length; w++) {
        scaleAnimation.setAttribute('duration','250');
        scaleAnimation.setAttribute('easing','ease-out-quad');
        alert.play();
-       alert.pos(evt.detail.intersection.point);
-       alert.fade(0,1,2000);
+       alert.pos(point);
        clickRing.appendChild(opacityAnimation);
        clickRing.appendChild(scaleAnimation);
 
-       scene.appendChild(clickRing);
+       NAF.utils.whenEntityLoaded(clickRing, function() {
+         scene.appendChild(clickRing);
+
+         var removeChime = function() {
+           clickRing.parentElement.removeChild(clickRing);
+         };
+         setTimeout(removeChime, 4000);
+       })
+
        var onAnimationEnd = function () {
          scene.removeChild(document.querySelector('#'+clickRing.id))
        }
