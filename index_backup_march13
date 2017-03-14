@@ -4,7 +4,6 @@
                 <title> Where is Here? </title>
           <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.2/howler.js"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.3/howler.spatial.min.js"></script>
           <script src="https://rawgit.com/ngokevin/aframe-randomizer-components/master/dist/aframe-randomizer-components.min.js"></script>
 
           <script src="https://rawgit.com/ngokevin/aframe-look-at-component/master/dist/aframe-look-at-component.min.js"></script>
@@ -200,7 +199,7 @@
 
 <!-- Scene -->
         <body>
-          <a-scene network-scene="
+          <a-scene stats network-scene="
              app: whereishere;
              room: whereisnow;
              audio: false;
@@ -215,10 +214,9 @@
                 <a-entity class="avatar">
                       <a-sphere class="head"
                         opacity="0"
-
                       ></a-sphere>
                             <a-entity class="face"
-                              position="0 0.05 0"  scale="1.2 1.2 1.2">
+                              position="0 0.05 0"  >
                                                 <a-sphere class="eye"
                                                   material="shader:flat;color:#FFFFFF"
                                                   position="0.12 0.1 -0.35"
@@ -231,7 +229,7 @@
                                                   position="-0.12 0.1 -0.35"
                                                   scale="0.05 0.05 0.05 "
                                                 >
-<a-animation attribute="position" from="-.12 0.1 -.35" to="-.12 0 -.35" dur="1000" repeat="indefinate" direction="alternate" ></a-animation>
+<a-animation attribute="position" from="-.12 0.1 -.35" to="-.12 0 -.35" dur="1000" repeat="indefinate" direction="alternate" begin="20"></a-animation>
                               </a-sphere>
 
                               <a-entity class="placer" position="0 0 -4">
@@ -243,24 +241,6 @@
               <!-- Emote -->
               <script id="bullet-template" type="text/html">
                 <a-entity>
-
-              <a-sphere class="bullet"
-                material="shader:flat;color:#FFFFFF"
-                scale="0.25 0.25 0.25"
-                position="0 0 0"
-                color="#fff"
-                ><a-animation attribute="scale" to=".01 .01 .01" dur="10000" direction="alternate" easing="ease" repeat="indefinate"></a-animation></a-sphere>
-              <a-animation attribute="scale" to="0 0 0" dur="400" direction="alternate" easing="ease" repeat="indefinate"></a-animation>
-              <a-animation attribute="position" to="0 5 0" dur="200" direction="alternate" easing="ease" repeat="indefinate"></a-animation>
-
-
-            <a-animation attribute="rotation" to="0 360 0" dur="400" easing="linear" repeat="indefinate"></a-animation>
-          </a-entity>
-              </script>
-
-              <!-- Spin -->
-              <script id="spinner" type="text/html">
-                <a-entity>
                 <a-entity position="-.4 0 0">
                 <a-sphere class="bullet"
                   material="shader:flat;color:#FFFFFF"
@@ -268,7 +248,6 @@
                   position="0 0 0"
                   color="#fff"
                 ></a-sphere>
-
                 <a-animation attribute="scale" to="0 2 0" dur="400" direction="alternate" easing="ease" repeat="indefinate"></a-animation>
                 <a-animation attribute="position" to="0 2 0" dur="200" direction="alternate" easing="ease" repeat="indefinate"></a-animation>
 
@@ -289,14 +268,11 @@
               </script>
 
 
-
               <script id="chime" type="text/html">
-                <a-entity >
-                  <a-torus segments-radial="4" segments-tubular="4" material="shader:flat; color: #FFFFFF; transparent: false; opacity: 1">
-                    <a-animation attribute="radius-tubular" from=".05" to="0.0001" dur="2250" easing="ease-out-quad"></a-animation>
-                     <a-animation id="scaling" attribute="scale" to="4 4 4" duration="2500" easing="ease-out-quad"></a-animation>
-                  </a-torus>
-                </a-entity>
+                  <a-ring segments-theta="4" radius-inner=".5" radius-outer=".6" material="shader:flat; color: #FFFFFF; transparent: false; opacity: 1">
+                    <a-animation attribute="radius-Inner" from=".5" to=".5" dur="1300" easing="ease-out-quad"></a-animation>
+                     <a-animation id="scaling" attribute="scale" to="6 4 4" duration="1300" easing="ease-out-quad"></a-animation>
+                  </a-ring>
               </script>
 
                     <!-- OBJECTS -->
@@ -876,31 +852,34 @@ for (var w = 0; w < list2.length; w++) {
       list2[w].setAttribute('opacity','0');
       list2[w].addEventListener('click', function (evt) {
        var scene = document.querySelector('a-scene');
+
+
        var clickRing = NAF.entities.createNetworkEntity('#chime', evt.detail.intersection.point, '0 0 0');
        clickRing.id = 'clickRing-'+new Date().getTime();
+
        clickRing.setAttribute('position',evt.detail.intersection.point);
        var point = evt.detail.intersection.point;
+
        clickRing.setAttribute('look-at',"[camera]");
 
-      var soundId = alert.play();
-      alert.pos(evt.detail.intersection.point.x, evt.detail.intersection.point.y, evt.detail.intersection.point.z,  soundId);
-      alert.pannerAttr({
-        panningModel: 'HRTF',
-        refDistance: 4,
-        rolloffFactor: 0.5,
-        distanceModel: 'exponential',
+       alert.play();
+       var soundId = alert.play();
+       alert.pos(point, soundId);
 
-      }, soundId);
+       var timerAnimation = document.createElement('a-animation');
+       timerAnimation.setAttribute('attribute','rotation');
+       timerAnimation.setAttribute('from','0 0 0');
+       timerAnimation.setAttribute('to','0 0 180');
+       timerAnimation.setAttribute('duration','1200');
+       timerAnimation.setAttribute('easing','ease-out-quad');
 
-
-
-       NAF.utils.whenEntityLoaded(clickRing, function() {
-           var goaway = function () {
-            scene.removeChild(document.querySelector('#'+clickRing.id))
-          };
-          setTimeout( goaway, 2500);
-       })
+       clickRing.appendChild(timerAnimation);
+       var onAnimationEnd = function () {
+         scene.removeChild(document.querySelector('#'+clickRing.id))
+       }
+       timerAnimation.addEventListener('animationend', onAnimationEnd.bind(this))
       });
+
      };
 
   </script>
