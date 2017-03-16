@@ -1,0 +1,976 @@
+  <!DOCTYPE html>
+    <html>
+      <head>
+                <title> Where is Here? </title>
+          <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.2/howler.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.3/howler.spatial.min.js"></script>
+          <script src="https://rawgit.com/ngokevin/aframe-randomizer-components/master/dist/aframe-randomizer-components.min.js"></script>
+
+          <script src="https://rawgit.com/ngokevin/aframe-look-at-component/master/dist/aframe-look-at-component.min.js"></script>
+          <script src="bundle.js"></script>
+          <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.1/dist/aframe-extras.controls.min.js"></script>
+          <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.1/dist/aframe-extras.min.js"></script>
+
+
+          <script src="https://unpkg.com/networked-aframe/dist/networked-aframe.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+          <script src="easyrtc/api/easyrtc.js"></script>
+                <!-- HERE WE ARE -->
+
+
+                <script>
+
+                var avatar;
+                var bulletSpeed = 0;
+
+                      function randomPointOnCircle(radius, angleRad) {
+                        x = Math.cos(angleRad)*radius;
+                        y = Math.sin(angleRad)*radius;
+                        return {x: x, y: y};
+                      }
+
+                      // Define custom schema for syncing avatar color, set by random-color
+                      var avatarSchema = {
+                        template: '#avatar-template',
+                        components: [
+                          'position',
+                          'rotation',
+                          {
+                            selector: '.head',
+                            component: 'material'
+                          }
+                        ]
+                      };
+
+
+                      NAF.schemas.add(avatarSchema);
+
+                      // Called by Networked-Aframe when connected to server
+                      function onConnect () {
+                        // Get random angle
+                        var angleRad = Math.random()*Math.PI*2;
+
+                        // Get position around a circle
+                        var position = randomPointOnCircle(3, angleRad);
+                        position.x = position.x - 105;
+                        position.z = position.z + 26.67;
+                        var positionStr = position.x + ' 2 ' + position.y;
+
+                        // Get rotation towards center of circle
+                        var angleDeg = angleRad * 180 / Math.PI;
+                        var angleToCenter = -1 * angleDeg + 90;
+                        var rotationStr = '0 ' + angleToCenter + ' 0';
+
+                        // Create avatar with this position and rotation
+                        avatar = NAF.entities.createAvatar('#avatar-template', positionStr, rotationStr);
+
+                        // Detect trigger pulled (spacebar)
+                        document.body.onkeyup = function(e){
+                          if(e.keyCode == 32){
+                            emote();
+                          }
+                        }
+                      }
+
+
+                      function emote() {
+                        var tip = avatar.querySelector('.placer');
+                        var position = tip.getAttribute('position');
+                        var worldDirection = new THREE.Vector3();
+                        tip.object3D.getWorldDirection(worldDirection);
+                        worldDirection.multiplyScalar(-1);
+
+                        var worldPos = new THREE.Vector3();
+
+                        worldPos.setFromMatrixPosition(tip.object3D.matrixWorld);
+                        var bullet = NAF.entities.createNetworkEntity('#bullet-template', worldPos, '0 0 0');
+
+
+                        var moveForward = function() {
+                          var currentPosition = bullet.getAttribute('position');
+                          var newPosition = worldDirection
+                                              .clone()
+                                              .multiplyScalar(bulletSpeed)
+                                              .add(currentPosition);
+                          bullet.setAttribute('position', newPosition);
+                        };
+
+                        NAF.utils.whenEntityLoaded(bullet, function() {
+                          var moveInterval = setInterval(moveForward, 100);
+
+                          var removeBullet = function() {
+                            clearInterval(moveInterval);
+                            bullet.parentElement.removeChild(bullet);
+                          };
+                          setTimeout(removeBullet, 10000);
+                        })
+                      }
+
+
+
+                    </script>
+
+
+         <script>
+                var tiny = new Howl({
+                  src: ['assets/audio/tiny_mystery.mp3']
+                });
+
+
+                var hey = new Howl({
+                    src: ['assets/audio/beautiful_mystery_compressed.mp3'],
+                    autoplay: true,
+                    html5: true,
+                    volume: 0.2,
+                });
+
+
+                var bgMusic = new Howl({
+                  src: ['assets/audio/bm.mp3'],
+                  autoplay: false,
+                  loop: true,
+                  volume: 0.2,
+                  onend: function() {
+                    console.log('Finished!');
+                  }
+                });
+
+
+                var sound = new Howl({
+                  src: ['assets/audio/bm.mp3']
+                });
+
+                var alert = new Howl({
+                  src: ['assets/audio/alert.wav']
+                });
+
+                var ding2 = new Howl({
+                  src: ['assets/audio/321104__nsstudios__blip2.wav']
+                });
+
+                var ding = new Howl({
+                  src: ['assets/audio/321103__nsstudios__blip1.wav']
+                });
+
+
+                var bgsound = new Howl({
+                  src: ['assets/audio/alert.wav']
+                });
+
+                var sound2 = new Howl({
+                  src: ['assets/audio/bm.mp3'],
+                  sprite: {
+                    s1: [0, 5000],
+                    s2: [3000, 5000],
+                    s3: [6000, 5000],
+                    s4: [9000, 5000],
+                    s5: [12000, 5000],
+                    s6: [15000, 5000],
+                    s7: [18000, 5000],
+                  }
+                });
+
+
+                var soundFile = [];
+                var sounds = [ding,ding, alert, ding2];
+                var sprites = ['s1','s2','s3','s4','s5','s6','s7'];
+
+                // Preload Howl objects
+                //  var soundFile = sounds[Math.floor(Math.random() * sounds.length)];
+                // Select a random sound and play it
+                function randomSound(){
+                var soundFile = sounds[Math.floor( Math.random() * sounds.length)];
+                soundFile.play();
+                };
+
+                function randomSprite(){
+                var soundSprite = sprites[Math.floor( Math.random() * sprites.length)];
+                sound2.play(soundSprite);
+                sound2.fade(0,1,2000,soundSprite);
+                function fadeout(){sound2.fade(1,0,2000,soundSprite)};
+                setTimeout(fadeout(),3000);
+                };
+                </script>
+
+
+</head>
+
+
+
+<!-- Scene -->
+        <body>
+          <a-scene stats network-scene="
+             app: whereishere;
+             room: whereisnow;
+             audio: false;
+             debug: true;
+             signallingUrl: https://haydenlee.io;
+             ">
+
+
+        <!-- Assets -->
+            <a-assets timeout="10000">
+              <script id="avatar-template" type="text/html">
+                <a-entity class="avatar">
+                      <a-sphere class="head"
+                        opacity="0"
+
+                      ></a-sphere>
+                            <a-entity class="face"
+                              position="0 0.05 0"  scale="1.2 1.2 1.2">
+                                                <a-sphere class="eye"
+                                                  material="shader:flat;color:#FFFFFF"
+                                                  position="0.12 0.1 -0.35"
+                                                  scale="0.05 0.05 0.05"
+                                                >
+<a-animation attribute="position" from=".12 0.1 -.35" to=".12 0 -.35" dur="1000" repeat="indefinate" direction="alternate" begin="0"></a-animation>
+                                                </a-sphere>
+                                                <a-sphere class="eye"
+                                                  material="shader:flat;color:#FFFFFF"
+                                                  position="-0.12 0.1 -0.35"
+                                                  scale="0.05 0.05 0.05 "
+                                                >
+<a-animation attribute="position" from="-.12 0.1 -.35" to="-.12 0 -.35" dur="1000" repeat="indefinate" direction="alternate" ></a-animation>
+                              </a-sphere>
+
+                              <a-entity class="placer" position="0 0 -4">
+                              </a-entity>
+                  </a-entity>
+                </a-entity>
+              </script>
+
+              <!-- Emote -->
+              <script id="bullet-template" type="text/html">
+                <a-entity>
+
+              <a-sphere class="bullet"
+                material="shader:flat;color:#FFFFFF"
+                scale="0.25 0.25 0.25"
+                position="0 0 0"
+                color="#fff"
+                ><a-animation attribute="scale" to=".01 .01 .01" dur="10000" direction="alternate" easing="ease" repeat="indefinate"></a-animation></a-sphere>
+              <a-animation attribute="scale" to="0 0 0" dur="400" direction="alternate" easing="ease" repeat="indefinate"></a-animation>
+              <a-animation attribute="position" to="0 5 0" dur="200" direction="alternate" easing="ease" repeat="indefinate"></a-animation>
+
+
+            <a-animation attribute="rotation" to="0 360 0" dur="400" easing="linear" repeat="indefinate"></a-animation>
+          </a-entity>
+              </script>
+
+              <!-- Spin -->
+              <script id="spinner" type="text/html">
+                <a-entity>
+                <a-entity position="-.4 0 0">
+                <a-sphere class="bullet"
+                  material="shader:flat;color:#FFFFFF"
+                  scale="0.1 0.1 0.1"
+                  position="0 0 0"
+                  color="#fff"
+                ></a-sphere>
+
+                <a-animation attribute="scale" to="0 2 0" dur="400" direction="alternate" easing="ease" repeat="indefinate"></a-animation>
+                <a-animation attribute="position" to="0 2 0" dur="200" direction="alternate" easing="ease" repeat="indefinate"></a-animation>
+
+              </a-entity>
+              <a-entity position=".4 0 0">
+              <a-sphere class="bullet"
+                material="shader:flat;color:#FFFFFF"
+                scale="0.1 0.1 0.1"
+                position="0 0 0"
+                color="#fff"
+              ></a-sphere>
+              <a-animation attribute="scale" to="0 0 0" dur="400" direction="alternate" easing="ease" repeat="indefinate"></a-animation>
+              <a-animation attribute="position" to="0 2 0" dur="200" direction="alternate" easing="ease" repeat="indefinate"></a-animation>
+
+            </a-entity>
+            <a-animation attribute="rotation" to="0 360 0" dur="400" easing="linear" repeat="indefinate"></a-animation>
+          </a-entity>
+              </script>
+
+
+
+              <script id="chime" type="text/html">
+                <a-entity >
+                  <a-torus segments-radial="4" segments-tubular="4" material="shader:flat; color: #FFFFFF; transparent: false; opacity: 1">
+                    <a-animation attribute="radius-tubular" from=".05" to="0.0001" dur="2250" easing="ease-out-quad"></a-animation>
+                     <a-animation id="scaling" attribute="scale" to="4 4 4" duration="2500" easing="ease-out-quad"></a-animation>
+                  </a-torus>
+                </a-entity>
+              </script>
+
+                    <!-- OBJECTS -->
+
+                                  <a-mixin id="cube" geometry="primitive: octahedron" random-rotation random-scale="min:.2 .2 .2; max:5 5 5;" random-position="min:-15 0 -15;max:10 35 10;"></a-mixin>
+
+<!--
+                                  <a-asset-item id="terrain-obj" src="assets/models/terrain.obj"></a-asset-item>
+                                  <a-asset-item id="courtyard-obj" src="assets/models/courtyard.obj"></a-asset-item>
+                                  <a-asset-item id="towers-obj" src="assets/models/towers.obj"></a-asset-item>
+
+                                  <a-asset-item id="temple-obj" src="assets/models/temple.obj"></a-asset-item>
+                                  <a-asset-item id="walkway-obj" src="assets/models/walkway.obj"></a-asset-item>
+                                  <a-asset-item id="walkway2-obj" src="assets/models/walkway2.obj"></a-asset-item>
+                                  <a-asset-item id="pedestal-obj" src="assets/models/pedestal.obj"></a-asset-item>
+                                  <a-asset-item id="shape01-obj" src="assets/models/shape01.obj"></a-asset-item>
+                                  <a-asset-item id="courtyardBuildings-obj" src="assets/models/courtyardBuildings.obj"></a-asset-item>
+                                  <a-asset-item id="courtyardElementsFloor-obj" src="assets/models/courtyardElementsFloor.obj"></a-asset-item>
+                                  <a-asset-item id="centralTower-obj" src="assets/models/centralTower.obj"></a-asset-item>
+                                  <a-asset-item id="statues-obj" src="assets/models/courtyardStatues.obj"></a-asset-item>
+
+                                  <a-asset-item id="ceiling-obj" src="assets/models/ceiling.obj"></a-asset-item>
+
+
+                                  <a-asset-item id="shell-obj" src="assets/models/mother_shell.obj"></a-asset-item>
+
+                                -->
+                                <a-asset-item id="courtyard01-obj" src="assets/models02/courtyard01.obj"></a-asset-item>
+                                <a-asset-item id="courtyard02-obj" src="assets/models02/courtyard02.obj"></a-asset-item>
+                                <a-asset-item id="crust-obj" src="assets/models02/crust.obj"></a-asset-item>
+                                <a-asset-item id="largeRocks-obj" src="assets/models02/largeRocks.obj"></a-asset-item>
+                                <a-asset-item id="rocks01-obj" src="assets/models02/rocks01.obj"></a-asset-item>
+                                <a-asset-item id="rocks02-obj" src="assets/models02/rocks02.obj"></a-asset-item>
+                                <a-asset-item id="statue01-obj" src="assets/models02/statue01.obj"></a-asset-item>
+                                <a-asset-item id="statue02-obj" src="assets/models02/statue02.obj"></a-asset-item>
+                                <a-asset-item id="statue03-obj" src="assets/models02/statue03.obj"></a-asset-item>
+
+                                <a-asset-item id="temple01-obj" src="assets/models02/temple01.obj"></a-asset-item>
+                                <a-asset-item id="temple01ceiling-obj" src="assets/models02/temple01ceiling.obj"></a-asset-item>
+                                <a-asset-item id="temple02-obj" src="assets/models02/temple02.obj"></a-asset-item>
+                                <a-asset-item id="temple03-obj" src="assets/models02/temple03.obj"></a-asset-item>
+                                <a-asset-item id="temple04-obj" src="assets/models02/temple04.obj"></a-asset-item>
+                                <a-asset-item id="temple05-obj" src="assets/models02/temple05.obj"></a-asset-item>
+                                <a-asset-item id="temple06-obj" src="assets/models02/temple06.obj"></a-asset-item>
+
+
+                                <a-asset-item id="mountain-obj" src="assets/models02/terrain_mountain.obj"></a-asset-item>
+                                <a-asset-item id="terrain-obj" src="assets/models02/terrain01.obj"></a-asset-item>
+
+                                <a-asset-item id="tower01-obj" src="assets/models02/tower01.obj"></a-asset-item>
+                                <a-asset-item id="tower02-obj" src="assets/models02/tower02.obj"></a-asset-item>
+                                <a-asset-item id="tower03-obj" src="assets/models02/tower03.obj"></a-asset-item>
+
+                                <a-asset-item id="walkway01-obj" src="assets/models02/walkway1.obj"></a-asset-item>
+                                <a-asset-item id="walkway02-obj" src="assets/models02/walkway2.obj"></a-asset-item>
+
+
+
+
+                  <!-- Checkpoints -->
+                                  <a-mixin id="checkpoint"></a-mixin>
+                                  <a-mixin id="checkpoint-hovered" color="#FFFFFF"></a-mixin>
+
+                  <!-- Video Textures -->
+                              <video id="disp" src="assets/displacement.mov"  loop="true"></video>
+                              <video id="geometric" src="assets/geometric_lq2.mov"  loop="true" webkit-playsinline></video>
+                              <video id="color" src="assets/color_sm.mov"  loop="true" webkit-playsinline></video>
+                              <video id="sky" src="assets/sky.mov"  loop="true" webkit-playsinline></video>
+                              <video id="blue" src="assets/color_blue.mp4" loop="true" webkit-playsinline></video>
+                              <video id="waves" src="assets/waves.mov" loop="true" webkit-playsinline></video>
+
+                              <a-image id="ancientFractal" src="assets/ancient.jpg"></image>
+                              <a-image id="geoNrm01" src="assets/norm2.jpg"></image>
+                              <a-image id="cobalt" src="assets/cobalt_512.jpg"></image>
+
+                    <!-- materials -->
+                          <a-mixin id="mtl_ancientAnim" material="shader:standard; roughness:0; metalness:.5; normalMap:#geometric; sphericalEnvMap:#sky"></a-mixin>
+                          <a-mixin id="mtl_ancient" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:#geoNrm01;sphericalEnvMap:#blue;normalTextureRepeat:.5 .5;"></a-mixin>
+                          <a-mixin id="mtl_ancientDark" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:#geoNrm01;sphericalEnvMap:#blue;normalTextureRepeat:.5 .5;"></a-mixin>
+                          <a-mixin id="mtl_ancientGold" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:#geometric;sphericalEnvMap:#color;normalTextureRepeat:1 1;"></a-mixin>
+                          <a-mixin id="ancient_Fractal" material="shader:standard;roughness:.5;color:#FFFFFF;metalness:.2;normalMap:#ancientFractal;sphericalEnvMap:#color;normalTextureRepeat:2 2"></a-mixin>
+
+
+
+                          <a-mixin id="randomize_01" random-rotation random-position="min:-15 2 -15;max:15 9 15;"></a-mixin>
+
+
+                    <!-- Animation Animation Textures -->
+                          <a-mixin id="rotAnim"  attribute="rotation" to="360 360 360" easing="linear" dur="40000"repeat="indefinate" begin="0" fill="backwards"></a-mixin>
+                          <a-mixin id="rotAnimSlow"  attribute="rotation" to="360 360 360" easing="linear" dur="130000"repeat="indefinate" begin="0" fill="backwards"></a-mixin>
+                          <a-mixin id="rotAnim2"  attribute="rotation" to="0 360 0" easing="ease-out-quad" dur="2000" fill="forwards"></a-mixin>
+                          <a-mixin id="posAnim"  attribute="position" to="0 2 0" easing="ease-out-quad" dur="2000" fill="forwards" alternate="reverse" repeat="indefinately"></a-mixin>
+                          <a-mixin id="select-anim" begin="click" attribute="scale" to="2 2 2" easing="ease-out-quad" dur="200" fill="forwards" repeat="1"></a-mixin>
+
+
+            </a-assets>
+<!-- Assets -->
+
+
+
+    <!-- Player -->
+
+<a-entity camera
+          id="camera"
+          active="true"
+          wasd-controls="acceleration:150;fly:false"
+          mouse-cursor
+          universal-controls="movementControls:checkpoint;movementSpeed:10"
+          checkpoint-controls="mode: animate;animateSpeed:7"
+          position="0 0 0"
+          rotation="0.10 328.71 0"
+          fov="50">
+                    <a-entity cursor="maxDistance: 100"
+                              fuse="true"
+                              fuseTimeout="800"
+                              raycaster="far: 100; objects: .waypoints,.intersectable"
+                              position="0 0 -1"
+                              geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.014;"
+                              material="color: #FFF; shader: flat;opacity:0">
+
+                              <a-animation begin="click" easing="ease-in" attribute="scale"  fill="forwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
+                              <a-animation begin="fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500" repeat="1"></a-animation>
+                    </a-entity>
+
+</a-entity>
+
+
+
+
+<!--
+
+            <a-entity obj-model="obj: #terrain-obj;" material="normalMap:#geoNrm01;normalTextureRepeat:80 80;src:#cobalt;sphericalEnvMap:#blue;metalness:.7;displacementMap:#disp;displacementScale:3"></a-entity>
+
+
+            <a-entity id="pedestal" obj-model="obj: #pedestal-obj" mixin="mtl_ancient2" checkpoint position="0 -2.1 0">
+              <a-box id="portalcube" scale=".2 .6 .2" position="0 1.5 0" material="shader:flat;color:white"></a-box>
+            </a-entity>
+
+            <a-entity id="theTemple" obj-model="obj: #temple-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
+
+            <a-entity id="floatingShape01" obj-model="obj: #shape01-obj" mixin="mtl_ancientGold" checkpoint position="-130 30 -70"><a-animation mixin="rotAnimSlow"></a-animation></a-entity>
+
+            <a-entity id="courtyardElements" obj-model="obj: #courtyardElements-obj" mixin="mtl_ancientDark"  position="0 0 0"></a-entity>
+
+            <a-entity obj-model="obj: #walkway2-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
+            <a-entity obj-model="obj: #walkway-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
+            <a-entity obj-model="obj: #courtyard-obj" mixin="ancient_Fractal" checkpoint position="0 0 0"></a-entity>
+            <a-entity obj-model="obj: #courtyardBuildings-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
+            <a-entity obj-model="obj: #courtyardElementsFloor-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
+            <a-entity obj-model="obj: #centralTower-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
+            <a-entity obj-model="obj: #statues-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
+
+            <a-entity obj-model="obj: #ceiling-obj" checkpoint position="0 0 0" material="normalMap:#geometric"></a-entity>
+
+
+          <a-entity id="shellGrp" visible="false" position="0 -15 0" scale="1.4 1.4 1.4">
+                <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01" ><a-animation mixin="rotAnim"></a-animation></a-entity>
+                <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01"   sound="on: click; src: #river;" audioanalyser="src: #raver" audioanalyser-volume-scale="multiplier: 1"><a-animation mixin="rotAnim"></a-animation></a-entity>
+                <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01"  sound="on: click; src: #river;" ><a-animation mixin="rotAnim"></a-animation></a-entity>
+                <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01"   sound="on: click; src: #river;" ><a-animation mixin="rotAnim"></a-animation></a-entity>
+          </a-entity>
+
+ -->
+
+<a-entity obj-model="obj: #courtyard01-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #courtyard02-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #crust-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #largeRocks-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+
+<a-entity obj-model="obj: #rocks01-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #rocks02-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+
+<a-entity obj-model="obj: #statue01-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #statue02-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #statue03-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+
+<a-entity obj-model="obj: #temple01-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #temple01ceiling-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #temple02-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #temple03-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #temple04-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #temple05-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #temple06-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+
+<a-entity obj-model="obj: #mountain-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #terrain-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #tower01-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #tower02-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #tower03-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #walkway01-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #walkway02-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+
+
+
+
+
+
+
+
+
+
+
+<!-- Rotating Scene Lights -->
+<a-entity position="" rotation="" scale="1000 1000 1000" visible="">
+          <a-light type="point" position="0 0 -5" color="#cc1616" intensity=".3" rotation="" scale="" visible="" light="">
+          <a-animation attribute="intensity" from=".2" to=".7" begin="0" repeat="indefinate" direction="alternate" dur="9999"></a-animation>
+        </a-light>
+        <a-light type="point" position="0 0 5" color="#FF5500" intensity=".3" rotation="" scale="" visible="" light=""></a-light>
+        <a-light type="point" position="5 0 0" color="#FF6644" intensity=".2" rotation="0 169.5462119999768 0" scale="1 1 1" visible="true" light="type:point;color:#6cd0ff;intensity:.4">
+                <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="1000" delay="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
+        </a-light>
+
+                <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="60000" delay="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
+</a-entity>
+<a-light id="redLight" type="point" position="0 28 0" color="#FF0000" intensity="0" decay="5" distance="70">
+<a-animation attribute="decay" from="6" to="4" begin="0" repeat="indefinate" direction="alternate" dur="2666"></a-animation>
+</a-light>
+
+
+
+
+
+
+                            <!-- Waypoints-->
+
+
+
+
+
+<a-entity position="-1 2 0">
+<a-box id="wpPedestal" scale="0 0 0" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0" light="type:point;color:#6cd0ff;intensity:20;decay:14;distance:50;"></a-box>
+</a-entity>
+
+
+
+
+<a-entity position="-20 2 0">
+<a-box id="wpWalkway01" scale="1 4 6" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+<a-entity position="-30 2 0">
+<a-box id="wpTempleDoor" scale="1 80 5" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+<a-entity position="-60 2 0">
+<a-box id="wpTempleApproach" scale="10 80 40" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+<a-entity position="-89.5 2 .3">
+<a-box id="wpCenterPoint" scale="20 20 20" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+<a-entity position="-129 2 1.2">
+<a-box id="wpAdjacentTemple" scale="4 50 25" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+<a-entity position="-70 2 65" rotation="0 20 0">
+<a-box id="wpClockTowerEntrance" scale="30 40 3" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+
+<a-entity position="-50 2 115" rotation="0 20 0">
+<a-box id="wpClockTowerApproach" scale="30 40 3" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+<a-entity position="-38.5 2 142" rotation="0 20 0">
+<a-box id="wpClockTowerDoor" scale="8 40 3" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+
+<a-entity position="-54 2 20" rotation="0 0 0">
+<a-box id="wpTempleSideApproach" scale="30 60 3" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+
+<a-entity position="-113 2 -40" rotation="0 40 0">
+<a-box id="wpTempleDoor02" scale="30 80 15"  color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+<a-entity position="-73 2 -33">
+<a-box id="wpPoi01" scale="20 50 20" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
+</a-entity>
+
+
+
+
+
+<!-- Ground Plane -->
+  <a-plane id="waterplane" rotation="-90 0 0" position="0 -4 0" width="200" height="200" segmentsHeight="1" segmentsWidth="1" color="#7BC8A4" material="shader:standard;sphericalEnvMap:#sky;metalness:.95;normalMap:#waves"></a-plane>
+  <a-plane id="waterplane" rotation="-90 0 0" position="-200 -4 0" width="200" height="200" segmentsHeight="1" segmentsWidth="1" color="#7BC8A4" material="shader:standard;sphericalEnvMap:#sky;metalness:.95;normalMap:#waves"></a-plane>
+
+
+
+
+  <!-- Audio analyser. -->
+       <a-entity id="analyser"
+         audioanalyser="src: #river"
+         audioanalyser-waveform="radius: 0.5"
+         rotation="90 0 0"
+         position="0 30 0"></a-entity>
+
+
+<a-sphere color="black" scale="50 50 50" position="0 1000 0"></a-sphere>
+<a-entity rotation="180 0 90"> <a-sky src="#sky"><a-animation mixin="rotAnimSlow"></a-animation></a-sky></a-entity>
+
+
+<script>
+	// create empty buffer
+  var isUnlocked = false;
+  function unlock() {
+
+  	if(isIOS || this.unlocked)
+  		return;
+
+  	// create empty buffer and play it
+  	var buffer = myContext.createBuffer(1, 1, 22050);
+  	var source = myContext.createBufferSource();
+  	source.buffer = buffer;
+  	source.connect(myContext.destination);
+  	source.noteOn(0);
+  	// by checking the play state after some time, we know if we're really unlocked
+  	setTimeout(function() {
+  		if((source.playbackState === source.PLAYING_STATE || source.playbackState === source.FINISHED_STATE)) {
+  			isUnlocked = true;
+  		}
+  	}, 0);
+  }
+  </script>
+
+
+
+
+          <!-- Array -->
+             <a-entity id="cubeparent">
+              <a-animation attribute="rotation" dur="100000" from="0 0 0" to="0 360 0" repeat="indefinate" easing="linear"></a-animation>
+
+
+            </a-entity>
+          <script>
+            var cubeEl;
+            var cParent = document.querySelector('#cubeparent');
+            var sceneEl = document.querySelector('a-scene');
+            var xStartPos = -5
+            var zStartPos = 15;
+            var xPos;
+            var zPos;
+            var xMargin = 7;
+            var zMargin = -7;
+            var cubeszNum = 3;
+            var cubesxNum = 3;
+            var rootEl;
+            var x;
+            zPos = zStartPos;
+            for (var i = 0; i < cubeszNum; i += 1) {
+              xPos = xStartPos;
+              for (var j = 0; j < cubesxNum; j += 1) {
+                cubeEl = document.createElement('a-entity');
+                cubeEl.setAttribute('mixin', 'cube mtl_ancient');
+                cubeEl.setAttribute('cursor-listener');
+                cubeEl.setAttribute('class', 'clickable');
+                cubeEl.setAttribute('class', 'intersectable');
+                cubeEl.setAttribute('onclick', 'incrementCount();checkCount();');
+                cubeEl.addEventListener('mouseenter', function () {
+                randomSprite();
+                incrementOverCount();
+                checkOverCount();
+                this.setAttribute('material','color:#FFFFFF;metalness:.7;sphericalEnvMap:#color');
+                });
+               var rotAnimation = document.createElement('a-animation');
+               rotAnimation.setAttribute('begin','click');
+               rotAnimation.setAttribute('mixin','rotAnim2');
+               cubeEl.appendChild(rotAnimation);
+               var rotAnimation = document.createElement('a-animation');
+               rotAnimation.setAttribute('begin','0');
+               rotAnimation.setAttribute('mixin','rotAnim');
+               cubeEl.appendChild(rotAnimation);
+               var posAnim = document.createElement('a-animation');
+               posAnim.setAttribute('repeat','0');
+               posAnim.setAttribute('attribute','position');
+               posAnim.setAttribute('dur','5000');
+               posAnim.setAttribute('begin','click');
+               posAnim.setAttribute('direction','alternate');
+               posAnim.setAttribute('to','0 1 0');
+               cubeEl.appendChild(posAnim);
+               var scaleAnim = document.createElement('a-animation');
+               scaleAnim.setAttribute('repeat','0');
+               scaleAnim.setAttribute('attribute','scale');
+               scaleAnim.setAttribute('dur','5000');
+               scaleAnim.setAttribute('begin','click');
+               scaleAnim.setAttribute('direction','alternate');
+               scaleAnim.setAttribute('easing','ease-out-quad');
+               scaleAnim.setAttribute('to','.1 .1 .1');
+               cubeEl.appendChild(scaleAnim);
+               cubeEl.setAttribute('position', { x: xPos, y: 1, z: zPos});
+                xPos += xMargin;
+                cParent.appendChild(cubeEl);
+              }
+              zPos += zMargin;
+            }
+          </script>
+
+
+
+<!-- Counter Test -->
+<script>
+
+var count = 0;
+    function incrementCount() {
+      count++;
+      };
+
+    function checkCount(){
+      if (count == 3){
+          alert.play();
+
+          transition01();
+
+      }
+      else{
+        ding.play();
+      };
+
+
+    console.log(count);
+
+
+  };
+</script>
+
+
+<script>
+
+var overCount = 0;
+    function incrementOverCount() {
+      overCount++;
+      };
+
+    function checkOverCount(){
+      if (overCount == 7){
+            transition01();
+            alert.play();
+      }
+      else{
+                  };
+
+
+    console.log(overCount);
+
+
+  };
+</script>
+
+
+
+
+
+<!-- Cube Transition -->
+<script>
+function transition01(){
+  var list = document.getElementsByClassName("intersectable");
+  for (var i = 0; i < list.length; i++) {
+    list[i].setAttribute('material','color:#FFFFFF;metalness:.7;sphericalEnvMap:#color');
+  };
+
+
+  var SelRedLight = document.querySelector('#redLight');
+  var RedLightIntensity = document.createElement('a-animation');
+  RedLightIntensity.setAttribute('repeat','0');
+  RedLightIntensity.setAttribute('attribute','intensity');
+  RedLightIntensity.setAttribute('dur','8000');
+  RedLightIntensity.setAttribute('easing','ease');
+  RedLightIntensity.setAttribute('from','0' );
+  RedLightIntensity.setAttribute('to','3');
+  RedLightIntensity.setAttribute('fill','forwards');
+  SelRedLight.appendChild(RedLightIntensity);
+
+  var cParent = document.querySelector('#cubeparent');
+  var transition1 = document.createElement('a-animation');
+  transition1.setAttribute('repeat','0');
+  transition1.setAttribute('attribute','scale');
+  transition1.setAttribute('dur','15000');
+  transition1.setAttribute('easing','ease');
+  transition1.setAttribute('to','.01 .01 .01');
+  transition1.setAttribute('fill','forwards');
+  cParent.appendChild(transition1);
+
+  var transition1rotation = document.createElement('a-animation');
+  transition1rotation.setAttribute('repeat','0');
+  transition1rotation.setAttribute('attribute','rotation');
+  transition1rotation.setAttribute('dur','20000');
+  transition1rotation.setAttribute('easing','ease');
+  transition1rotation.setAttribute('to','0 720 0');
+  transition1rotation.setAttribute('fill','forwards');
+  cParent.appendChild(transition1rotation);
+
+  var onAnimationEnd = function () {
+  scene.remove(document.querySelector('#cubeparent'))
+  console.log('donerotation');
+  var ped = document.querySelector('#pedestal');
+  var pedPos = document.createElement('a-animation');
+  pedPos.setAttribute('repeat','0');
+  pedPos.setAttribute('attribute','position');
+  pedPos.setAttribute('dur','8000');
+  pedPos.setAttribute('easing','ease');
+  pedPos.setAttribute('to','0 -.8 0');
+  pedPos.setAttribute('fill','forwards');
+  ped.appendChild(pedPos);
+  var portalcube = document.querySelector('#portalcube');
+  var portalcubePos = document.createElement('a-animation');
+  portalcubePos.setAttribute('repeat','0');
+  portalcubePos.setAttribute('attribute','position');
+  portalcubePos.setAttribute('dur','8000');
+  portalcubePos.setAttribute('easing','ease');
+  portalcubePos.setAttribute('from','0 1.5 .05');
+  portalcubePos.setAttribute('to','0 2.5 .05');
+  portalcubePos.setAttribute('fill','forwards');
+  portalcube.appendChild(portalcubePos);
+
+  transition02();
+  };
+  transition1.addEventListener('animationend', onAnimationEnd.bind(this))
+};
+  </script>
+
+
+<!-- Shell Transition -->
+<script>
+function transition02(){
+    stop();
+    tiny.play();
+    var shellGroup = document.querySelector('#shellGrp');
+    shellGroup.setAttribute('visible','true');
+    var transition2 = document.createElement('a-animation');
+    transition2.setAttribute('repeat','0');
+    transition2.setAttribute('attribute','position');
+    transition2.setAttribute('dur','22000');
+    transition2.setAttribute('easing','ease');
+    transition2.setAttribute('from','0 -18 0');
+    transition2.setAttribute('to','0 7 0');
+    transition2.setAttribute('fill','forwards');
+    shellGroup.appendChild(transition2);
+    console.log('done Transition 02');
+    var wp2 = document.querySelector('#wpPedestal');
+    var transitionLight = document.createElement('a-animation');
+    transitionLight.setAttribute('repeat','0');
+    transitionLight.setAttribute('attribute','light.distance');
+    transitionLight.setAttribute('to','100');
+    transitionLight.setAttribute('from','50');
+    transitionLight.setAttribute('dur','5000');
+    wp2.appendChild(transitionLight);
+    wp2.setAttribute('scale','4 4 4');
+    };
+    transition2.addEventListener('animationend', onAnimationEnd.bind(this))
+  </script>
+
+
+<!--Links-->
+<script>
+var scene = document.querySelector('a-scene');
+
+var el= document.querySelector('#link');
+el.addEventListener('click', function () {
+  window.location.href = 'https://google.com';
+});
+</script>
+
+
+
+<!-- Audio Reactive -->
+<script>
+<!-- AUDIO REACT -->
+var el= document.querySelector('#audioREACT');
+el.addEventListener('click', function () {
+  var scene = document.querySelector('a-scene');
+  var newSound = document.createElement('audio');
+  newSound.id = 'nsound';
+  newSound.setAttribute('src','assets/audio/bm.mp3');
+  newSound.setAttribute('autoplay','true');
+  alert.play();
+  el.setAttribute('audioanalyser','src: #nsound');
+  el.setAttribute('audioanalyser-volume-scale','multiplier:1');
+});
+</script>
+
+
+
+
+<!-- Eminating Circle-->
+<script>
+
+document.querySelector('#boop').addEventListener('mouseenter', function () {
+  this.setAttribute();
+  alert.play();
+
+});
+
+document.querySelector('#boop').addEventListener('mouseleave', function () {
+    this.setAttribute();
+  });
+
+  document.querySelector('#boop').addEventListener('mouseleave', function () {
+      this.setAttribute();
+    });
+    </script>
+
+
+<script>
+    (function () {
+      // Custom states.
+      var clickedEl = null;
+      var els = document.querySelectorAll('a-entity');
+      Array.prototype.forEach.call(els, function (el) {
+        el.addEventListener('click', function () {
+          if (clickedEl && clickedEl !== el) {
+            clickedEl.removeState('selected');
+          }
+          if (!el.classList.contains('clickable')) { return; }
+          clickedEl = el;
+          clickedEl.addState('selected');
+        });
+      });
+
+      // Responding to mouse events.
+      var cubes = document.querySelectorAll('a-entity[mixin*=cube]');
+      var i;
+      for (i = 0; i < cubes.length; ++i) {
+        cubes[i].addEventListener('click', function () {
+          var href = this.getAttribute('href');
+          cubes[i].setAttribute('color','#FF0000');
+          if (!href) { return; }
+          window.top.postMessage({type: 'navigate', data: {url: href}}, '*');
+                                                        })
+                                          }
+                });
+</script>
+
+<script>
+
+var list2 = document.querySelectorAll(".waypoints");
+for (var w = 0; w < list2.length; w++) {
+      list2[w].setAttribute('transparent','true');
+      list2[w].setAttribute('opacity','0');
+      list2[w].addEventListener('click', function (evt) {
+       var scene = document.querySelector('a-scene');
+       var clickRing = NAF.entities.createNetworkEntity('#chime', evt.detail.intersection.point, '0 0 0');
+       clickRing.id = 'clickRing-'+new Date().getTime();
+       clickRing.setAttribute('position',evt.detail.intersection.point);
+       var point = evt.detail.intersection.point;
+       clickRing.setAttribute('look-at',"[camera]");
+
+      var soundId = alert.play();
+      alert.pos(evt.detail.intersection.point.x, evt.detail.intersection.point.y, evt.detail.intersection.point.z,  soundId);
+      alert.pannerAttr({
+        panningModel: 'HRTF',
+        refDistance: 4,
+        rolloffFactor: 0.5,
+        distanceModel: 'exponential',
+
+      }, soundId);
+
+
+
+       NAF.utils.whenEntityLoaded(clickRing, function() {
+           var goaway = function () {
+            scene.removeChild(document.querySelector('#'+clickRing.id))
+          };
+          setTimeout( goaway, 2500);
+       })
+      });
+     };
+
+  </script>
+
+
+  </a-scene>
+</body>
+</html>
