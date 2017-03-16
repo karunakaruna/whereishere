@@ -200,7 +200,7 @@
 
 <!-- Scene -->
         <body>
-          <a-scene network-scene="
+          <a-scene  network-scene="
              app: whereishere;
              room: whereisnow;
              audio: false;
@@ -330,15 +330,15 @@
                                   <a-mixin id="checkpoint-hovered" color="#FFFFFF"></a-mixin>
 
                     <!-- Video Textures -->
-                              <video id="disp" src="assets/displacement.mov"  loop="true"></video>
-                              <video id="geometric" src="assets/geometric_lq2.mov"  loop="true" webkit-playsinline></video>
-                              <video id="color" src="assets/color_sm.mov"  loop="true" webkit-playsinline></video>
-                              <video id="sky" src="assets/sky.mov"  loop="true" webkit-playsinline></video>
-                              <video id="blue" src="assets/color_blue.mp4" loop="true" webkit-playsinline></video>
+                              <video id="disp" src="assets/movies/displacement.mov"  loop="true"></video>
+                              <video id="geometric" src="assets/movies/geometric_lq2.mov"  loop="true" webkit-playsinline></video>
+                              <video id="color" src="assets/movies/color_sm.mov"  loop="true" webkit-playsinline></video>
+                              <video id="sky" src="assets/movies/sky.mov"  loop="true" webkit-playsinline></video>
+                              <video id="blue" src="assets/movies/color_blue.mp4" loop="true" webkit-playsinline></video>
 
-                              <a-image id="ancientFractal" src="assets/ancient.jpg"></image>
-                              <a-image id="geoNrm01" src="assets/norm2.jpg"></image>
-                              <a-image id="cobalt" src="assets/cobalt_512.jpg"></image>
+                              <a-image id="ancientFractal" src="assets/textures/ancient.jpg"></image>
+                              <a-image id="geoNrm01" src="assets/textures/norm2.jpg"></image>
+                              <a-image id="cobalt" src="assets/textures/cobalt_512.jpg"></image>
 
                     <!-- materials -->
                           <a-mixin id="mtl_ancient" material="shader:standard; roughness:0; metalness:.5; normalMap:#geometric; sphericalEnvMap:#sky"></a-mixin>
@@ -375,7 +375,7 @@
           mouse-cursor
           universal-controls="movementControls:checkpoint;movementSpeed:10"
           checkpoint-controls="mode: animate;animateSpeed:7"
-          position="0 0 0"
+          position="-105 0 26.6"
           rotation="0.10 328.71 0"
           fov="50">
                     <a-entity cursor="maxDistance: 100"

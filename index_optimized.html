@@ -325,6 +325,15 @@
                                   <a-asset-item id="shell-obj" src="assets/models/mother_shell.obj"></a-asset-item>
 
                                 -->
+
+
+
+
+
+
+                                <a-asset-item id="mountain-obj" src="assets/models02/terrain_mountain.obj"></a-asset-item>
+                                <a-asset-item id="terrain-obj" src="assets/models02/terrain01.obj"></a-asset-item>
+
                                 <a-asset-item id="courtyard01-obj" src="assets/models02/courtyard01.obj"></a-asset-item>
                                 <a-asset-item id="courtyard02-obj" src="assets/models02/courtyard02.obj"></a-asset-item>
                                 <a-asset-item id="crust-obj" src="assets/models02/crust.obj"></a-asset-item>
@@ -344,8 +353,7 @@
                                 <a-asset-item id="temple06-obj" src="assets/models02/temple06.obj"></a-asset-item>
 
 
-                                <a-asset-item id="mountain-obj" src="assets/models02/terrain_mountain.obj"></a-asset-item>
-                                <a-asset-item id="terrain-obj" src="assets/models02/terrain01.obj"></a-asset-item>
+
 
                                 <a-asset-item id="tower01-obj" src="assets/models02/tower01.obj"></a-asset-item>
                                 <a-asset-item id="tower02-obj" src="assets/models02/tower02.obj"></a-asset-item>
@@ -363,17 +371,24 @@
 
                   <!-- Video Textures -->
                               <video id="disp" src="assets/movies/displacement.webm"  loop="true" webkit-playsinline></video>
-                              <video id="geometric" src="assets/movies/geometric_lq2.webm"  loop="true" webkit-playsinline></video>
+
                               <video id="color" src="assets/movies/color_sm.webm"  loop="true" webkit-playsinline></video>
                               <video id="sky" src="assets/movies/sky.mov"  loop="true" webkit-playsinline></video>
-                              <video id="blue" src="assets/movies/color_blue.webm" loop="true" webkit-playsinline></video>
                               <video id="waves" src="assets/movies/waves.mov" loop="true" webkit-playsinline></video>
+
+
+                              <video id="geometric" src="assets/movies/geometric_lq2.webm"  loop="true" webkit-playsinline></video>
+                              <video id="blue" src="assets/movies/color_blue.webm" loop="true" webkit-playsinline></video>
+                              <a-image id="cobalt" src="assets/textures/cobalt_512.jpg"></image>
+
 
 
                   <!--  Textures -->
                               <a-image id="ancientFractal" src="assets/textures/ancient.jpg"></image>
                               <a-image id="geoNrm01" src="assets/textures/norm2.jpg"></image>
-                              <a-image id="cobalt" src="assets/textures/cobalt_512.jpg"></image>
+
+
+
 
                     <!-- materials -->
                           <a-mixin id="mtl_ancientAnim" material="shader:standard; roughness:0; metalness:.5; normalMap:#geometric; sphericalEnvMap:#sky"></a-mixin>
@@ -486,7 +501,7 @@
 <a-entity obj-model="obj: #temple06-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 
 <a-entity obj-model="obj: #mountain-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
-// <a-entity obj-model="obj: #terrain-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #terrain-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 <a-entity obj-model="obj: #tower01-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 <a-entity obj-model="obj: #tower02-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 <a-entity obj-model="obj: #tower03-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
