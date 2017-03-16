@@ -361,23 +361,26 @@
                                   <a-mixin id="checkpoint-hovered" color="#FFFFFF"></a-mixin>
 
                   <!-- Video Textures -->
-                              <video id="disp" src="assets/displacement.mov"  loop="true"></video>
-                              <video id="geometric" src="assets/geometric_lq2.mov"  loop="true" webkit-playsinline></video>
-                              <video id="color" src="assets/color_sm.mov"  loop="true" webkit-playsinline></video>
-                              <video id="sky" src="assets/sky.mov"  loop="true" webkit-playsinline></video>
-                              <video id="blue" src="assets/color_blue.mp4" loop="true" webkit-playsinline></video>
-                              <video id="waves" src="assets/waves.mov" loop="true" webkit-playsinline></video>
+                              <video id="disp" src="assets/movies/displacement.webm"  loop="true"></video>
+                              <video id="geometric" src="assets/movies/geometric_lq2.webm"  loop="true" webkit-playsinline></video>
+                              <video id="color" src="assets/movies/color_sm.webm"  loop="true" webkit-playsinline></video>
+                              <video id="sky" src="assets/movies/sky.mov"  loop="true" webkit-playsinline></video>
+                              <video id="blue" src="assets/movies/color_blue.webm" loop="true" webkit-playsinline></video>
+                              <video id="waves" src="assets/movies/waves.mov" loop="true" webkit-playsinline></video>
 
-                              <a-image id="ancientFractal" src="assets/ancient.jpg"></image>
-                              <a-image id="geoNrm01" src="assets/norm2.jpg"></image>
-                              <a-image id="cobalt" src="assets/cobalt_512.jpg"></image>
+
+                  <!--  Textures -->
+                              <a-image id="ancientFractal" src="assets/textures/ancient.jpg"></image>
+                              <a-image id="geoNrm01" src="assets/textures/norm2.jpg"></image>
+                              <a-image id="cobalt" src="assets/textures/cobalt_512.jpg"></image>
 
                     <!-- materials -->
                           <a-mixin id="mtl_ancientAnim" material="shader:standard; roughness:0; metalness:.5; normalMap:#geometric; sphericalEnvMap:#sky"></a-mixin>
                           <a-mixin id="mtl_ancient" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:#geoNrm01;sphericalEnvMap:#blue;normalTextureRepeat:.5 .5;"></a-mixin>
+                          <a-mixin id="mtl_ancient2" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:#geoNrm01;sphericalEnvMap:#blue;normalTextureRepeat:.5 .5;"></a-mixin>
                           <a-mixin id="mtl_ancientDark" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:#geoNrm01;sphericalEnvMap:#blue;normalTextureRepeat:.5 .5;"></a-mixin>
                           <a-mixin id="mtl_ancientGold" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:#geometric;sphericalEnvMap:#color;normalTextureRepeat:1 1;"></a-mixin>
-                          <a-mixin id="ancient_Fractal" material="shader:standard;roughness:.5;color:#FFFFFF;metalness:.2;normalMap:#ancientFractal;sphericalEnvMap:#color;normalTextureRepeat:2 2"></a-mixin>
+                          <a-mixin id="mtl_ancientFractal" material="shader:standard;roughness:.5;color:#FFFFFF;metalness:.2;normalMap:#ancientFractal;sphericalEnvMap:#color;normalTextureRepeat:2 2"></a-mixin>
 
 
 
@@ -461,33 +464,33 @@
 
  -->
 
-<a-entity obj-model="obj: #courtyard01-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #courtyard02-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #crust-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #largeRocks-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #courtyard01-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #courtyard02-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #crust-obj" mixin="mtl_ancientFractal" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #largeRocks-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 
-<a-entity obj-model="obj: #rocks01-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #rocks02-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #rocks01-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #rocks02-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 
-<a-entity obj-model="obj: #statue01-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #statue02-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #statue03-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #statue01-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #statue02-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #statue03-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 
-<a-entity obj-model="obj: #temple01-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #temple01ceiling-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #temple02-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #temple03-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #temple04-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #temple05-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #temple06-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #temple01-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #temple01ceiling-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #temple02-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #temple03-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #temple04-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #temple05-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #temple06-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 
-<a-entity obj-model="obj: #mountain-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #terrain-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #tower01-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #tower02-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #tower03-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #walkway01-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #walkway02-obj" mixin="mtl_ancient" class="intersectable" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #mountain-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+// <a-entity obj-model="obj: #terrain-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #tower01-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #tower02-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #tower03-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #walkway01-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #walkway02-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 
 
 
@@ -654,7 +657,7 @@
               xPos = xStartPos;
               for (var j = 0; j < cubesxNum; j += 1) {
                 cubeEl = document.createElement('a-entity');
-                cubeEl.setAttribute('mixin', 'cube mtl_ancient');
+                cubeEl.setAttribute('mixin', 'cube mtl_ancient2');
                 cubeEl.setAttribute('cursor-listener');
                 cubeEl.setAttribute('class', 'clickable');
                 cubeEl.setAttribute('class', 'intersectable');
