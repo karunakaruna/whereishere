@@ -1,6 +1,7 @@
   <!DOCTYPE html>
     <html>
       <head>
+        <meta name="apple-mobile-web-app-capable" content="yes">
                 <title> Where is Here? </title>
           <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.2/howler.js"></script>
@@ -361,7 +362,7 @@
                                   <a-mixin id="checkpoint-hovered" color="#FFFFFF"></a-mixin>
 
                   <!-- Video Textures -->
-                              <video id="disp" src="assets/movies/displacement.webm"  loop="true"></video>
+                              <video id="disp" src="assets/movies/displacement.webm"  loop="true" webkit-playsinline></video>
                               <video id="geometric" src="assets/movies/geometric_lq2.webm"  loop="true" webkit-playsinline></video>
                               <video id="color" src="assets/movies/color_sm.webm"  loop="true" webkit-playsinline></video>
                               <video id="sky" src="assets/movies/sky.mov"  loop="true" webkit-playsinline></video>
