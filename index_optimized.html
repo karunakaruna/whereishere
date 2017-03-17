@@ -389,15 +389,17 @@
                                             var mobileuser = AFRAME.utils.device.isMobile ();
 
                                             function checkMobile(){
-                                              if (mobileuser == 0){
+                                              if (mobileuser == 1){
                                              		  document.write('<a-image id="blue" src="assets/textures/color_blue.jpg"></image>');
                                                   document.write('<a-image id="color" src="assets/textures/color_sm.jpg"></image>');
+                                                  document.write('<a-image id="geometric" src="assets/textures/norm2.jpg"></image>');
 
 
                                               }
                                               else{
                                                   document.write('<video id="blue" src="assets/movies/color_blue.webm" loop="true" webkit-playsinline></video>');
                                                   document.write('<video id="color" src="assets/movies/color_sm.webm"  loop="true" webkit-playsinline></video>');
+                                                  document.write('<video id="geometric" src="assets/movies/geometric_lq2.webm"  loop="true" webkit-playsinline></video>');
 
                                               };};
 
@@ -419,6 +421,7 @@
                   <!--  Textures -->
                               <a-image id="ancientFractal" src="assets/textures/ancient.jpg"></image>
                               <a-image id="geoNrm01" src="assets/textures/norm2.jpg"></image>
+
 
 
 
@@ -526,7 +529,7 @@
 <a-entity obj-model="obj: #statue03-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 
 <a-entity obj-model="obj: #temple01-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #temple01ceiling-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #temple01ceiling-obj" mixin="mtl_ancientAnim" class="" position="0 0 0"></a-entity>
 <a-entity obj-model="obj: #temple02-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 <a-entity obj-model="obj: #temple03-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 <a-entity obj-model="obj: #temple04-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
