@@ -423,8 +423,6 @@
                                                   document.write('<video id="sky" src="assets/movies/sky.mov"  loop="true" webkit-playsinline></video>');
                                                   document.write('<video id="waves" src="assets/movies/waves.mov" loop="true" webkit-playsinline></video>');
 
-
-
                                                   document.write('');
                                                   document.write('');
                                                   document.write('');
@@ -706,6 +704,7 @@
 
             </a-entity>
           <script>
+          if (mobileuser == 0){
             var cubeEl;
             var cParent = document.querySelector('#cubeparent');
             var sceneEl = document.querySelector('a-scene');
@@ -766,6 +765,15 @@
               }
               zPos += zMargin;
             }
+          }
+          else{
+
+          };
+
+
+
+
+
           </script>
 
 
