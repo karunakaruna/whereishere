@@ -23,7 +23,7 @@
                 <script>
 
                 var avatar;
-                var bulletSpeed = 0;
+                var bulletSpeed = 1;
 
                       function randomPointOnCircle(radius, angleRad) {
                         x = Math.cos(angleRad)*radius;
@@ -343,21 +343,23 @@
 
                                 <div id="uniqueTargetID" style="display: none;"></div>
 
-                                <a-asset-item id="mountain-obj" src="assets/models02/terrain_mountain.obj"></a-asset-item>
-                                <a-asset-item id="terrain-obj" src="assets/models02/terrain01.obj"></a-asset-item>
 
                                 <a-asset-item id="courtyard01-obj" src="assets/models02/courtyard01.obj"></a-asset-item>
                                 <a-asset-item id="courtyard02-obj" src="assets/models02/courtyard02.obj"></a-asset-item>
+
                                 <a-asset-item id="crust-obj" src="assets/models02/crust.obj"></a-asset-item>
                                 <a-asset-item id="largeRocks-obj" src="assets/models02/largeRocks.obj"></a-asset-item>
-                                <a-asset-item id="rocks01-obj" src="assets/models02/rocks01.obj"></a-asset-item>
-                                <a-asset-item id="rocks02-obj" src="assets/models02/rocks02.obj"></a-asset-item>
+
+
+
+
                                 <a-asset-item id="statue01-obj" src="assets/models02/statue01.obj"></a-asset-item>
                                 <a-asset-item id="statue02-obj" src="assets/models02/statue02.obj"></a-asset-item>
                                 <a-asset-item id="statue03-obj" src="assets/models02/statue03.obj"></a-asset-item>
 
                                 <a-asset-item id="temple01-obj" src="assets/models02/temple01.obj"></a-asset-item>
                                 <a-asset-item id="temple01ceiling-obj" src="assets/models02/temple01ceiling.obj"></a-asset-item>
+
                                 <a-asset-item id="temple02-obj" src="assets/models02/temple02.obj"></a-asset-item>
                                 <a-asset-item id="temple03-obj" src="assets/models02/temple03.obj"></a-asset-item>
                                 <a-asset-item id="temple04-obj" src="assets/models02/temple04.obj"></a-asset-item>
@@ -389,17 +391,36 @@
                                             var mobileuser = AFRAME.utils.device.isMobile ();
 
                                             function checkMobile(){
-                                              if (mobileuser == 1){
+                                              if (mobileuser == 0){
                                              		  document.write('<a-image id="blue" src="assets/textures/color_blue.jpg"></image>');
                                                   document.write('<a-image id="color" src="assets/textures/color_sm.jpg"></image>');
                                                   document.write('<a-image id="geometric" src="assets/textures/norm2.jpg"></image>');
+                                                  document.write('<a-asset-item id="rocks01-obj" src=""></a-asset-item>');
+                                                  document.write('<a-asset-item id="rocks02-obj" src=""></a-asset-item>');
+                                                  document.write('<a-asset-item id="mountain-obj" src=""></a-asset-item>');
+                                                  document.write('<a-asset-item id="terrain-obj" src=""></a-asset-item>');
+                                                  document.write('<video id="disp" src=""  loop="true"></video>');
+                                                  document.write('<video id="sky" src=""  loop="true"></video>');
+                                                  document.write('<video id="waves" src="" loop="true"></video>');
 
 
                                               }
                                               else{
                                                   document.write('<video id="blue" src="assets/movies/color_blue.webm" loop="true" webkit-playsinline></video>');
-                                                  document.write('<video id="color" src="assets/movies/color_sm.webm"  loop="true" webkit-playsinline></video>');
-                                                  document.write('<video id="geometric" src="assets/movies/geometric_lq2.webm"  loop="true" webkit-playsinline></video>');
+                                                  document.write('<video id="color" src="assets/movies/color_sm.webm" loop="true" webkit-playsinline></video>');
+                                                  document.write('<video id="geometric" src="assets/movies/geometric_lq2.webm" loop="true" webkit-playsinline></video>');
+                                                  document.write('<a-asset-item id="rocks01-obj" src="assets/models02/rocks01.obj"></a-asset-item>');
+                                                  document.write('<a-asset-item id="rocks02-obj" src="assets/models02/rocks02.obj"></a-asset-item>');
+                                                  document.write('<a-asset-item id="mountain-obj" src="assets/models02/terrain_mountain.obj"></a-asset-item>');
+                                                  document.write('<a-asset-item id="terrain-obj" src="assets/models02/terrain01.obj"></a-asset-item>');
+                                                  document.write('<video id="disp" src="assets/movies/displacement.webm"  loop="true" webkit-playsinline></video>');
+                                                  document.write('<video id="sky" src="assets/movies/sky.mov"  loop="true" webkit-playsinline></video>');
+                                                  document.write('<video id="waves" src="assets/movies/waves.mov" loop="true" webkit-playsinline></video>');
+                                                  document.write('');
+                                                  document.write('');
+                                                  document.write('');
+                                                  document.write('');
+                                                  document.write('');
 
                                               };};
 
@@ -407,7 +428,6 @@
                                 </script>
 
                               <video id="disp" src="assets/movies/displacement.webm"  loop="true" webkit-playsinline></video>
-                              <video id="color" src="assets/movies/color_sm.webm"  loop="true" webkit-playsinline></video>
                               <video id="sky" src="assets/movies/sky.mov"  loop="true" webkit-playsinline></video>
                               <video id="waves" src="assets/movies/waves.mov" loop="true" webkit-playsinline></video>
 
@@ -431,7 +451,7 @@
                           <a-mixin id="mtl_ancient" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:#geoNrm01;sphericalEnvMap:#blue;normalTextureRepeat:.5 .5;"></a-mixin>
                           <a-mixin id="mtl_ancient2" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:#geoNrm01;sphericalEnvMap:#blue;normalTextureRepeat:.5 .5;"></a-mixin>
                           <a-mixin id="mtl_ancientDark" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:#geoNrm01;sphericalEnvMap:#blue;normalTextureRepeat:.5 .5;"></a-mixin>
-                          <a-mixin id="mtl_ancientGold" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:#geometric;sphericalEnvMap:#color;normalTextureRepeat:1 1;"></a-mixin>
+                          <a-mixin id="mtl_ancientGold" material="shader:standard;roughness:0;color:#999999;metalness:.4;normalMap:#geometric;sphericalEnvMap:#color;normalTextureRepeat:2 2;"></a-mixin>
                           <a-mixin id="mtl_ancientFractal" material="shader:standard;roughness:.5;color:#FFFFFF;metalness:.2;normalMap:#ancientFractal;sphericalEnvMap:#color;normalTextureRepeat:2 2"></a-mixin>
 
 
@@ -521,8 +541,8 @@
 <a-entity obj-model="obj: #crust-obj" mixin="mtl_ancientFractal" class="" position="0 0 0"></a-entity>
 <a-entity obj-model="obj: #largeRocks-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 
-<a-entity obj-model="obj: #rocks01-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #rocks02-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #rocks01-obj" mixin="mtl_ancientGold" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #rocks02-obj" mixin="mtl_ancientGold" class="" position="0 0 0"></a-entity>
 
 <a-entity obj-model="obj: #statue01-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 <a-entity obj-model="obj: #statue02-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
@@ -545,15 +565,6 @@
 <a-entity obj-model="obj: #walkway02-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 
 
-
-
-
-
-
-
-
-
-
 <!-- Rotating Scene Lights -->
 <a-entity position="" rotation="" scale="1000 1000 1000" visible="">
           <a-light type="point" position="0 0 -5" color="#cc1616" intensity=".3" rotation="" scale="" visible="" light="">
@@ -573,20 +584,11 @@
 
 
 
-
-
                             <!-- Waypoints-->
-
-
-
-
 
 <a-entity position="-1 2 0">
 <a-box id="wpPedestal" scale="0 0 0" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0" light="type:point;color:#6cd0ff;intensity:20;decay:14;distance:50;"></a-box>
 </a-entity>
-
-
-
 
 <a-entity position="-20 2 0">
 <a-box id="wpWalkway01" scale="1 4 6" color="#FFFFFF" checkpoint class="waypoints" transparent="true" opacity="0"></a-box>
