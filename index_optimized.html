@@ -195,6 +195,11 @@
                 </script>
 
 
+
+
+
+
+
 </head>
 
 
@@ -331,6 +336,13 @@
 
 
 
+
+
+
+
+
+                                <div id="uniqueTargetID" style="display: none;"></div>
+
                                 <a-asset-item id="mountain-obj" src="assets/models02/terrain_mountain.obj"></a-asset-item>
                                 <a-asset-item id="terrain-obj" src="assets/models02/terrain01.obj"></a-asset-item>
 
@@ -370,18 +382,39 @@
                                   <a-mixin id="checkpoint-hovered" color="#FFFFFF"></a-mixin>
 
                   <!-- Video Textures -->
-                              <video id="disp" src="assets/movies/displacement.webm"  loop="true" webkit-playsinline></video>
 
+
+
+                              <script id="mobilecheck" type="text/javascript">
+                                            var mobileuser = AFRAME.utils.device.isMobile ();
+
+                                            function checkMobile(){
+                                              if (mobileuser == 0){
+                                             		  document.write('<a-image id="blue" src="assets/textures/color_blue.jpg"></image>');
+                                                  document.write('<a-image id="color" src="assets/textures/color_sm.jpg"></image>');
+
+
+                                              }
+                                              else{
+                                                  document.write('<video id="blue" src="assets/movies/color_blue.webm" loop="true" webkit-playsinline></video>');
+                                                  document.write('<video id="color" src="assets/movies/color_sm.webm"  loop="true" webkit-playsinline></video>');
+
+                                              };};
+
+                                              checkMobile();
+                                </script>
+
+                              <video id="disp" src="assets/movies/displacement.webm"  loop="true" webkit-playsinline></video>
                               <video id="color" src="assets/movies/color_sm.webm"  loop="true" webkit-playsinline></video>
                               <video id="sky" src="assets/movies/sky.mov"  loop="true" webkit-playsinline></video>
                               <video id="waves" src="assets/movies/waves.mov" loop="true" webkit-playsinline></video>
 
-
+<!--
                               <video id="geometric" src="assets/movies/geometric_lq2.webm"  loop="true" webkit-playsinline></video>
                               <video id="blue" src="assets/movies/color_blue.webm" loop="true" webkit-playsinline></video>
                               <a-image id="cobalt" src="assets/textures/cobalt_512.jpg"></image>
 
-
+-->
 
                   <!--  Textures -->
                               <a-image id="ancientFractal" src="assets/textures/ancient.jpg"></image>
