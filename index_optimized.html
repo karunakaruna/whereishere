@@ -391,7 +391,7 @@
                                             var mobileuser = AFRAME.utils.device.isMobile ();
 
                                             function checkMobile(){
-                                              if (mobileuser == 1){
+                                              if (mobileuser == 0){
                                              		  document.write('<a-image id="blue" src="assets/textures/color_blue.jpg"></image>');
                                                   document.write('<a-image id="color" src="assets/textures/color_sm.jpg"></image>');
                                                   document.write('<a-image id="geometric" src="assets/textures/norm2.jpg"></image>');
@@ -402,6 +402,9 @@
                                                   document.write('<video id="disp" src=""  loop="true"></video>');
                                                   document.write('<video id="sky" src=""  loop="true"></video>');
                                                   document.write('<video id="waves" src="" loop="true"></video>');
+                                                  document.write('<video id="disp" src=""  loop="" ></video>');
+                                                  document.write('<video id="sky" src=""  loop="" ></video>');
+                                                  document.write('<video id="waves" src="" loop=""></video>');
 
 
                                               }
@@ -416,6 +419,12 @@
                                                   document.write('<video id="disp" src="assets/movies/displacement.webm"  loop="true" webkit-playsinline></video>');
                                                   document.write('<video id="sky" src="assets/movies/sky.mov"  loop="true" webkit-playsinline></video>');
                                                   document.write('<video id="waves" src="assets/movies/waves.mov" loop="true" webkit-playsinline></video>');
+                                                  document.write('<video id="disp" src="assets/movies/displacement.webm"  loop="true" webkit-playsinline></video>');
+                                                  document.write('<video id="sky" src="assets/movies/sky.mov"  loop="true" webkit-playsinline></video>');
+                                                  document.write('<video id="waves" src="assets/movies/waves.mov" loop="true" webkit-playsinline></video>');
+
+
+
                                                   document.write('');
                                                   document.write('');
                                                   document.write('');
@@ -427,9 +436,7 @@
                                               checkMobile();
                                 </script>
 
-                              <video id="disp" src="assets/movies/displacement.webm"  loop="true" webkit-playsinline></video>
-                              <video id="sky" src="assets/movies/sky.mov"  loop="true" webkit-playsinline></video>
-                              <video id="waves" src="assets/movies/waves.mov" loop="true" webkit-playsinline></video>
+
 
 <!--
                               <video id="geometric" src="assets/movies/geometric_lq2.webm"  loop="true" webkit-playsinline></video>
@@ -506,9 +513,7 @@
             <a-entity obj-model="obj: #terrain-obj;" material="normalMap:#geoNrm01;normalTextureRepeat:80 80;src:#cobalt;sphericalEnvMap:#blue;metalness:.7;displacementMap:#disp;displacementScale:3"></a-entity>
 
 
-            <a-entity id="pedestal" obj-model="obj: #pedestal-obj" mixin="mtl_ancient2" checkpoint position="0 -2.1 0">
-              <a-box id="portalcube" scale=".2 .6 .2" position="0 1.5 0" material="shader:flat;color:white"></a-box>
-            </a-entity>
+
 
             <a-entity id="theTemple" obj-model="obj: #temple-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
 
@@ -535,6 +540,14 @@
           </a-entity>
 
  -->
+
+
+
+
+ <a-entity id="pedestal" obj-model="obj: #pedestal-obj" mixin="mtl_ancient2" checkpoint position="0 -2.1 0">
+   <a-box id="portalcube" scale=".2 .6 .2" position="0 1.5 0" material="shader:flat;color:white"></a-box>
+ </a-entity>
+
 
 <a-entity obj-model="obj: #courtyard01-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 <a-entity obj-model="obj: #courtyard02-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
