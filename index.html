@@ -113,9 +113,18 @@
                     </script>
 
 
+
+
+
+
          <script>
                 var tiny = new Howl({
-                  src: ['assets/audio/tiny_mystery.mp3']
+                  src: ['assets/audio/tiny_mystery.mp3'],
+                    volume: 0.2,
+                    onend: function() {
+                      hey.play();
+                      console.log('Finished!');
+                    }
                 });
 
 
@@ -124,6 +133,7 @@
                     autoplay: true,
                     html5: true,
                     volume: 0.2,
+                    loop: true,
                 });
 
 
@@ -317,8 +327,8 @@
                                   <a-asset-item id="temple-obj" src="assets/models/temple.obj"></a-asset-item>
                                   <a-asset-item id="walkway-obj" src="assets/models/walkway.obj"></a-asset-item>
                                   <a-asset-item id="walkway2-obj" src="assets/models/walkway2.obj"></a-asset-item>
-                                  <a-asset-item id="pedestal-obj" src="assets/models/pedestal.obj"></a-asset-item>
-                                  <a-asset-item id="shape01-obj" src="assets/models/shape01.obj"></a-asset-item>
+
+
                                   <a-asset-item id="courtyardBuildings-obj" src="assets/models/courtyardBuildings.obj"></a-asset-item>
                                   <a-asset-item id="courtyardElementsFloor-obj" src="assets/models/courtyardElementsFloor.obj"></a-asset-item>
                                   <a-asset-item id="centralTower-obj" src="assets/models/centralTower.obj"></a-asset-item>
@@ -327,7 +337,7 @@
                                   <a-asset-item id="ceiling-obj" src="assets/models/ceiling.obj"></a-asset-item>
 
 
-                                  <a-asset-item id="shell-obj" src="assets/models/mother_shell.obj"></a-asset-item>
+
 
                                 -->
 
@@ -350,7 +360,7 @@
                                 <a-asset-item id="crust-obj" src="assets/models02/crust.obj"></a-asset-item>
                                 <a-asset-item id="largeRocks-obj" src="assets/models02/largeRocks.obj"></a-asset-item>
 
-
+                                <a-asset-item id="pedestal-obj" src="assets/models/pedestal.obj"></a-asset-item>
 
 
                                 <a-asset-item id="statue01-obj" src="assets/models02/statue01.obj"></a-asset-item>
@@ -405,6 +415,8 @@
                                                   document.write('<video id="disp" src=""  loop="" ></video>');
                                                   document.write('<video id="sky" src=""  loop="" ></video>');
                                                   document.write('<video id="waves" src="" loop=""></video>');
+                                                  document.write('<a-asset-item id="shell-obj" src=""></a-asset-item>');
+                                                  document.write('<a-asset-item id="shape01-obj" src=""></a-asset-item>');
 
 
                                               }
@@ -423,8 +435,8 @@
                                                   document.write('<video id="sky" src="assets/movies/sky.mov"  loop="true" webkit-playsinline></video>');
                                                   document.write('<video id="waves" src="assets/movies/waves.mov" loop="true" webkit-playsinline></video>');
 
-                                                  document.write('');
-                                                  document.write('');
+                                                  document.write('<a-asset-item id="shell-obj" src="assets/models/mother_shell.obj"></a-asset-item>');
+                                                  document.write('<a-asset-item id="shape01-obj" src="assets/models/shape01.obj"></a-asset-item>');
                                                   document.write('');
                                                   document.write('');
                                                   document.write('');
@@ -483,9 +495,11 @@
           id="camera"
           active="true"
           wasd-controls="acceleration:150;fly:false"
+          look-controls
           mouse-cursor
-          universal-controls="movementControls:checkpoint;movementSpeed:10"
+          universal-controls="movementControls:checkpoint;movementSpeed:10;movementEasing:40;rotationControls:mousedrag-rotation;"
           checkpoint-controls="mode: animate;animateSpeed:7"
+
           position="-105 0 26.67"
           rotation="0.10 328.71 0"
           fov="50">
@@ -515,7 +529,7 @@
 
             <a-entity id="theTemple" obj-model="obj: #temple-obj" mixin="mtl_ancient2" checkpoint position="0 0 0"></a-entity>
 
-            <a-entity id="floatingShape01" obj-model="obj: #shape01-obj" mixin="mtl_ancientGold" checkpoint position="-130 30 -70"><a-animation mixin="rotAnimSlow"></a-animation></a-entity>
+
 
             <a-entity id="courtyardElements" obj-model="obj: #courtyardElements-obj" mixin="mtl_ancientDark"  position="0 0 0"></a-entity>
 
@@ -530,16 +544,16 @@
             <a-entity obj-model="obj: #ceiling-obj" checkpoint position="0 0 0" material="normalMap:#geometric"></a-entity>
 
 
-          <a-entity id="shellGrp" visible="false" position="0 -15 0" scale="1.4 1.4 1.4">
-                <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01" ><a-animation mixin="rotAnim"></a-animation></a-entity>
-                <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01"   sound="on: click; src: #river;" audioanalyser="src: #raver" audioanalyser-volume-scale="multiplier: 1"><a-animation mixin="rotAnim"></a-animation></a-entity>
-                <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01"  sound="on: click; src: #river;" ><a-animation mixin="rotAnim"></a-animation></a-entity>
-                <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01"   sound="on: click; src: #river;" ><a-animation mixin="rotAnim"></a-animation></a-entity>
-          </a-entity>
+
 
  -->
-
-
+<a-entity id="floatingShape01" obj-model="obj: #shape01-obj" mixin="mtl_ancientGold" checkpoint position="-130 30 -70"><a-animation mixin="rotAnimSlow"></a-animation></a-entity>
+<a-entity id="shellGrp" visible="false" position="0 -15 0" scale="1.4 1.4 1.4">
+      <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01" ><a-animation mixin="rotAnim"></a-animation></a-entity>
+      <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01"   sound="on: click; src: #river;" audioanalyser="src: #raver" audioanalyser-volume-scale="multiplier: 1"><a-animation mixin="rotAnim"></a-animation></a-entity>
+      <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01"  sound="on: click; src: #river;" ><a-animation mixin="rotAnim"></a-animation></a-entity>
+      <a-entity obj-model="obj: #shell-obj" mixin="mtl_ancient randomize_01"   sound="on: click; src: #river;" ><a-animation mixin="rotAnim"></a-animation></a-entity>
+</a-entity>
 
 
  <a-entity id="pedestal" obj-model="obj: #pedestal-obj" mixin="mtl_ancient2" checkpoint position="0 -2.1 0">
@@ -560,7 +574,7 @@
 <a-entity obj-model="obj: #statue03-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 
 <a-entity obj-model="obj: #temple01-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
-<a-entity obj-model="obj: #temple01ceiling-obj" mixin="mtl_ancientAnim" class="" position="0 0 0"></a-entity>
+<a-entity obj-model="obj: #temple01ceiling-obj" mixin="mtl_ancientDark" class="" position="0 0 0"></a-entity>
 <a-entity obj-model="obj: #temple02-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 <a-entity obj-model="obj: #temple03-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
 <a-entity obj-model="obj: #temple04-obj" mixin="mtl_ancient" class="" position="0 0 0"></a-entity>
@@ -588,7 +602,7 @@
 
                 <a-animation attribute="rotation" from="0 0 0 " to="0 360 0" dur="60000" delay="0" repeat="indefinate" direction="normal" easing="linear"></a-animation>
 </a-entity>
-<a-light id="redLight" type="point" position="0 28 0" color="#FF0000" intensity="0" decay="5" distance="70">
+<a-light id="redLight" type="point" position="0 28 0" color="#FF0000" intensity="20" decay="5" distance="70">
 <a-animation attribute="decay" from="6" to="4" begin="0" repeat="indefinate" direction="alternate" dur="2666"></a-animation>
 </a-light>
 
@@ -903,7 +917,7 @@ function transition01(){
 <!-- Shell Transition -->
 <script>
 function transition02(){
-    stop();
+    hey.stop();
     tiny.play();
     var shellGroup = document.querySelector('#shellGrp');
     shellGroup.setAttribute('visible','true');
