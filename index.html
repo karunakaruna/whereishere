@@ -412,9 +412,6 @@
                                                   document.write('<video id="disp" src=""  loop="true"></video>');
                                                   document.write('<video id="sky" src=""  loop="true"></video>');
                                                   document.write('<video id="waves" src="" loop="true"></video>');
-                                                  document.write('<video id="disp" src=""  loop="" ></video>');
-                                                  document.write('<video id="sky" src=""  loop="" ></video>');
-                                                  document.write('<video id="waves" src="" loop=""></video>');
                                                   document.write('<a-asset-item id="shell-obj" src=""></a-asset-item>');
                                                   document.write('<a-asset-item id="shape01-obj" src=""></a-asset-item>');
 
@@ -431,10 +428,6 @@
                                                   document.write('<video id="disp" src="assets/movies/displacement.webm"  loop="true" webkit-playsinline></video>');
                                                   document.write('<video id="sky" src="assets/movies/sky.mov"  loop="true" webkit-playsinline></video>');
                                                   document.write('<video id="waves" src="assets/movies/waves.mov" loop="true" webkit-playsinline></video>');
-                                                  document.write('<video id="disp" src="assets/movies/displacement.webm"  loop="true" webkit-playsinline></video>');
-                                                  document.write('<video id="sky" src="assets/movies/sky.mov"  loop="true" webkit-playsinline></video>');
-                                                  document.write('<video id="waves" src="assets/movies/waves.mov" loop="true" webkit-playsinline></video>');
-
                                                   document.write('<a-asset-item id="shell-obj" src="assets/models/mother_shell.obj"></a-asset-item>');
                                                   document.write('<a-asset-item id="shape01-obj" src="assets/models/shape01.obj"></a-asset-item>');
                                                   document.write('');
@@ -490,7 +483,8 @@
 
 
     <!-- Player -->
-
+<a-entity>
+  <a-entity>
 <a-entity camera
           id="camera"
           active="true"
@@ -516,7 +510,10 @@
                     </a-entity>
 
 </a-entity>
-
+<a-animation attribute="position" from="0 0 0" to="0 -.1 0" dur="3000" direction="alternate" repeat="indefinate" easing="ease"></a-animation>
+</a-entity>
+<a-animation attribute="position" from=".05 0 -.03" to="-0.05 0 0.03" dur="3700" direction="alternate" repeat="indefinate" easing="ease"></a-animation>
+</a-entity>
 
 
 
